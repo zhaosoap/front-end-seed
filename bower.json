@@ -1,0 +1,41 @@
+{
+  "name": "gulp-angualr-coffee-jade-less-seed",
+  "version": "0.0.0",
+  "description": "gulp-angualr-coffee-jade-less-seed",
+  "author": ":FooTearth <footearth@gmail.com>",
+  "main": "README.md",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mooxe000/gulp-angualr-coffee-jade-less-seed.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mooxe000/gulp-angualr-coffee-jade-less-seed/issues"
+  },
+  "homepage": "https://github.com/Mooxe000/gulp-angualr-coffee-jade-less-seed",
+  "Keywords": [
+    "gulp",
+    "angular",
+    "coffee",
+    "jade",
+    "less",
+    "generator"
+  ],
+  "dependencies": {
+    "angular": "1.4.0-rc.1",
+    "angular-bootstrap": "~0.12.1",
+    "ngInfiniteScroll": "~1.2.1",
+    "angular-cookies": "1.4.0-rc.1",
+    "ng-file-upload": "~4.2.1",
+    "bootstrap": "*",
+    "ui-route": "~0.2.13",
+    "angular-classy": "~1.1.0",
+    "restangular": "~1.5.1",
+    "bluebird": "~2.9.24",
+    "angular-animate": "1.4.0-rc.1",
+    "classy-initscope": "*"
+  },
+  "devDependencies": {
+
+  }
+}

@@ -1,0 +1,26 @@
+doctype html
+html(
+lang='en'
+ng-app='TDLV'
+)
+  head
+    meta(charset='utf-8')
+    base(href="/")
+    title Telco-Data-Localization-Vis
+
+    link(rel='stylesheet', href='./styles/libs/bootstrap.css', type="text/css")
+    link(rel='stylesheet', href='./styles/style.css', type="text/css")
+    link(rel='stylesheet', href='./styles/libs/flat-ui.css', type="text/css")
+  body
+
+
+    include widgets/nav/index
+
+    div(ui-view='')
+
+    include widgets/footer/index
+    script(type="text/javascript" src='http://webapi.amap.com/maps?v=1.3&key=a4c9530ab07a1ee0cf9c92b624200e57')
+    include scripts/libs/lib-index
+    include scripts/scr-index
+    include widgets/wid-index
+    include modules/mod-index

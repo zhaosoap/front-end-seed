@@ -1,0 +1,9 @@
+ul.nav.navbar-nav.navbar-right
+  li.baseli
+    button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown', type='button')
+      | {{G.User.info.cellphone}}
+      span.caret
+    ul.dropdown-menu(role='menu')
+      li
+        a(ng-click='logout()') 注销
+

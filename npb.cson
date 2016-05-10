@@ -1,0 +1,84 @@
+# PUBLIC CONFIG
+name: 'gulp-angualr-coffee-jade-less-seed'
+version: '0.0.0'
+description: 'gulp-angualr-coffee-jade-less-seed'
+author: ':FooTearth <footearth@gmail.com>'
+main: 'README.md'
+license: 'MIT'
+repository:
+  type: 'git'
+  url: 'https://github.com/Mooxe000/gulp-angualr-coffee-jade-less-seed.git'
+bugs:
+  url: 'https://github.com/Mooxe000/gulp-angualr-coffee-jade-less-seed/issues'
+homepage: 'https://github.com/Mooxe000/gulp-angualr-coffee-jade-less-seed'
+Keywords: [
+  'gulp'
+  'angular'
+  'coffee'
+  'jade'
+  'less'
+  'generator'
+]
+
+# BOWER CONFIG
+bower:
+  dependencies: []
+  devDependencies:
+    bootstrap: [
+      'dist/css/bootstrap.css'
+      'dist/fonts/glyphicons-halflings-regular.eot'
+      'dist/fonts/glyphicons-halflings-regular.svg'
+      'dist/fonts/glyphicons-halflings-regular.ttf'
+      'dist/fonts/glyphicons-halflings-regular.woff'
+      'dist/fonts/glyphicons-halflings-regular.woff2'
+    ]
+    'angular': 'angular.js'
+
+# NPM CONFIG
+npm:
+  bin: {}
+  scripts:
+    test: ''
+  dependencies: []
+  devDependencies: [
+    'coffee-script'
+    'npb-coffee'
+    'lodash'
+    'del'
+    gulp: [
+      # dev
+      'run-sequence'
+      'gulp-filter'
+      'gulp-coffee'
+      'gulp-jade'
+      'gulp-less'
+      'gulp-tap'
+      'gulp-watch'
+      'gulp-plumber'
+      'browser-sync'
+      'connect-modrewrite'
+      # dist
+#      'gulp-inline-angular-templates'
+#      'gulp-usemin'
+#      'gulp-useref'
+#      'gulp-minify-html'
+#      'gulp-minify-css'
+#      'gulp-csso'
+#      'gulp-uglify'
+#      'gulp-rev'
+#      'gulp-rev-replace'
+    ]
+  ]
+
+# NPB CONFIG
+npb:
+
+#  bower:
+#    root_allow: true
+  npm:
+    commander: 'npm' # default
+    # commander: 'cnpm'
+
+# -- build tools --
+#  build: 'gulp'  # default
+#  build: 'grunt'

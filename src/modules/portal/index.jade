@@ -1,0 +1,106 @@
+.portal
+  .part1
+    .content
+      p Some descriptions of this app, babalala...
+
+  .wrapper
+      .part2
+        .content
+          .left
+            p Raw Data
+          .right
+            .sd-sides
+              span.tag
+              .btn-group
+                button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown', type='button')
+                  | select data
+                  span.caret
+                ul.dropdown-menu(role='menu')
+                  li
+                    a(ng-click='setSides(false,"forward.csv",filewrap)') forward.csv
+                  li
+                    a(ng-click='setSides(true,"forward1.csv",filewrap)') forward1.csv
+      .part2
+        .content
+          .left
+            p Clean
+          .right
+            label.checkbox
+              input(type='checkbox', ng-model='delnull1')
+              span Delete null LAC or Cell-id
+            label.checkbox
+              input(type='checkbox', ng-model='delnull2')
+              span Delete null Longitude or Latitude
+            label.checkbox
+              input(type='checkbox', ng-model='delnull3')
+              span Message Type is 'Measurement Report'
+            label.checkbox
+              input(type='checkbox', ng-model='delnull4')
+              span Serving BS RxLev greater than
+                select.form-control.select.select-primary(data-toggle='select')
+                  option -60
+                  option -70
+                  option -80
+                  option -90
+                  option -100
+                  option -110
+
+      .part2
+        .content
+          .left
+            p Split Train & Test
+          .right
+            label.radio
+              input(type='radio', value='0', ng-model='split_way')
+              span Ordered
+            label.radio
+              input(type='radio', value='1', ng-model='split_way')
+              span Random
+            label Ratio
+              select.form-control.select.select-primary(data-toggle='select')
+                option 50%
+                option 60%
+                option 70%
+                option 80%
+                option 90%
+      .part2
+        .content
+          .left
+            p Algorithm
+          .right
+            label.radio
+              input(type='radio', value='DT', ng-model='algorithm')
+              span Decision Tree(DT)
+            label.radio
+              input(type='radio', value='RF', ng-model='algorithm')
+              span 2 Layer Random Forest(RF)
+            label.radio
+              input(type='radio', value='MLP', ng-model='algorithm')
+              span Multilayer Perceptron (MLP)
+            label.radio
+              input(type='radio', value='RNN', ng-model='algorithm')
+              span Recurrent Neural Networks(RNN)
+      .part2
+        .content
+          .left
+            p {{algorithm}} Configuration
+          .right
+            .slide-animate-container
+              .slide-animate(ng-include='template.url')
+
+
+      .part2
+        .content
+          .left
+            p Results
+          .right
+
+      .part2
+        .content
+          .left
+            p Analysis
+          .right
+
+
+
+
