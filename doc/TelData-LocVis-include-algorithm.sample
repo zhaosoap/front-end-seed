@@ -1,0 +1,9 @@
+{
+  "id": "RF",
+  "train": "forword.csv",
+  "test": "backword.csv",
+  "configurations": [
+    {"layer1":["20","50","20","50","20"]},
+    {"layer2":["20","50","20","50","20"]}
+  ]
+}

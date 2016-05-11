@@ -1,0 +1,88 @@
+#%RAML 0.8
+---
+title: TelData-LocVis
+baseUri: http://0.0.0.0:5000/api
+version: v1
+
+schemas:
+ - algorithm: !include TelData-LocVis-include-algorithm.schema
+ - clean: !include TelData-LocVis-include-clean.schema
+ - split: !include TelData-LocVis-include-split.schema
+
+resourceTypes:
+  - readOnlyList:
+      description: List of available <<resourcePathName>> in TelData-LocVis.
+      get:
+        description: Get a list of <<resourcePathName>>.
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  <<exampleCollection>>
+  - execution:
+      description: Execution of available <<resourcePathName>> in TelData-LocVis.
+      post:
+        description: | 
+          execute a <<resourcePathName|!singularize>> in TelData-LocVis.
+        queryParameters:
+          access_token:
+            description: "The access token provided by the authentication application"
+            example: AABBCCDD
+            required: true
+            type: string
+        body:
+          application/json:
+            schema: <<resourcePathName|!singularize>>
+            example: |
+              <<exampleItem>>
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  { 
+                    "message": "The <<resourcePathName|!singularize>> has been properly executed",
+                    "result": "out123.csv"
+                  }
+
+
+
+/data:
+  /raw:
+    type:
+      readOnlyList:
+        exampleCollection: !include TelData-LocVis-include-rawFiles.sample
+
+  /clean: 
+    type:
+        readOnlyList:
+          exampleCollection: !include TelData-LocVis-include-cleanData.sample        
+  /train:
+    type:
+      readOnlyList:
+        exampleCollection: !include TelData-LocVis-include-trainData.sample          
+  /test:
+    type:
+      readOnlyList:
+        exampleCollection: !include TelData-LocVis-include-testData.sample         
+/run:
+  /clean:
+    type:
+      execution:
+        exampleItem: !include TelData-LocVis-include-clean.sample
+
+  /split:
+    type:
+      execution:
+        exampleItem: !include TelData-LocVis-include-split.sample
+
+  /algorithms:
+    type:
+      execution:
+        exampleItem: !include TelData-LocVis-include-algorithm.sample
+    /{algorithmName}/results:
+      type:
+        readOnlyList:
+          exampleCollection: !include TelData-LocVis-include-algorithm-res.sample    
+

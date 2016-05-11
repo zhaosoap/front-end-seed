@@ -1,0 +1,8 @@
+{
+  "id": "clean",
+  "input": "forword.csv",
+  "configurations": [
+    {"notNull1": "true"},
+    {"notNull2": "False"}
+  ]
+}

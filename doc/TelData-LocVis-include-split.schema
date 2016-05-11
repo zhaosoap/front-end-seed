@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "id": "http://jsonschema.net",
+  "required": true,
+  "properties": {
+    "id": {
+      "type": "string",
+      "required": true,
+      "minLength": 36,
+      "maxLength": 36
+    },
+    "input":{
+      "type": "string",
+      "required": true,
+      "minLength": 36,
+      "maxLength": 36
+    },
+    "configurations": {
+      "type": "array",
+      "required": true,
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "id": "split",
+  "input": "forword.csv",
+  "configurations": [
+    {"order": "random"},
+    {"ratio": "0.8"}
+  ]
+}
