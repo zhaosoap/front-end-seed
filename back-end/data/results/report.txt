@@ -1,0 +1,40 @@
+Total Train size	6078
+Total Test size	5384
+Total Max error	553.800000
+Total Min error	2.600000
+Total Mean error	289.773031
+Total Median error	307.050000
+Total 67% error	396.200000
+
+Total Train size	6078
+Total Test size	5384
+Total Max error	556.200000
+Total Min error	6.500000
+Total Mean error	294.997697
+Total Median error	312.150000
+Total 67% error	399.200000
+
+Total Train size	6078
+Total Test size	5384
+Total Max error	591.800000
+Total Min error	0.600000
+Total Mean error	61.344688
+Total Median error	43.300000
+Total 67% error	67.600000
+
+Total Train size	6078
+Total Test size	5384
+Total Max error	586.600000
+Total Min error	0.600000
+Total Mean error	62.163187
+Total Median error	44.100000
+Total 67% error	69.300000
+
+Total Train size	6078
+Total Test size	5384
+Total Max error	384.700000
+Total Min error	0.700000
+Total Mean error	58.455442
+Total Median error	40.200000
+Total 67% error	64.300000
+
