@@ -84,6 +84,26 @@
         .content
           .left
             p {{algorithm}} Configuration
+            .sd-sides
+              span.tag
+                .btn-group
+                  button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown', type='button')
+                    | Train Set
+                    span.caret
+                  ul.dropdown-menu(role='menu')
+                    li
+                      a(ng-click='setSides(false,"forward.csv",filewrap)') forward.csv
+                    li
+                      a(ng-click='setSides(true,"forward1.csv",filewrap)') forward1.csv
+                .btn-group
+                  button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown', type='button')
+                    | Test Set
+                    span.caret
+                  ul.dropdown-menu(role='menu')
+                    li
+                      a(ng-click='setSides(false,"forward.csv",filewrap)') forward.csv
+                    li
+                      a(ng-click='setSides(true,"forward1.csv",filewrap)') forward1.csv
           .right
             .slide-animate-container
               .slide-animate(ng-include='template.url')

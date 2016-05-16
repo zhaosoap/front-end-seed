@@ -7,13 +7,15 @@ angular.module 'TDLV'
   inject: [
     '$scope'
     'apiData'
+    'calcTool'
   ]
 
   initScope: ->
     load1: true
     load2: true
     load3: true
-
+    showModel : 0
+    errThreshold: 0
   data:
     sampleSize: null
     fullSize: null
@@ -22,12 +24,17 @@ angular.module 'TDLV'
     redStar: null
     blueStar: null
     tower: null
+    getGreatCircleDistance: 'calcTool.getGreatCircleDistance'
     getResults: 'apiData.getResults'
     predGPS: []
     realGPS: []
     baseGPS: []
     showGPSIndex: []
-    map: null
+    display:
+      isDirty : false
+      map : null
+
+
     splitResults: (data) ->
       colums = _.unzip data
       @predGPS = _.zip colums[2], colums[3]
@@ -64,43 +71,58 @@ angular.module 'TDLV'
         console.log error
         console.log error
 
-    runSample: () ->
+    runSample: ->
       @showGPSIndex = []
       temp = @sampleSize
       tempFull = @fullSize
       for x in [0..@fullSize-1]
-        roll = Math.round Math.random()*resSize
+        roll = Math.round Math.random()*@fullSize
         if roll<temp
           @showGPSIndex.push x
           temp -=1
         tempFull -=1
+      @$scope.showModel = @$scope.showModel+3
 
+    runFilter: ->
 
+      filterOut =[]
+      for x in @showGPSIndex
+        if @$scope.errThreshold < @getGreatCircleDistance @predGPS[x].lat,@predGPS[x].lng, @realGPS[x].lat, @realGPS[x].lng
+          filterOut.push x
+      @showGPSIndex = filterOut
+
+      @$scope.showModel = @$scope.showModel+3
+
+    clearDisplay: ->
+      @display.map.clearMap() if @display.isDirty
+      @display.showPred = []
+      @display.showReal = []
+      @display.isFirst = true
+      @display.isDirty = false
 
   init: ->
-    sampleSize = @predGPS.length/50
-    resSize = @predGPS.length
-    redIcon = new AMap.Icon
+    @redIcon = new AMap.Icon
       image : 'http://0.0.0.0:5000/images/red-oval-7.png'
       size : new AMap.Size(7,7)
-    blueIcon = new AMap.Icon
+    @blueIcon = new AMap.Icon
       image : 'http://0.0.0.0:5000/images/blue-oval-7.png'
       size : new AMap.Size(7,7)
-    redStar = new AMap.Icon
-      image : 'http://0.0.0.0:5000/images/Star1.png'
+    @violetStar = new AMap.Icon
+      image : 'http://0.0.0.0:5000/images/violet-star-7.png'
       size : new AMap.Size(10,10)
-    blueStar = new AMap.Icon
-      image : 'http://0.0.0.0:5000/images/Star3.png'
+    @greenStar = new AMap.Icon
+      image : 'http://0.0.0.0:5000/images/green-star-7.png'
       size : new AMap.Size(10,10)
-    tower = new AMap.Icon
+    @tower = new AMap.Icon
       image : 'http://0.0.0.0:5000/images/tower.png'
       size : new AMap.Size(24,24)
 
-    @map = new AMap.Map 'container',
+    @display.map = new AMap.Map 'container',
       zoom : 15
       center : [121.4456,31.1986]
       mapStyle : 'fresh'
       features: ['road']
+
     Promise.bind @
     .then ->
       @getResults()
@@ -115,6 +137,8 @@ angular.module 'TDLV'
       @$scope.load2 = false
       @$scope.load1 = false
       @fullSize = result.length
+      @$scope.samplingRate = 5
+#      @$scope._setSamplingRate()
       @convertGPS @baseGPS
     .then (result) ->
       @baseGPS = result
@@ -123,160 +147,118 @@ angular.module 'TDLV'
 
 
   methods:
-    setSampleRatio: (x) ->
-      @sampleSize = @fullSize*x/1000
-      @runSample()
+    setVisModel1: ->
+      @$scope.showModel = 0
+    setVisModel2: ->
+      @$scope.showModel = 1
+    setVisModel3: ->
+      @$scope.showModel = 2
+    VisModel1: ->
 
-    setVisModel1: () ->
-      sampleSize = @predGPS.length/50
-      resSize = @predGPS.length
-      redIcon = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/tl3.png'
-        size : new AMap.Size(24,24)
-      blueIcon = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/tl1.png'
-        size : new AMap.Size(24,24)
-      redStar = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/Star1.png'
-        size : new AMap.Size(24,24)
-      blueStar = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/Star3.png'
-        size : new AMap.Size(24,24)
-      showPred = []
-      showReal = []
-      isFirst = true
-      for x in [0..@predGPS.length-1]
-        roll = Math.round Math.random()*resSize
-        if roll<sampleSize
-          showPred.push @predGPS[x]
-          showReal.push @realGPS[x]
-          marker = new AMap.Marker
-            position: [@predGPS[x].lng,@predGPS[x].lat]
-            icon : if isFirst then blueStar else blueIcon
-            offset : new AMap.Pixel(0,-22),
-            map : @map
-          marker1 = new AMap.Marker
-            position: [@realGPS[x].lng,@realGPS[x].lat]
-            icon : if isFirst then redStar else redIcon
-            offset : new AMap.Pixel(0,-22),
-            map : @map
-          isFirst = false
-          sampleSize -= 1
-        resSize -= 1
+      @clearDisplay()
+      @display.isDirty = true
+      for x in @showGPSIndex
+        @display.showPred.push @predGPS[x]
+        @display.showReal.push @realGPS[x]
+        marker = new AMap.Marker
+          position: [@predGPS[x].lng,@predGPS[x].lat]
+          icon : if @display.isFirst then @greenStar else @blueIcon
+          offset : new AMap.Pixel(-5,-5)
+          map : @display.map
+        marker1 = new AMap.Marker
+          position: [@realGPS[x].lng,@realGPS[x].lat]
+          icon : if @display.isFirst then @violetStar else @redIcon
+          offset : new AMap.Pixel(-5,-5)
+          map : @display.map
+        @display.isFirst = false
       pline = new AMap.Polyline
-        path : showPred
+        path : @display.showPred
         strokeColor : '#3498DB'
-        map : @map
+        strokeWeight : 2
+        map : @display.map
       pline1 = new AMap.Polyline
-        path : showReal
+        path : @display.showReal
+        strokeWeight : 2
         strokeColor : '#E74C3C'
-        map : @map
+        map : @display.map
 
-    setVisModel2: () ->
-      sampleSize = @predGPS.length/50
-      resSize = @predGPS.length
-      redIcon = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/tl3.png'
-        size : new AMap.Size(24,24)
-      blueIcon = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/tl1.png'
-        size : new AMap.Size(24,24)
-      redStar = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/Star1.png'
-        size : new AMap.Size(24,24)
-      blueStar = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/Star3.png'
-        size : new AMap.Size(24,24)
-      showPred = []
-      showReal = []
-      isFirst = true
-      for x in [0..@predGPS.length-1]
-        roll = Math.round Math.random()*resSize
-        if roll<sampleSize
-          showPred.push @predGPS[x]
-          showReal.push @realGPS[x]
-          marker = new AMap.Marker
-            position: [@predGPS[x].lng,@predGPS[x].lat]
-            icon : if isFirst then blueStar else blueIcon
+    VisModel2: ->
+      @clearDisplay()
+      @display.isDirty = true
+      for x in @showGPSIndex
+        marker = new AMap.Marker
+          position: [@predGPS[x].lng,@predGPS[x].lat]
+          icon : if @display.isFirst then @greenStar else @blueIcon
+          offset : new AMap.Pixel(-5,-5),
+          map : @display.map
+        marker1 = new AMap.Marker
+          position: [@realGPS[x].lng,@realGPS[x].lat]
+          icon : if @display.isFirst then @violetStar else @redIcon
+          offset : new AMap.Pixel(-5,-5),
+          map : @display.map
+        pline = new AMap.Polyline
+          path : [@predGPS[x], @realGPS[x]]
+          strokeColor : '#16A085'
+          strokeStyle : 'dashed'
+          strokeWeight : 2
+          map : @display.map
+        @display.isFirst = false
+
+    VisModel3: ->
+      @clearDisplay()
+      @display.isDirty = true
+      for x in @showGPSIndex
+        @display.showPred.push @predGPS[x]
+        @display.showReal.push @realGPS[x]
+        marker = new AMap.Marker
+          position: [@predGPS[x].lng,@predGPS[x].lat]
+          icon : if @display.isFirst then @greenStar else @blueIcon
+          offset : new AMap.Pixel(-5,-5),
+          map : @display.map
+        marker1 = new AMap.Marker
+          position: [@realGPS[x].lng,@realGPS[x].lat]
+          icon : if @display.isFirst then @violetStar else @redIcon
+          offset : new AMap.Pixel(-5,-5),
+          map : @display.map
+        pline = new AMap.Polyline
+          path : [@predGPS[x], @realGPS[x]]
+          strokeColor : '#16A085'
+          strokeWeight : 2
+          map : @display.map
+        @display.isFirst = false
+        if @baseGPS[x].lat > 0
+          marker2 = new AMap.Marker
+            position: [@baseGPS[x].lng,@baseGPS[x].lat]
+            icon :  @tower
             offset : new AMap.Pixel(0,-22),
-            map : @map
-          marker1 = new AMap.Marker
-            position: [@realGPS[x].lng,@realGPS[x].lat]
-            icon : if isFirst then redStar else redIcon
-            offset : new AMap.Pixel(0,-22),
-            map : @map
-          pline = new AMap.Polyline
-            path : [@predGPS[x], @realGPS[x]]
-            strokeColor : '#16A085'
+            map : @display.map
+          pline1 = new AMap.Polyline
+            path : [@realGPS[x], @baseGPS[x]]
+            strokeColor : '#95A5A6'
             strokeStyle : 'dashed'
-            map : @map
-          isFirst = false
-          sampleSize -= 1
-        resSize -= 1
+            map : @display.map
+          pline2 = new AMap.Polyline
+            path : [@predGPS[x], @baseGPS[x]]
+            strokeColor : '#BDC3C7'
+            strokeStyle : 'dashed'
+            map : @display.map
+    _setSamplingRate: (newValue, oldValue) ->
+      @sampleSize = @fullSize*newValue/100
+      @runSample()
+      @runFilter()
+    _setErrorDistance: (newValue, oldValue) ->
+      if @showGPSIndex.length is 0
+        return
+      @runFilter()
+    _setShowModel: (newValue, oldValue) ->
+      if @showGPSIndex.length is 0
+        return
+      @$scope.VisModel1() if newValue%3 is 0
+      @$scope.VisModel2() if newValue%3 is 1
+      @$scope.VisModel3() if newValue%3 is 2
 
-    setVisModel3: () ->
-      sampleSize = @predGPS.length/50
-      resSize = @predGPS.length
-      redIcon = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/red-oval-7.png'
-        size : new AMap.Size(7,7)
-      blueIcon = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/blue-oval-7.png'
-        size : new AMap.Size(7,7)
-      redStar = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/Star1.png'
-        size : new AMap.Size(24,24)
-      blueStar = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/Star3.png'
-        size : new AMap.Size(24,24)
-      tower = new AMap.Icon
-        image : 'http://0.0.0.0:5000/images/tower.png'
-        size : new AMap.Size(24,24)
-      showPred = []
-      showReal = []
-      isFirst = true
-      for x in [0..@predGPS.length-1]
-        roll = Math.round Math.random()*resSize
-        resSize -= 1
-        if roll<sampleSize
-          showPred.push @predGPS[x]
-          showReal.push @realGPS[x]
-          marker = new AMap.Marker
-            position: [@predGPS[x].lng,@predGPS[x].lat]
-            icon : if isFirst then blueStar else blueIcon
-            offset : new AMap.Pixel(-5,-5),
-            map : @map
-          marker1 = new AMap.Marker
-            position: [@realGPS[x].lng,@realGPS[x].lat]
-            icon : if isFirst then redStar else redIcon
-            offset : new AMap.Pixel(-5,-5),
-            map : @map
-          pline = new AMap.Polyline
-            path : [@predGPS[x], @realGPS[x]]
-            strokeColor : '#16A085'
-            strokeWeight : 2
-            map : @map
-          isFirst = false
-          sampleSize -= 1
-          if @baseGPS[x].lat > 0
-            marker2 = new AMap.Marker
-              position: [@baseGPS[x].lng,@baseGPS[x].lat]
-              icon :  tower
-              offset : new AMap.Pixel(0,-22),
-              map : @map
-            pline1 = new AMap.Polyline
-              path : [@realGPS[x], @baseGPS[x]]
-              strokeColor : '#95A5A6'
-              strokeStyle : 'dashed'
-              map : @map
-            pline2 = new AMap.Polyline
-              path : [@predGPS[x], @baseGPS[x]]
-              strokeColor : '#BDC3C7'
-              strokeStyle : 'dashed'
-              map : @map
+  watch:
+      '{object}samplingRate' : '_setSamplingRate'
+      '{object}errThreshold' : '_setErrorDistance'
+      '{object}showModel' : '_setShowModel'
 
-
-
-
-
-  watch: null

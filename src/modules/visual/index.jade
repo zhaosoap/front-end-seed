@@ -1,15 +1,26 @@
 .visual
   .part1
     .content
-      .col-xs-3
-        .btn.btn-block.btn-lg.btn-success(ng-click='setVisModel1()')
-          | Model1
-      .col-xs-3
-        .btn.btn-block.btn-lg.btn-info(ng-click='setVisModel2()')
-          | Model2
-      .col-xs-3
-        .btn.btn-block.btn-lg.btn-warning(ng-click='setVisModel3()', ng-hide='load3')
-          | Model3
+      .row-one
+        .col-xs-4.sampling-rate.has-success
+          span Sampling rate
+          input.form-control(type='text',ng-model='samplingRate')
+          span %
+        .col-xs-5.sampling-rate.has-success
+          span Error distance greater than
+          input.form-control(type='text',ng-model='errThreshold')
+          span m
+      .row-one
+        .col-xs-3
+          .btn.btn-block.btn-lg.btn-success(ng-click='setVisModel1()',ng-hide='load1')
+            | Model1
+        .col-xs-3
+          .btn.btn-block.btn-lg.btn-info(ng-click='setVisModel2()', ng-hide='load2')
+            | Model2
+        .col-xs-3
+          .btn.btn-block.btn-lg.btn-warning(ng-click='setVisModel3()', ng-hide='load3')
+            | Model3
+
   .wrapper
       .part2
         .content(id='container')
