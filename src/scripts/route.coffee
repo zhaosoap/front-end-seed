@@ -39,6 +39,13 @@ angular.module 'TDLV'
       templateUrl: '/modules/visual/index.html'
       controller: 'visualCtrl'
 
+    .state 'gmap'
+    ,
+      parent: 'abslogin'
+      url: '/gmap'
+      templateUrl: '/modules/gmap/index.html'
+      controller: 'gmapCtrl'
+
     .state 'error'
     ,
       url: '/404'

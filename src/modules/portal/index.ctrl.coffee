@@ -21,6 +21,7 @@ angular.module 'TDLV'
         { name: 'MLP', url: '/modules/algorithm/MLP.html'},
       ];
     @$scope.template = @$scope.templates[1];
+    $('[data-toggle="select"]').select2();
 
 
   methods:

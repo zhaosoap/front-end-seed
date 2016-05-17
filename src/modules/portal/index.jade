@@ -12,14 +12,9 @@
             .sd-sides
               span.tag
               .btn-group
-                button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown', type='button')
-                  | Select data
-                  span.caret
-                ul.dropdown-menu(role='menu')
-                  li
-                    a(ng-click='setSides(false,"forward.csv",filewrap)') forward.csv
-                  li
-                    a(ng-click='setSides(true,"forward1.csv",filewrap)') forward1.csv
+                select.form-control.select.select-primary.select-block.mbl(data-toggle="select")
+                  option(value='1') test 1
+                  option(value='2') test 2
       .part2
         .content
           .left
@@ -84,26 +79,28 @@
         .content
           .left
             p {{algorithm}} Configuration
-            .sd-sides
-              span.tag
-                .btn-group
-                  button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown', type='button')
-                    | Train Set
-                    span.caret
-                  ul.dropdown-menu(role='menu')
-                    li
-                      a(ng-click='setSides(false,"forward.csv",filewrap)') forward.csv
-                    li
-                      a(ng-click='setSides(true,"forward1.csv",filewrap)') forward1.csv
-                .btn-group
-                  button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown', type='button')
-                    | Test Set
-                    span.caret
-                  ul.dropdown-menu(role='menu')
-                    li
-                      a(ng-click='setSides(false,"forward.csv",filewrap)') forward.csv
-                    li
-                      a(ng-click='setSides(true,"forward1.csv",filewrap)') forward1.csv
+            .row
+              .labelroc Train Set
+              select.form-control.select.select-primary.select-block.mbl(
+                data-toggle="select"
+                ng-model='trainSet'
+              )
+                option(value='1') forward_1.csv
+                option(value='2') forward_2.csv
+            .row
+              .labelroc Test Set
+              select.form-control.select.select-primary.select-block.mbl(
+              data-toggle="select"
+              ng-model='testSet'
+              )
+                option(value='1') backward_1.csv
+                option(value='2') backward_2.csv
+            .row
+
+              .btn.btn-block.btn-lg.btn-success(ng-click='setVisModel1()',ng-hide='load1')
+                | submit
+
+
           .right
             .slide-animate-container
               .slide-animate(ng-include='template.url')

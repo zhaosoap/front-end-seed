@@ -6,6 +6,7 @@ angular.module 'TDLV'
 
   inject: [
     '$scope'
+    '$timeout'
     'apiData'
     'calcTool'
   ]
@@ -58,8 +59,6 @@ angular.module 'TDLV'
         if points.length>=200 or x==data.length
           allPromise.push @convertFromPromise points
           points=[]
-
-      allPromise
       Promise.all allPromise
       .then (results)->
         traj = []
@@ -69,7 +68,8 @@ angular.module 'TDLV'
         traj
       .catch (error)->
         console.log error
-        console.log error
+
+
 
     runSample: ->
       @showGPSIndex = []
@@ -81,7 +81,7 @@ angular.module 'TDLV'
           @showGPSIndex.push x
           temp -=1
         tempFull -=1
-      @$scope.showModel = @$scope.showModel+3
+      @$scope.showModel = @$scope.showModel+4
 
     runFilter: ->
 
@@ -91,10 +91,11 @@ angular.module 'TDLV'
           filterOut.push x
       @showGPSIndex = filterOut
 
-      @$scope.showModel = @$scope.showModel+3
+      @$scope.showModel = @$scope.showModel+4
 
     clearDisplay: ->
       @display.map.clearMap() if @display.isDirty
+
       @display.showPred = []
       @display.showReal = []
       @display.isFirst = true
@@ -122,6 +123,8 @@ angular.module 'TDLV'
       center : [121.4456,31.1986]
       mapStyle : 'fresh'
       features: ['road']
+      jogEnable : true
+    window.map = @display.map
 
     Promise.bind @
     .then ->
@@ -138,7 +141,6 @@ angular.module 'TDLV'
       @$scope.load1 = false
       @fullSize = result.length
       @$scope.samplingRate = 5
-#      @$scope._setSamplingRate()
       @convertGPS @baseGPS
     .then (result) ->
       @baseGPS = result
@@ -153,6 +155,84 @@ angular.module 'TDLV'
       @$scope.showModel = 1
     setVisModel3: ->
       @$scope.showModel = 2
+    setVisModel4: ->
+      @$scope.showModel = 3
+
+    VisModel4: ->
+      @clearDisplay()
+      @display.isDirty = true
+      markers_pred = []
+      markers_real = []
+      tick = 0
+      for x in @showGPSIndex
+        tick += 1
+        @display.showPred.push @predGPS[x]
+        @display.showReal.push @realGPS[x]
+        markers_pred.push new AMap.Marker
+          position: [@predGPS[x].lng,@predGPS[x].lat]
+          icon : if @display.isFirst then @greenStar else @blueIcon
+          offset : new AMap.Pixel(-5,-5)
+        markers_real.push new AMap.Marker
+          position: [@realGPS[x].lng,@realGPS[x].lat]
+          icon : if @display.isFirst then @violetStar else @redIcon
+          offset : new AMap.Pixel(-5,-5)
+        @display.isFirst = false
+#        if markers.length>=200 or tick==@showGPSIndex.length
+
+#          markers = []
+      window.markers_pred = markers_pred
+      window.markers_real = markers_real
+
+      window.map.plugin ['AMap.MarkerClusterer'], ()->
+        sts = [{
+          url: "http://0.0.0.0:5000/images/Oval2.png",
+          size: new AMap.Size(24, 24),
+          offset: new AMap.Pixel(-24, -24)
+        }, {
+          url: "http://0.0.0.0:5000/images/Oval2.png",
+          size: new AMap.Size(24, 24),
+          offset: new AMap.Pixel(-24, -24)
+        }, {
+          url: "http://0.0.0.0:5000/images/Oval2.png",
+          size: new AMap.Size(24, 24),
+          offset: new AMap.Pixel(-24, -24),
+          textColor: '#CC0066'
+        }];
+        sts1 = [{
+          url: "http://0.0.0.0:5000/images/Oval1.png",
+          size: new AMap.Size(24, 24),
+          offset: new AMap.Pixel(-24, -24)
+        }, {
+          url: "http://0.0.0.0:5000/images/Oval1.png",
+          size: new AMap.Size(24, 24),
+          offset: new AMap.Pixel(-24, -24)
+        }, {
+          url: "http://0.0.0.0:5000/images/Oval1.png",
+          size: new AMap.Size(24, 24),
+          offset: new AMap.Pixel(-24, -24),
+          textColor: '#CC0066'
+        }];
+        cluster = new AMap.MarkerClusterer map, markers_pred,
+          zoomOnClick: true
+          gridSize: 20
+          averageCenter: true
+          styles: sts
+        cluster1 = new AMap.MarkerClusterer map, markers_real,
+          zoomOnClick: true
+          averageCenter: true
+          gridSize: 20
+          styles: sts1
+
+      pline = new AMap.Polyline
+        path : @display.showPred
+        strokeColor : '#3498DB'
+        strokeWeight : 2
+        map : @display.map
+      pline1 = new AMap.Polyline
+        path : @display.showReal
+        strokeWeight : 2
+        strokeColor : '#E74C3C'
+        map : @display.map
     VisModel1: ->
 
       @clearDisplay()
@@ -253,9 +333,10 @@ angular.module 'TDLV'
     _setShowModel: (newValue, oldValue) ->
       if @showGPSIndex.length is 0
         return
-      @$scope.VisModel1() if newValue%3 is 0
-      @$scope.VisModel2() if newValue%3 is 1
-      @$scope.VisModel3() if newValue%3 is 2
+      @$scope.VisModel1() if newValue%4 is 0
+      @$scope.VisModel2() if newValue%4 is 1
+      @$scope.VisModel3() if newValue%4 is 2
+      @$scope.VisModel4() if newValue%4 is 3
 
   watch:
       '{object}samplingRate' : '_setSamplingRate'
