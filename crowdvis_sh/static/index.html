@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://www.bootcss.com/examples/carousel.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Main</title>
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+
+    <link href="style/index/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="style/index/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+    /* GLOBAL STYLES
+    -------------------------------------------------- */
+    /* Padding below the footer and lighter body text */
+
+    body {
+      padding-bottom: 40px;
+      color: #5a5a5a;
+    }
+
+    /* CUSTOMIZE THE CAROUSEL
+    -------------------------------------------------- */
+
+    /* Carousel base class */
+    .carousel {
+      margin-bottom: 60px;
+    }
+
+    .carousel .container {
+      position: relative;
+      z-index: 9;
+    }
+
+    .carousel-control {
+      height: 80px;
+      margin-top: 0;
+      font-size: 120px;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+      background-color: transparent;
+      border: 0;
+      z-index: 10;
+    }
+
+    .carousel .item {
+      height: 500px;
+    }
+    .carousel img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      height: 500px;
+    }
+
+    .carousel-caption {
+      background-color: transparent;
+      position: static;
+      max-width: 550px;
+      padding: 0 20px;
+      margin-top: 200px;
+    }
+    .carousel-caption h1,
+    .carousel-caption .lead {
+      margin: 0;
+      line-height: 1.25;
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+    }
+    .carousel-caption .btn {
+      margin-top: 10px;
+    }
+
+
+
+    /* MARKETING CONTENT
+    -------------------------------------------------- */
+
+    /* Center align the text within the three columns below the carousel */
+    .marketing .span6 {
+      text-align: center;
+    }
+    .marketing h2 {
+      font-weight: normal;
+    }
+    .marketing .span6 p {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+
+    /* Featurettes
+    ------------------------- */
+
+    .featurette-divider {
+      margin: 80px 0; /* Space out the Bootstrap <hr> more */
+    }
+    .featurette {
+      padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+      overflow: hidden; /* Vertically center images part 2: clear their floats. */
+    }
+    .featurette-image {
+      margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+    }
+
+    /* Give some space on the sides of the floated elements so text doesn't run right into it. */
+    .featurette-image.pull-left {
+      margin-right: 40px;
+    }
+    .featurette-image.pull-right {
+      margin-left: 40px;
+    }
+
+    /* Thin out the marketing headings */
+    .featurette-heading {
+      font-size: 50px;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+
+
+    /* RESPONSIVE CSS
+    -------------------------------------------------- */
+
+    @media (max-width: 979px) {
+
+      .container.navbar-wrapper {
+        margin-bottom: 0;
+        width: auto;
+      }
+      .navbar-inner {
+        border-radius: 0;
+        margin: -20px 0;
+      }
+
+      .carousel .item {
+        height: 500px;
+      }
+      .carousel img {
+        width: auto;
+        height: 500px;
+      }
+
+      .featurette {
+        height: auto;
+        padding: 0;
+      }
+      .featurette-image.pull-left,
+      .featurette-image.pull-right {
+        display: block;
+        float: none;
+        max-width: 40%;
+        margin: 0 auto 20px;
+      }
+    }
+
+
+    @media (max-width: 767px) {
+
+      .navbar-inner {
+        margin: -20px;
+      }
+
+      .carousel {
+        margin-left: -20px;
+        margin-right: -20px;
+      }
+      .carousel .container {
+
+      }
+      .carousel .item {
+        height: 300px;
+      }
+      .carousel img {
+        height: 300px;
+      }
+      .carousel-caption {
+        width: 65%;
+        padding: 0 70px;
+        margin-top: 100px;
+      }
+      .carousel-caption h1 {
+        font-size: 30px;
+      }
+      .carousel-caption .lead,
+      .carousel-caption .btn {
+        font-size: 18px;
+      }
+
+      .marketing .span6 + .span6 {
+        margin-top: 40px;
+      }
+
+      .featurette-heading {
+        font-size: 30px;
+      }
+      .featurette .lead {
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+    }
+
+    .navrow {
+		position:fixed;
+		top:0;
+		left:0;
+		margin:0;
+		height:40px;
+		width:100%;
+	    background: linear-gradient(to bottom, rgba(100,100,100,1) 0%,rgba(60,60,60,1) 25%,rgba(0,0,0,1) 100%);
+		overflow:hidden;
+		z-index:100;
+	}
+	
+	#title_icon {
+		display: inline-block;
+		width:20%;
+		transform:translate(0,-2px);
+		height:41px;
+		background: rgba(0,0,0,0);
+		margin:0;
+		padding:0;
+		text-align: center;
+	}
+	
+	#title_icon>img {
+		height:100%;
+	}
+	
+	.navbar_wrapper {
+		height: 38px;
+		width:80%;
+		display: inline-block;
+		font-family: "Trebuchet MS", Helvetica, sans-serif
+		color: #fff;
+		font-size:15px;
+		font-weight:600;
+	}
+	
+	.navbar_wrapper>a {
+		position:relative;
+		display:inline-table;
+		width:120px;
+		height:100%;
+		text-align: center;
+		line-height: 40px;
+		vertical-align: middle;
+		margin: 0;
+		cursor:pointer;
+		color: #fff;
+		transition: 0.3s background-color;
+		background-color: rgba(0,0,0,0);
+	}
+	
+	.navbar_wrapper>a:hover{
+		background-color: rgba(255,255,255,0.2);
+		color: #fff;
+		text-decoration: none;
+	}
+	
+	.navbar_wrapper>a.active {
+		background-color:rgba(255,255,255,0.3);
+		color: #fff;
+		text-decoration: none;
+	}
+    </style>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+
+
+    <!-- NAVBAR
+    ================================================== -->
+    <div class="navrow" style="height:40px; width:100%">
+        <div id="title_icon"><img src="images/crowdvis_w.png">
+        </div><div class="navbar_wrapper">
+            <a class="active"><span>Home</span>
+            </a><a href="density.html"><span>Density</span>
+            </a><a href="movement.html"><span>Movement</span></a>
+        </div>
+    </div>
+
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="images/bg-1.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Big Data Visual Analytic</h1>
+              <p class="lead">Utilizing the heatmap and other visualization tools, this system displays the spatial-temporal distribution of a target group of people. </p>
+              <!--<a class="btn btn-large btn-primary" href="demo.html#">Sign up today</a>-->
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="images/bg-3.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Density </h1>
+              <p class="lead"> A tool that displays the spatial distribution of a certain group of people, whom are selected according to personal attributes including gender, occupation, etc.</p>
+              <a class="btn btn-large btn-primary" href="density.html">Learn more</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="images/bg-2.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Movement </h1>
+              <p class="lead"> A tool that shows sources and destinations of a group of people, who appear in certain region at a specific moment. </p>
+              <a class="btn btn-large btn-primary" href="movement.html">Learn more</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+    </div><!-- /.carousel -->
+
+
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+
+      <!-- Three columns of text below the carousel -->
+       <div class="row">
+        <div class="span6">
+          <img class="img-circle" data-src="holder.js/140x140" alt="140x140" style="width: 140px; height: 140px;" src="images/title_1.png">
+          <h2>Density </h2>
+          <p align= "left">This tool display the spatial distribution of a certain group of people, whom are selected according to personal attributes including gender, occupation, etc.</p>
+          <p><a class="btn" href="density.html">View details »</a></p>
+        </div><!-- /.span6 -->
+        <div class="span6">
+          <img class="img-circle" data-src="holder.js/140x140" alt="140x140" style="width: 140px; height: 140px;" src="images/title_2.png">
+          <h2>Movement</h2>
+          <p  align= "left">After selecting the group of people that appear in a specific region at a certain moment, this tool shows their movement behavior by displaying the distribution before and after the picked moment.</p>
+          <p><a class="btn" href="movement.html">View details »</a></p>
+        </div><!-- /.span6 -->
+      </div><!-- /.row -->
+
+	<hr>
+
+      <!-- FOOTER -->
+      <footer>
+		<p>
+			All Rights Reserved&copy; 2012-2015 Huawei Technologies Noah's Ark Lab <br>
+			版权所有&copy; 2012-2015 华为诺亚方舟实验室 <br>
+			<p align="right">
+				<a href="http://www.huawei.com/cn/">Huawei</a> |
+				<a href="http://www.huawei.com/cn/about-huawei/legal/index.htm">Privacy &amp; Terms</a>
+			</p>
+		</p>
+      </footer>
+
+    </div><!-- /.container -->
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/vendor/jquery.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script>
+      !function ($) {
+        $(function(){
+          // carousel demo
+          $('#myCarousel').carousel()
+        })
+      }(window.jQuery)
+    </script>
+    <script src="js/vendor/holder.js"></script>
+  
+
+</body>
+</html>

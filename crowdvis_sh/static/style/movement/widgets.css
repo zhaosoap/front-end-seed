@@ -1,0 +1,99 @@
+/*
+* Define the styles of basic components, mostly at the lowest level
+*/
+.btn {
+    width:auto;
+    height:30px;
+    padding:auto;
+}
+.btn-default {
+    background-image:none;
+    background:#eee;
+}
+
+.btn-default:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+
+.btn-default.checked {
+    color: #ccc;
+    background-color: #fafafa;
+    border-color: #e6e6e6;
+}
+
+.sel_btn.checked {
+    background-color: #ccc;
+    border-color: #dbdbdb;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,.25);
+    color: #333;
+}
+
+.slider_text {
+    width: 20%;
+}
+
+.slider {
+    margin-top: 5px;
+    transform:translate(0,-8px);
+}
+
+.slider_display {
+    position: relative;
+    width: 15%;
+    margin-left: 3%;
+}
+
+.checkbox_text {
+    text-align: left;
+    width: auto;
+}
+
+.checkbox {
+    padding-top: 6px;
+}
+
+.dropdown_text {
+    width: 25%;
+}
+
+.imgcell {
+    padding-left:3px;
+    padding-right:3px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.leaflet-popup-content {
+    margin: 5px 0px;
+}
+
+/*
+* Margin and padding styles defined by classes
+*/
+.nomargin {
+    margin:0px;
+}
+
+.smallpadding {
+    padding-left:8px;
+    padding-right:8px;
+}
+
+.nopadding {
+    padding:0px;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #ccc;
+    shape-rendering: crispEdges;
+}
+
+.line {
+    fill: none;
+    stroke: #94E4FF;
+    stroke-width: 1.5px;
+}

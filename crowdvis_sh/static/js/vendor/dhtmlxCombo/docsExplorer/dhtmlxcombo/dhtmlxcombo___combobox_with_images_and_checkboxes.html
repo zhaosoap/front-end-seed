@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxcombo:combobox_with_images_and_checkboxes    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxcombo:combobox_with_images_and_checkboxes</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxcombo:combobox_with_images_and_checkboxes" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxcombo:combobox_with_images_and_checkboxes" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxcombo:combobox_with_images_and_checkboxes" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxcombo:combobox_with_images_and_checkboxes"  class="breadcrumbs" title="dhtmlxcombo:combobox_with_images_and_checkboxes">combobox_with_images_and_checkboxes</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#combobox_with_images_and_checkboxes" class="toc">Combobox with images and checkboxes</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#setting_combo_type" class="toc">Setting combo type</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#type_checkbox" class="toc">Type &quot;checkbox&quot;</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#type_image" class="toc">Type &quot;image&quot;</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___combo.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxcombo:toc">dhtmlxcombo</a></div></div>
+
+</p>
+
+<h2><a name="combobox_with_images_and_checkboxes" id="combobox_with_images_and_checkboxes">Combobox with images and checkboxes</a></h2>
+<div class="level2">
+
+<p>
+
+Combo supports two special types: 
+</p>
+<ul>
+<li class="level1"><div class="li"> image</div>
+</li>
+<li class="level1"><div class="li"> checkbox</div>
+</li>
+</ul>
+
+<p>
+
+Both types require dhtmlxcombo_extra.js extenstion:
+</p>
+<pre class="code javascript">  <span class="sy0">&lt;</span>link rel<span class="sy0">=</span><span class="st0">&quot;STYLESHEET&quot;</span> type<span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;../codebase/dhtmlxcombo.css&quot;</span><span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>script src<span class="sy0">=</span><span class="st0">&quot;../codebase/dhtmlxcommon.js&quot;</span><span class="sy0">&gt;&lt;/</span>script<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>script src<span class="sy0">=</span><span class="st0">&quot;../codebase/dhtmlxcombo.js&quot;</span><span class="sy0">&gt;&lt;/</span>script<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>script src<span class="sy0">=</span><span class="st0">&quot;../codebase/ext/dhtmlxcombo_extra.js&quot;</span><span class="sy0">&gt;&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="54-488" /><input type="hidden" name="rev" value="1340312400" /><input type="hidden" name="id" value="dhtmlxcombo:combobox_with_images_and_checkboxes" /><input type="submit" value="Edit" class="button" title="Combobox with images and checkboxes" /></div></form></div>
+<h3><a name="setting_combo_type" id="setting_combo_type">Setting combo type</a></h3>
+<div class="level3">
+
+<p>
+
+There are two ways of combo intialization: 
+</p>
+<ul>
+<li class="level1"><div class="li"> from selectbox</div>
+</li>
+<li class="level1"><div class="li"> in html container. </div>
+</li>
+</ul>
+
+<p>
+
+In first case the type is set by the opt_type attribute of the select tag:
+</p>
+<pre class="code javascript">  <span class="sy0">&lt;</span>select opt_type<span class="sy0">=</span><span class="st0">&quot;checkbox&quot;</span> style<span class="sy0">=</span><span class="st0">&quot;width:200px;&quot;</span>  id<span class="sy0">=</span><span class="st0">&quot;combo_zone&quot;</span> <span class="kw3">name</span><span class="sy0">=</span><span class="st0">&quot;alfa&quot;</span><span class="sy0">&gt;</span>
+    ...
+  <span class="sy0">&lt;/</span>select<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+    <span class="kw2">var</span> combo <span class="sy0">=</span> dhtmlXComboFromSelect<span class="br0">&#40;</span><span class="st0">&quot;combo_zone&quot;</span><span class="br0">&#41;</span>;
+  <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+<p>
+When combo is initialized using dhtmlXCombo(…), you can define the type as follows:
+</p>
+<pre class="code javascript">  <span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;combo_zone1&quot;</span> style<span class="sy0">=</span><span class="st0">&quot;width:200px;&quot;</span><span class="sy0">&gt;&lt;/</span>div<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+    <span class="kw2">var</span> combo <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXCombo<span class="br0">&#40;</span><span class="st0">&quot;combo_zone1&quot;</span><span class="sy0">,</span><span class="st0">&quot;alfa1&quot;</span><span class="sy0">,</span><span class="nu0">200</span><span class="sy0">,</span><span class="st0">&quot;image&quot;</span><span class="br0">&#41;</span>;
+    ...
+  <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="489-1149" /><input type="hidden" name="rev" value="1340312400" /><input type="hidden" name="id" value="dhtmlxcombo:combobox_with_images_and_checkboxes" /><input type="submit" value="Edit" class="button" title="Setting combo type" /></div></form></div>
+<h3><a name="type_checkbox" id="type_checkbox">Type &quot;checkbox&quot;</a></h3>
+<div class="level3">
+
+<p>
+
+The option can be selected checked using one of the following methods:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> in the xml:</div>
+</li>
+</ul>
+<pre class="code javascript">  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;some value&quot;</span> checked<span class="sy0">=</span><span class="st0">&quot;1&quot;</span><span class="sy0">&gt;</span>some text<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span></pre><ul>
+<li class="level1"><div class="li"> by the setChecked(option_index,mode) method:</div>
+</li>
+</ul>
+<pre class="code javascript"><span class="coMULTI">/*the 4th and 7th options are checked*/</span>
+  combo.<span class="me1">setChecked</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span><span class="kw2">true</span><span class="br0">&#41;</span>;
+  combo.<span class="me1">setChecked</span><span class="br0">&#40;</span><span class="nu0">6</span><span class="sy0">,</span><span class="kw2">true</span><span class="br0">&#41;</span>;</pre>
+<p>
+The array with values of selected options can be got by getChecked() method:
+</p>
+<pre class="code javascript">  <span class="kw2">var</span> checked_array <span class="sy0">=</span> combo.<span class="me1">getChecked</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1150-1670" /><input type="hidden" name="rev" value="1340312400" /><input type="hidden" name="id" value="dhtmlxcombo:combobox_with_images_and_checkboxes" /><input type="submit" value="Edit" class="button" title="Type checkbox" /></div></form></div>
+<h3><a name="type_image" id="type_image">Type &quot;image&quot;</a></h3>
+<div class="level3">
+
+<p>
+
+ 
+Image path is set by img_src attribute:
+</p>
+<pre class="code javascript">  <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;some value&quot;</span> img_src<span class="sy0">=</span><span class="st0">&quot;some.gif&quot;</span><span class="sy0">&gt;</span>some text<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span></pre>
+<p>
+The setDefaultImage(src) method allows to set the default image:
+</p>
+<pre class="code javascript">  <span class="kw2">var</span> combo <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXCombo<span class="br0">&#40;</span><span class="st0">&quot;combo_zone&quot;</span><span class="sy0">,</span><span class="st0">&quot;alfa&quot;</span><span class="sy0">,</span><span class="nu0">200</span><span class="sy0">,</span><span class="st0">&quot;image&quot;</span><span class="br0">&#41;</span>;
+  combo.<span class="me1">setDefaultImage</span><span class="br0">&#40;</span><span class="st0">&quot;../images/book.gif&quot;</span><span class="br0">&#41;</span>;
+  ...</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1671-" /><input type="hidden" name="rev" value="1340312400" /><input type="hidden" name="id" value="dhtmlxcombo:combobox_with_images_and_checkboxes" /><input type="submit" value="Edit" class="button" title="Type image" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxcombo/combobox_with_images_and_checkboxes.txt &middot; Last modified: 2012/06/22 01:00 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxcombo:combobox_with_images_and_checkboxes" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxcombo:combobox_with_images_and_checkboxes" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxcombo:combobox_with_images_and_checkboxes" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxcombo%3Acombobox_with_images_and_checkboxes&amp;1366131648" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2011 Dinamenta, UAB<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxcombo:combobox_with_images_and_checkboxes" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

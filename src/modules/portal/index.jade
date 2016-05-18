@@ -67,7 +67,7 @@
               input(type='radio', value='DT', ng-model='algorithm')
               span Decision Tree(DT)
             label.radio
-              input(type='radio', value='RF', ng-model='algorithm')
+              input(type='radio', value='RF_roc', ng-model='algorithm')
               span 2 Layer Random Forest(RF)
             label.radio
               input(type='radio', value='MLP', ng-model='algorithm')
@@ -81,23 +81,22 @@
             p {{algorithm}} Configuration
             .row
               .labelroc Train Set
-              select.form-control.select.select-primary.select-block.mbl(
-                data-toggle="select"
-                ng-model='trainSet'
+              select(
+              ng-model='trainSet'
+              ng-options='name for name in trainFileList'
               )
-                option(value='1') forward_1.csv
-                option(value='2') forward_2.csv
+                option(value="") -- choose train set --
+
             .row
               .labelroc Test Set
-              select.form-control.select.select-primary.select-block.mbl(
-              data-toggle="select"
+              select(
               ng-model='testSet'
+              ng-options='name for name in testFileList'
               )
-                option(value='1') backward_1.csv
-                option(value='2') backward_2.csv
-            .row
+                option(value="") -- choose test set --
 
-              .btn.btn-block.btn-lg.btn-success(ng-click='setVisModel1()',ng-hide='load1')
+            .row
+              .btn.btn-block.btn-lg.btn-success(ng-click='submitTask()',ng-hide='load1')
                 | submit
 
 

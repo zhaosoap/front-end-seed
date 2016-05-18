@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxcombo:adding_options    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxcombo:adding_options</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxcombo:adding_options" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxcombo:adding_options" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxcombo:adding_options" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxcombo:adding_options"  class="breadcrumbs" title="dhtmlxcombo:adding_options">adding_options</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___combo.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxcombo:toc">dhtmlxcombo</a></div></div>
+
+</p>
+
+<h2><a name="adding_options" id="adding_options">Adding Options</a></h2>
+<div class="level2">
+
+<p>
+Options can be added in the next ways:
+</p>
+
+<p>
+1. By addOption command:
+</p>
+<pre class="code javascript"><span class="kw2">var</span> z<span class="sy0">=</span><span class="kw2">new</span> dhtmlXCombo<span class="br0">&#40;</span><span class="st0">&quot;combo_zone3&quot;</span><span class="sy0">,</span><span class="st0">&quot;alfa3&quot;</span><span class="sy0">,</span><span class="nu0">200</span><span class="br0">&#41;</span>;
+z.<span class="me1">addOption</span><span class="br0">&#40;</span>value<span class="sy0">,</span>label<span class="sy0">,</span>css<span class="sy0">,</span>img_src<span class="br0">&#41;</span>;</pre><ul>
+<li class="level1"><div class="li"> <strong>value</strong> - the option value</div>
+</li>
+<li class="level1"><div class="li"> <strong>label</strong> - the option label</div>
+</li>
+<li class="level1"><div class="li"> <strong>css</strong> - the css string attached to the option, optional</div>
+</li>
+<li class="level1"><div class="li"> <strong>img_src</strong> - the path to the option icon image. Available just for the <a href="dhtmlxcombo___combobox_with_images_and_checkboxes.html" class="wikilink1" title="dhtmlxcombo:combobox_with_images_and_checkboxes">image</a> combo type.</div>
+</li>
+</ul>
+
+<p>
+
+It is possible to add few options at once:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> as an array of array (in this case you <strong>can&#039;t use</strong> 4th parameter <strong>img_src</strong>)<br/>
+ <br/>
+ <pre class="code javascript"><span class="kw2">var</span> z<span class="sy0">=</span><span class="kw2">new</span> dhtmlXCombo<span class="br0">&#40;</span><span class="st0">&quot;combo_zone3&quot;</span><span class="sy0">,</span><span class="st0">&quot;alfa3&quot;</span><span class="sy0">,</span><span class="nu0">200</span><span class="br0">&#41;</span>;
+z.<span class="me1">addOption</span><span class="br0">&#40;</span><span class="br0">&#91;</span>
+           <span class="br0">&#91;</span><span class="st0">&quot;a&quot;</span><span class="sy0">,</span><span class="st0">&quot;option A&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span>
+           <span class="br0">&#91;</span><span class="st0">&quot;b&quot;</span><span class="sy0">,</span><span class="st0">&quot;option B&quot;</span><span class="sy0">,</span> <span class="st0">&quot;color:red;&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span>
+           <span class="br0">&#91;</span><span class="st0">&quot;c&quot;</span><span class="sy0">,</span><span class="st0">&quot;option C&quot;</span><span class="br0">&#93;</span>
+<span class="br0">&#93;</span><span class="br0">&#41;</span>;</pre></div>
+</li>
+<li class="level1"><div class="li"> as an array of objects (you can use 4 parameters) <br/>
+ <br/>
+ <pre class="code javascript"><span class="kw2">var</span> z<span class="sy0">=</span><span class="kw2">new</span> dhtmlXCombo<span class="br0">&#40;</span><span class="st0">&quot;combo_zone3&quot;</span><span class="sy0">,</span><span class="st0">&quot;alfa3&quot;</span><span class="sy0">,</span><span class="nu0">200</span><span class="br0">&#41;</span>;
+z.<span class="me1">addOption</span><span class="br0">&#40;</span><span class="br0">&#91;</span>
+           <span class="br0">&#123;</span>value<span class="sy0">:</span> <span class="st0">&quot;a&quot;</span><span class="sy0">,</span> text<span class="sy0">:</span> <span class="st0">&quot;option A&quot;</span><span class="sy0">,</span> img_src<span class="sy0">:</span> <span class="st0">&quot;../images/blue.gif&quot;</span><span class="sy0">,</span> css<span class="sy0">:</span><span class="st0">&quot;color:red;&quot;</span><span class="br0">&#125;</span><span class="sy0">,</span> 
+           <span class="br0">&#123;</span>value<span class="sy0">:</span> <span class="st0">&quot;b&quot;</span><span class="sy0">,</span> text<span class="sy0">:</span> <span class="st0">&quot;option B&quot;</span><span class="sy0">,</span> img_src<span class="sy0">:</span> <span class="st0">&quot;../images/green.gif&quot;</span><span class="br0">&#125;</span><span class="sy0">,</span> 
+           <span class="br0">&#123;</span>value<span class="sy0">:</span> <span class="st0">&quot;c&quot;</span><span class="sy0">,</span> text<span class="sy0">:</span> <span class="st0">&quot;option C&quot;</span><span class="sy0">,</span> img_src<span class="sy0">:</span> <span class="st0">&quot;../images/red.gif&quot;</span><span class="br0">&#125;</span>
+<span class="br0">&#93;</span><span class="br0">&#41;</span>;</pre></div>
+</li>
+</ul>
+
+<p>
+
+2. From <acronym title="Extensible Markup Language">XML</acronym> file:
+</p>
+<pre class="code javascript">  <span class="kw2">var</span> z<span class="sy0">=</span><span class="kw2">new</span> dhtmlXCombo<span class="br0">&#40;</span><span class="st0">&quot;combo_zone3&quot;</span><span class="sy0">,</span><span class="st0">&quot;alfa3&quot;</span><span class="sy0">,</span><span class="nu0">200</span><span class="br0">&#41;</span>;
+  z.<span class="me1">loadXML</span><span class="br0">&#40;</span><span class="st0">&quot;xml/data.xml&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+Where <acronym title="Extensible Markup Language">XML</acronym> has the following format: 
+</p>
+<pre class="code javascript">  <span class="sy0">&lt;?</span>xml version<span class="sy0">=</span><span class="st0">&quot;1.0&quot;</span> <span class="sy0">?&gt;</span>
+  <span class="sy0">&lt;</span>complete<span class="sy0">&gt;</span>
+     <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;1&quot;</span><span class="sy0">&gt;</span>one<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+     <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;2&quot;</span><span class="sy0">&gt;</span>two<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+     <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;3&quot;</span><span class="sy0">&gt;</span>three<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+     <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;4&quot;</span><span class="sy0">&gt;</span>four<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+     <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;5&quot;</span><span class="sy0">&gt;</span>five<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+     <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;6&quot;</span><span class="sy0">&gt;</span>six<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+     <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;7&quot;</span><span class="sy0">&gt;</span>seven<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+     <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;8&quot;</span><span class="sy0">&gt;</span>eight<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+     <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;9&quot;</span><span class="sy0">&gt;</span>nine<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+     <span class="sy0">&lt;</span>option value<span class="sy0">=</span><span class="st0">&quot;10&quot;</span><span class="sy0">&gt;</span>ten<span class="sy0">&lt;/</span>option<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;/</span>complete<span class="sy0">&gt;</span></pre>
+<p>
+Possible attributes of &lt;option&gt; tag are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li"> value - option value</div>
+</li>
+<li class="level1"><div class="li"> selected - if option is selected</div>
+</li>
+<li class="level1"><div class="li"> img_src - icon url (also add the 4th parameter to combobox constructor - “image”)</div>
+</li>
+<li class="level1"><div class="li"> checked - checkbox state (for combo with “checkbox” type, 0 by default)</div>
+</li>
+</ul>
+
+<p>
+3. From autocomplete xml file
+</p>
+
+<p>
+<a href="dhtmlxcombo___filtering.html" class="wikilink1" title="dhtmlxcombo:filtering">Plese check &quot;filtration&quot; section for more details</a>
+</p>
+
+<p>
+4. From <acronym title="HyperText Markup Language">HTML</acronym> in case of converting from existing select box
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="54-" /><input type="hidden" name="rev" value="1340312400" /><input type="hidden" name="id" value="dhtmlxcombo:adding_options" /><input type="submit" value="Edit" class="button" title="Adding Options" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxcombo/adding_options.txt &middot; Last modified: 2012/06/22 01:00 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxcombo:adding_options" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxcombo:adding_options" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxcombo:adding_options" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxcombo%3Aadding_options&amp;1366131648" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2011 Dinamenta, UAB<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxcombo:adding_options" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

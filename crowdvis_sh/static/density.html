@@ -1,0 +1,267 @@
+ <html>
+	 <head>
+	 	 <title>Population Vis</title>
+		 <link rel='stylesheet' href='lib/mapbox.css' />
+		 <link rel="stylesheet" href="lib/leaflet.css" />
+		 <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css" />
+		 <script src="lib/leaflet.js"></script>
+		 <script src="lib/jquery.min.js"></script>
+		 <script src="lib/bootstrap.min.js"></script>
+		 <script src="lib/queue.v1.min.js"></script>
+		 <script src="lib/d3.v3.min.js"></script>
+		 <script src="lib/dhtmlxslider.js"></script>
+         <script src='lib/mapbox.js'></script>
+
+         <link rel="stylesheet" type="text/css" href="lib/dhtmlxslider.css" />
+         <link rel="stylesheet" type="text/css" href="style/density/basic.css" />
+         <link rel="stylesheet" type="text/css" href="style/density/widgets.css" />
+         <link rel="stylesheet" type="text/css" href="style/density/control.css" />
+         <link rel="stylesheet" href="lib/draw/dist/leaflet.draw.css" />
+
+         <script src="lib/leaflet-heat.js"></script>
+		 <script src="js/density/selection-panel.js"></script>
+         <script src="js/density/data-reader.js"></script>
+         <script src="js/density/heatmap-container.js"></script>
+         <script src="js/density/themeriver.js"></script>
+         <script src="lib/draw/Leaflet.draw.js"></script>
+
+         <script src="lib/draw/edit/handler/Edit.Poly.js"></script>
+         <script src="lib/draw/edit/handler/Edit.SimpleShape.js"></script>
+         <script src="lib/draw/edit/handler/Edit.Circle.js"></script>
+         <script src="lib/draw/edit/handler/Edit.Rectangle.js"></script>
+
+         <script src="lib/draw/draw/handler/Draw.Feature.js"></script>
+         <script src="lib/draw/draw/handler/Draw.Polyline.js"></script>
+         <script src="lib/draw/draw/handler/Draw.Polygon.js"></script>
+         <script src="lib/draw/draw/handler/Draw.SimpleShape.js"></script>
+         <script src="lib/draw/draw/handler/Draw.Rectangle.js"></script>
+         <script src="lib/draw/draw/handler/Draw.Circle.js"></script>
+         <script src="lib/draw/draw/handler/Draw.Marker.js"></script>
+
+         <script src="lib/draw/ext/LatLngUtil.js"></script>
+         <script src="lib/draw/ext/GeometryUtil.js"></script>
+         <script src="lib/draw/ext/LineUtil.Intersect.js"></script>
+         <script src="lib/draw/ext/Polyline.Intersect.js"></script>
+         <script src="lib/draw/ext/Polygon.Intersect.js"></script>
+
+         <script src="lib/draw/Control.Draw.js"></script>
+         <script src="lib/draw/Tooltip.js"></script>
+         <script src="lib/draw/Toolbar.js"></script>
+
+         <script src="lib/draw/draw/DrawToolbar.js"></script>
+         <script src="lib/draw/edit/EditToolbar.js"></script>
+         <script src="lib/draw/edit/handler/EditToolbar.Edit.js"></script>
+         <script src="lib/draw/edit/handler/EditToolbar.Delete.js"></script>
+		 
+	</head>
+	
+	<body onload="doOnLoad();">
+    <!-- NAVBAR
+        ================================================== -->
+    <div class="navrow" style="height:40px; width:100%">
+        <div id="title_icon"><img src="images/crowdvis_w.png">
+        </div><div class="navbar_wrapper">
+            <a href="index.html"><span>Home</span>
+            </a><a class="active"><span>Density</span>
+            </a><a href="movement.html"><span>Movement</span>
+            </a>
+        </div>
+    </div>
+    
+    <div id="loader_page">
+        <div id="loader_gif_row">
+            <img src="images/loader-search-blue.gif" />
+        </div>
+        <div id="loader_text">
+            <span></span>
+        </div>
+    </div>
+    
+    <div id="main">
+		<div class="panel panel-default" id="map_panel">
+			<div class="panel-heading">Density Heatmap</div>
+			<div class="map panel-body" id="map">
+			</div>
+			<div style="position:absolute; right:10px; z-index: 100; top:50px">
+				<button type="button" class="glyph_btn sel_btn checked" onclick="heatmapContainer.toggleHeatmap(this);">
+					<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+				</button>
+				<button type="button" class="glyph_btn sel_btn checked" onclick="heatmapContainer.toggleCircles(this);">
+					<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+				</button>
+			</div>
+		</div>
+		
+		<div class="panel panel-default" id="control_panel">
+			<div class="panel-heading">Controller</div>
+			<div id="control_body">
+				<ul class="list-group nomargin">
+					<li class="list-group-item nomargin">
+						<div class="title_large">Heatmap Controller</div>
+						<div class="row">
+							<div class="col-md-1 nomargin smallpadding">
+                            <span class="glyphicon glyphicon-fire" aria-hidden="true" style="left:15px;"></span>
+                        </div>
+                        <div class="col-md-4 nomargin smallpadding">Heat Level <span style="position:absolute;right:0;">High</span></div>
+                        <div class="col-md-5 nomargin smallpadding">
+                            <div id="slider_percentile" class="slider"></div>
+                        </div>
+                        <div class="col-md-2 nomargin smallpadding">
+                            <span style="position:absolute;left:0;">Low</span>
+                        </div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-1 nomargin smallpadding">
+								<span class="glyphicon glyphicon-map-marker" aria-hidden="true" style="left:15px;"></span>
+							</div>
+							<div class="col-md-4 nomargin smallpadding">Population Threshold</div>
+							<div class="col-md-5 nomargin smallpadding">
+								<div id="slider_pop" class="slider"></div>
+							</div>
+							<div class="col-md-2 nomargin smallpadding">
+								<div id="slider_display_pop" type="text" style="width:45px;position:absolute;left:0;"></div>
+							</div>
+						</div>
+					</li>
+					
+					<li class="list-group-item nomargin">
+						<div class="title_large">Target Group Selector</div>
+						
+						<ol class="breadcrumb" id="selector_field">
+
+						</ol>
+						
+						<div id="target_field">
+                            <span class="title_mid">Categories</span>
+						</div>
+
+						
+					</li>
+					<li class="list-group-item nomargin">
+						<div class="title_large">Current Selection</div>
+                        <div id="curr_query_text"></div>
+                        <div style="margin-top:10px;">Population Covered: <span id="pop_num_display"></span></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		
+		<div id="result_panel" class="panel panel-default">
+			<div class="panel-heading">Piechart</div>
+			<div class="result_content panel-body" id="result_content">
+					<div class="pie_wrapper" id="piechart_wrapper_1"></div>
+					<div class="pie_wrapper" style="left:50%;" id="piechart_wrapper_2"></div>
+			</div>
+		</div>
+		
+		<div class="panel panel-default" id="themeriver_panel">
+			<div class="dropdown" style="position:absolute; top:4px; right:30px; z-index:100;">
+					<button class="sel_btn dropdown_btn dropdown-toggle" style="height:25px; padding-top:2px" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<span id="dropdownText"></span>
+					    <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="dropdown-menu">
+
+					</ul>
+			</div>
+			<div class="panel-heading">Themeriver</div>
+            <div id="riverwidth">River Width:</div>
+			<div id="themeriver_wrapper" class="panel-body"></div>
+		</div>
+    </div>
+	<script type="text/javascript">
+
+        resetSize();
+        // Initialize the heatmap stats
+        //heatmapContainer.initHeatmap();
+        initData();
+
+
+        function initData(){
+            // Read data file
+            startLoaderPage("Loading Data...");
+            queue()
+                    .defer(d3.json,"data/density/sample/stay_"+dataContainer.timeIndex+".json")
+                    .defer(d3.json,"data/density/sample/time_aggr.json")
+                    .defer(d3.json,"data/density/sample/label_mat.json")
+                    .await(ready);
+        }
+
+        function ready(error, station_data_list, time_aggr_data, label_mat){
+            if(error) { console.log(error); }
+            selectionPanel.dimList = label_mat.list;
+            selectionPanel.start();
+
+            dataContainer.timeAggrData = time_aggr_data;
+            // empty the storage
+            dataContainer.stationList = [];
+            for (var i in station_data_list)
+            {
+                var datum = station_data_list[i];
+                var tempStation = new StationData(datum);
+                dataContainer.stationList.push(tempStation);
+            }
+            // Initialize the heatmap stats
+            heatmapContainer.initHeatmap();
+            dataContainer.setMaxAndTotal();
+            heatmapContainer.heatmapStats.totalLoc = dataContainer.stationList.length;
+
+            heatmapContainer.refreshHeatmap(2);
+
+            themeriver.setDropdown();
+            themeriver.refresh();
+            endLoaderPage();
+        }
+
+        window.addEventListener("resize",function(){
+            themeriver.refresh();
+        });
+
+        function doOnLoad(){
+            setSliders();
+        }
+
+		function resetSize(){
+			w_width = $("body").width();
+			w_height = $("body").height();
+		}
+
+		function setSliders(){
+            var slider_percentile = new dhtmlXSlider({
+                parent:     "slider_percentile",
+                value:      1.0,
+                step:       0.025,
+                min:        0.025,
+                max:        5,
+                vertical:   false,
+                skin:		"dhx_skyblue"
+            });
+
+            slider_percentile.attachEvent("onChange", function(value){
+                heatmapContainer.updateHeatlevel(value);
+                heatmapContainer.drawHeatmap(heatmapContainer.heatmapStats.heat_data);
+            });
+
+            var slider_pop = new dhtmlXSlider({
+                parent:     "slider_pop",
+                value:      heatmapContainer.pointMap.popThres,
+                step:       100,
+                min:        500,
+                max:        5000,
+                vertical:   false,
+                linkTo:     "slider_display_pop",
+                skin:		"dhx_skyblue"
+            });
+
+            slider_pop.attachEvent("onSlideEnd", function(value){
+                heatmapContainer.pointMap.popThres = value;
+                heatmapContainer.pointMap.drawPoints();
+            });
+        }
+		
+		</script>
+	</body>
+ </html>

@@ -20,9 +20,10 @@ angular.module 'TDLV'
     AUTH
   ) ->
     getResults: ->
-      meta = apiDataBase.one 'run'
+      meta = apiDataBase.one 'data'
       .one 'results'
       .one 'RF'
+      .one '0'
 
       new Promise (resolve, reject) ->
         meta.get()
@@ -30,4 +31,33 @@ angular.module 'TDLV'
           resolve result
         , (res) ->
           reject res
+
+    getFileList: (input)->
+      {
+        dirs
+      } = input
+      meta = apiDataBase.one 'data'
+      .all "fileList"
+      new Promise (resolve, reject) ->
+        meta.post
+          dirs: dirs
+        .then (result) ->
+          resolve result
+        , (res) ->
+          reject res
+
+    getDefaultConf: (input)->
+      {
+        algorithms
+      } = input
+      meta = apiDataBase.one 'data'
+      .all 'defaultConf'
+      new Promise (resolve, reject) ->
+        meta.post
+          algorithms: algorithms
+        .then (result) ->
+          resolve result
+        , (res) ->
+          reject res
+
 ]

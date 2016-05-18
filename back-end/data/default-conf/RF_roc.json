@@ -1,0 +1,18 @@
+{
+  "id": "RF_roc",
+  "description": "2 layer random forest by roc",
+  "layer1":{
+    "n_jobs": -1,
+    "n_estimators": 1000,
+    "max_features": 0.8,
+    "bootstrap" : false,
+    "criterion" : "mse"
+  },
+  "layer2":{
+    "n_jobs": -1,
+    "n_estimators": 600,
+    "max_features": "sqrt",
+    "bootstrap" : false,
+    "criterion" : "mse"
+  }
+}
