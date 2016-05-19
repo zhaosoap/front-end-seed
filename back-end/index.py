@@ -25,19 +25,74 @@ app = Flask(__name__, static_url_path='')
 CORS(app)
 app.config.from_object(__name__)
 
-@app.route('/')
-def indexPage():
-    return app.send_static_file('index.html')
-
-@app.route('/api/data/raw',methods = ['GET'])
-def getRawData():
-    sample = ["xx.csv","xxx.csv"]
-    return json.dumps(sample)
-
 @app.route('/api/run/clean',methods = ['POST'])
 def runClean():
+    reqJson = json.loads(request.data)
+    #{
+    #  "rawFile": "forward.csv"
+    #  "delNullLacOrCellId" : true,
+    #  "delNullLngOrLat" : true,
+    #  "MessageType" : "Measurement Report",
+    #  "RxLevGreaterThan": -60
+    #}
+    #
+    #1.job had been done once ("CleanDoneList.index")
+    #2.run job
+    #3.output file to data/clean/xxx.csv
+    #4.append task to CleanDoneList.index
+    #
+    # result = {
+    #   "message" : "Clean task has been completed."
+    #   "input" : {
+    #       "rawFile": "forward.csv",
+    #       "rows": 5000,
+    #       "columns": 40
+    #   }
+    #   "output" : {
+    #       "cleanFile": "forward_t_t_mr_-60.csv",
+    #       "rows": 4000,
+    #       "columns": 40
+    #   }
+    # }
     clean.run("forward.csv", None)
-    return clean.run("backward.csv", None)
+    clean.run("backward.csv", None)
+    return null
+
+@app.route('/api/run/split',methods = ['POST'])
+def runSplit():
+    reqJson = json.loads(request.data)
+    #{
+    #  "cleanFile": "forward_t_t_mr_-60.csv"
+    #  "ordered" : true,
+    #  "random" : false,
+    #  "ratio" : 80
+    #}
+    #
+    #1.job had been done once ("SpiltDoneList.index")
+    #2.run job
+    #3.output file to data/clean/xxx.csv
+    #4.append task to SpiltDoneList.index
+    #
+    #
+    # result = {
+    #   "message" : "Split task has been completed."
+    #   "input" : {
+    #       "cleanFile": "clean002.csv",
+    #       "rows": 7000,
+    #       "columns": 40
+    #   }
+    #   "train" : {
+    #       "trainSet": "Train002.csv",
+    #       "rows": 4000,
+    #       "columns": 40
+    #   }
+    #   "test" : {
+    #       "testSet": "Test002.csv",
+    #       "rows": 3000,
+    #       "columns": 40
+    # }
+    #
+    return null
 
 @app.route('/api/run/algorithm',methods = ['POST'])
 def runAlgorithm():
@@ -51,11 +106,12 @@ def runAlgorithm():
     trainSet = reqJson["trainSet"]
     testSet = reqJson["testSet"]
     files = os.listdir('data/results/'+id+'/')
-    print files
+    # print files
     outPath = 'data/results/'+id+'/'+str(len(files))+'/'
     os.mkdir(outPath)
-    print outPath
-    # algorithms[id].run(trainSet,testSet,configuration,outPath)
+    # print outPath
+    algorithms[id].run(trainSet,testSet,configuration,outPath)
+    # run this algorithm
     return "success"
 
 @app.route('/api/data/fileList',methods = ['POST'])

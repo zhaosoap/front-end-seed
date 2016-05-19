@@ -97,7 +97,6 @@ angular.module 'TDLV'
 
     clearDisplay: ->
       @display.map.clearMap() if @display.isDirty
-
       @display.showPred = []
       @display.showReal = []
       @display.isFirst = true
