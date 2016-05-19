@@ -1,7 +1,8 @@
 .portal
   .part1
     .content
-      p Some descriptions of this app, babalala...
+      p This system can predict the location of measurement report(MR)
+      p Visualize and compare the results, Generate reports
 
   .wrapper
       .part2
@@ -11,39 +12,71 @@
           .right
             .sd-sides
               span.tag
-              .btn-group
-                select.form-control.select.select-primary.select-block.mbl(data-toggle="select")
-                  option(value='1') test 1
-                  option(value='2') test 2
+              select(
+              ng-model='cleanConf.rawFile'
+              ng-options='name for name in rawFileList'
+              )
+                option(value="") -- choose raw file --
       .part2
-        .content
-          .left
-            p Clean
-          .right
-            label.checkbox
-              input(type='checkbox', ng-model='delnull1')
-              span Delete null LAC or Cell-id
-            label.checkbox
-              input(type='checkbox', ng-model='delnull2')
-              span Delete null Longitude or Latitude
-            label.checkbox
-              input(type='checkbox', ng-model='delnull3')
-              span Message Type is 'Measurement Report'
-            label.checkbox
-              input(type='checkbox', ng-model='delnull4')
-              span Serving BS RxLev greater than
-                select.form-control.select.select-primary(data-toggle='select')
-                  option -60
-                  option -70
-                  option -80
-                  option -90
-                  option -100
-                  option -110
+        .clean
+          .content(
+            style='height:160px'
+          )
+            .left
+              p Clean
+              .row
+                .btn.btn-block.btn-lg.btn-success(ng-click='submitCleanTask()',ng-hide='load1')
+                  | submit
+            .middle
+              span.fui-triangle-up(
+              style='float:left'
+              ng-show='cleanScreen'
+              ng-click='cleanScreen=0'
+              )
+            .right
+              .check-element.animate-hide(ng-hide='cleanScreen')
+                label.checkbox
+                  input(type='checkbox', ng-model='cleanConf.delNullLacOrCellId')
+                  span Delete null LAC or Cell-id
+
+                label.checkbox
+                  input(type='checkbox', ng-model='cleanConf.delNullLngOrLat')
+                  span Delete null Longitude or Latitude
+
+                label.checkbox
+                  input(type='checkbox', ng-model='cleanConf.isMR')
+                  span Message Type is 'Measurement Report'
+
+                label.checkbox
+                  input(type='checkbox', ng-model='cleanConf.setRLGT')
+                  span Serving BS RxLev greater than
+                    select(
+                    ng-disabled='!cleanConf.setRLGT'
+                    ng-model='cleanConf.RxLevGreaterThan'
+                    ng-options='name for name in [-50,-60,-70,-80,-90,-100,-110,-300]'
+                    )
+              .check-element.animate-hide(ng-show='cleanScreen')
+
+                .check-element.animate-hide(ng-show='cleanLoading')
+                  img.loading(src='./styles/image/loading.gif')
+                .check-element.animate-hide(ng-hide='cleanLoading')
+                  p Raw File :
+                    span {{cleanResult.input.rawFile}}
+                    |({{cleanResult.input.rows}},{{cleanResult.input.columns}})
+                  p Deleted :
+                    span {{cleanResult.input.rows - cleanResult.output.rows}}
+                    |rows
+                  p Saved as :
+                    span {{cleanResult.output.cleanFile}}
+                    |({{cleanResult.output.rows}},{{cleanResult.output.columns}})
 
       .part2
         .content
           .left
             p Split Train & Test
+            .row
+              .btn.btn-block.btn-lg.btn-success(ng-click='submitTask()',ng-hide='load1')
+                | submit
           .right
             label.radio
               input(type='radio', value='0', ng-model='split_way')

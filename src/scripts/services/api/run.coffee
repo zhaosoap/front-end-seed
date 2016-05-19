@@ -39,5 +39,16 @@ angular.module 'TDLV'
         , (res) ->
           reject res
 
+    runClean: (input)->
+
+      meta = apiRunBase.one 'run'
+      .all 'clean'
+      new Promise (resolve, reject) ->
+        meta.post input
+        .then (result) ->
+          resolve result
+        , (res) ->
+          reject res
+
 
 ]

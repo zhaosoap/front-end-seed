@@ -11,6 +11,13 @@ angular.module 'TDLV'
   ]
 
   initScope: ->
+    cleanScreen: 0
+    cleanLoading: 1
+    cleanConf: {}
+    cleanResult:{
+      input:{}
+      output:{}
+    }
     RF_roc:
       layer1: {}
       layer2: {}
@@ -24,8 +31,10 @@ angular.module 'TDLV'
     getFileList: 'apiData.getFileList'
     getDefaultConf: 'apiData.getDefaultConf'
     runAlgorithm: 'apiRun.runAlgorithm'
+    runClean: 'apiRun.runClean'
 
   init: ->
+    @$scope.cleanConf.RxLevGreaterThan = -300
     dirs = ['train','test','raw','clean']
     Promise.bind @
     .then ->
@@ -45,7 +54,6 @@ angular.module 'TDLV'
       for key, val of result.defaultConfs
         @$scope[key]=val
 
-
     @$scope.templates =
       [
         { name: 'DT', url: '/modules/algorithm/DT.html'},
@@ -57,6 +65,17 @@ angular.module 'TDLV'
 
 
   methods:
+    submitCleanTask: ->
+
+      Promise.bind @
+      .then ->
+        @runClean @$scope.cleanConf
+      .then (result)->
+        @$scope.cleanLoading = 0
+        @$scope.cleanResult = result
+        console.log result
+      @$scope.cleanScreen ^=1
+
     submitTask: ->
       Promise.bind @
       .then ->
