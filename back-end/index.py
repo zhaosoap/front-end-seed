@@ -1,5 +1,5 @@
 from localization.preprocess import clean
-from localization.algorithms import RF_roc
+from localization.algorithms.RF_roc import RF_roc
 import pandas as pd
 import numpy as np
 import sys
