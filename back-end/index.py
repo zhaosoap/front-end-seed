@@ -1,4 +1,5 @@
 from localization.preprocess import clean
+from localization.clean import cleanJob
 from localization.algorithms.RF_roc import RF_roc
 import pandas as pd
 import numpy as np
@@ -28,11 +29,19 @@ app.config.from_object(__name__)
 @app.route('/api/run/clean',methods = ['POST'])
 def runClean():
     reqJson = json.loads(request.data)
+    result = cleanJob.cleanByCriteria(reqJson)
+
+    return json.dumps(result)
+
+    #print df_in.columns
+
+
+
     #{
     #  "rawFile": "forward.csv"
     #  "delNullLacOrCellId" : true,
     #  "delNullLngOrLat" : true,
-    #  "MessageType" : "Measurement Report",
+    #  "isMR" : true,
     #  "RxLevGreaterThan": -60
     #}
     #
@@ -54,9 +63,8 @@ def runClean():
     #       "columns": 40
     #   }
     # }
-    clean.run("forward.csv", None)
-    clean.run("backward.csv", None)
-    return null
+    #clean.run("forward.csv", None)
+    #clean.run("backward.csv", None)
 
 @app.route('/api/run/split',methods = ['POST'])
 def runSplit():
@@ -92,7 +100,7 @@ def runSplit():
     #       "columns": 40
     # }
     #
-    return null
+    return json.dumps(reqJson)
 
 @app.route('/api/run/algorithm',methods = ['POST'])
 def runAlgorithm():
