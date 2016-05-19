@@ -1,3 +1,14 @@
 rawFile,delNullLacOrCellId,delNullLngOrLat,MessageType,RxLevGreaterThan,inputRows,inputColumns,outputRows,outputColumns,cleanFile
 
 
+backward.csv,True,True,True,-300,48061,48,5348,48,1_t_t_mr_-300.csv
+backward.csv,False,True,True,-300,48061,48,5358,48,1_f_t_mr_-300.csv
+backward.csv,True,False,True,-80,48061,48,5220,48,1_t_f_mr_-80.csv
+backward.csv,True,False,False,-80,48061,48,44519,48,1_t_f_all_-80.csv
+forward.csv,True,True,True,-300,6100,48,6027,48,2_t_t_mr_-300.csv
+forward.csv,True,False,True,-300,6100,48,6027,48,2_t_f_mr_-300.csv
+backward.csv,False,False,False,-300,48061,48,45645,48,1_f_f_all_-300.csv
+backward.csv,False,False,False,-999,48061,48,45645,48,1_f_f_all_-999.csv
+backward.csv,False,False,False,-1000,48061,48,48061,48,1_f_f_all_-1000.csv
+forward.csv,False,False,False,-1000,6100,48,6100,48,2_f_f_all_-1000.csv
+forward.csv,False,True,False,-1000,6100,48,6100,48,2_f_t_all_-1000.csv

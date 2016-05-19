@@ -13,11 +13,17 @@ angular.module 'TDLV'
   initScope: ->
     cleanScreen: 0
     cleanLoading: 1
-    cleanConf: {}
-    cleanResult:{
+    cleanConf:
+      RxLevGreaterThan: -1000
+      delNullLacOrCellId: false
+      delNullLngOrLat: false
+      isMR: false
+      rawFile: null
+
+    cleanResult:
       input:{}
       output:{}
-    }
+
     RF_roc:
       layer1: {}
       layer2: {}
@@ -34,7 +40,7 @@ angular.module 'TDLV'
     runClean: 'apiRun.runClean'
 
   init: ->
-    @$scope.cleanConf.RxLevGreaterThan = -300
+
     dirs = ['train','test','raw','clean']
     Promise.bind @
     .then ->
@@ -71,8 +77,8 @@ angular.module 'TDLV'
       .then ->
         @runClean @$scope.cleanConf
       .then (result)->
-        @$scope.cleanLoading = 0
         @$scope.cleanResult = result
+        @$scope.cleanLoading = 0
         console.log result
       @$scope.cleanScreen ^=1
 
