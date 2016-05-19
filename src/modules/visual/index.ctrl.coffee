@@ -9,6 +9,7 @@ angular.module 'TDLV'
     '$timeout'
     'apiData'
     'calcTool'
+    'CONFIG'
   ]
 
   initScope: ->
@@ -25,6 +26,7 @@ angular.module 'TDLV'
     redStar: null
     blueStar: null
     tower: null
+    CONFIG: 'CONFIG'
     getGreatCircleDistance: 'calcTool.getGreatCircleDistance'
     getResults: 'apiData.getResults'
     predGPS: []
@@ -103,19 +105,19 @@ angular.module 'TDLV'
 
   init: ->
     @redIcon = new AMap.Icon
-      image : 'http://0.0.0.0:5000/images/red-oval-7.png'
+      image : 'http://'+@CONFIG.BASEURL.HOST+'/images/red-oval-7.png'
       size : new AMap.Size(7,7)
     @blueIcon = new AMap.Icon
-      image : 'http://0.0.0.0:5000/images/blue-oval-7.png'
+      image : 'http://'+@CONFIG.BASEURL.HOST+'/images/blue-oval-7.png'
       size : new AMap.Size(7,7)
     @violetStar = new AMap.Icon
-      image : 'http://0.0.0.0:5000/images/violet-star-7.png'
+      image : 'http://'+@CONFIG.BASEURL.HOST+'/images/violet-star-7.png'
       size : new AMap.Size(10,10)
     @greenStar = new AMap.Icon
-      image : 'http://0.0.0.0:5000/images/green-star-7.png'
+      image : 'http://'+@CONFIG.BASEURL.HOST+'/images/green-star-7.png'
       size : new AMap.Size(10,10)
     @tower = new AMap.Icon
-      image : 'http://0.0.0.0:5000/images/tower.png'
+      image : 'http://'+@CONFIG.BASEURL.HOST+'/images/tower.png'
       size : new AMap.Size(24,24)
 
     @display.map = new AMap.Map 'container',
@@ -185,29 +187,29 @@ angular.module 'TDLV'
 
       window.map.plugin ['AMap.MarkerClusterer'], ()->
         sts = [{
-          url: "http://0.0.0.0:5000/images/Oval2.png",
+          url: "http://'+@CONFIG.BASEURL.HOST+'/images/Oval2.png",
           size: new AMap.Size(24, 24),
           offset: new AMap.Pixel(-24, -24)
         }, {
-          url: "http://0.0.0.0:5000/images/Oval2.png",
+          url: "http://'+@CONFIG.BASEURL.HOST+'/images/Oval2.png",
           size: new AMap.Size(24, 24),
           offset: new AMap.Pixel(-24, -24)
         }, {
-          url: "http://0.0.0.0:5000/images/Oval2.png",
+          url: "http://'+@CONFIG.BASEURL.HOST+'/images/Oval2.png",
           size: new AMap.Size(24, 24),
           offset: new AMap.Pixel(-24, -24),
           textColor: '#CC0066'
         }];
         sts1 = [{
-          url: "http://0.0.0.0:5000/images/Oval1.png",
+          url: "http://'+@CONFIG.BASEURL.HOST+'/images/Oval1.png",
           size: new AMap.Size(24, 24),
           offset: new AMap.Pixel(-24, -24)
         }, {
-          url: "http://0.0.0.0:5000/images/Oval1.png",
+          url: "http://'+@CONFIG.BASEURL.HOST+'/images/Oval1.png",
           size: new AMap.Size(24, 24),
           offset: new AMap.Pixel(-24, -24)
         }, {
-          url: "http://0.0.0.0:5000/images/Oval1.png",
+          url: "http://'+@CONFIG.BASEURL.HOST+'/images/Oval1.png",
           size: new AMap.Size(24, 24),
           offset: new AMap.Pixel(-24, -24),
           textColor: '#CC0066'
