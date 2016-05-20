@@ -13,11 +13,22 @@ angular.module 'TDLV'
   initScope: ->
     cleanScreen: 0
     cleanLoading: 1
-    cleanConf: {}
-    cleanResult:{
+    cleanConf:
+      RxLevGreaterThan: -1000
+      delNullLacOrCellId: false
+      delNullLngOrLat: false
+      isMR: false
+      rawFile: null
+    splitConf:
+      cleanFile: null
+      splitWay: 0
+      ratio: 80
+
+
+    cleanResult:
       input:{}
       output:{}
-    }
+
     RF_roc:
       layer1: {}
       layer2: {}
@@ -33,17 +44,18 @@ angular.module 'TDLV'
     runAlgorithm: 'apiRun.runAlgorithm'
     runClean: 'apiRun.runClean'
 
-  init: ->
-    @$scope.cleanConf.RxLevGreaterThan = -300
-    dirs = ['train','test','raw','clean']
-    Promise.bind @
-    .then ->
-      @getFileList
-        dirs: dirs
-    .then (result)->
-      for key, val of result.fileLists
-        @$scope[key+'FileList']=val
+    refreshDirs: ->
+      dirs = ['train','test','raw','clean']
+      Promise.bind @
+      .then ->
+        @getFileList
+          dirs: dirs
+      .then (result)->
+        for key, val of result.fileLists
+          @$scope[key+'FileList']=val
 
+  init: ->
+    @refreshDirs()
     algorithms = ['RF_roc']
 
     Promise.bind @
@@ -71,9 +83,10 @@ angular.module 'TDLV'
       .then ->
         @runClean @$scope.cleanConf
       .then (result)->
-        @$scope.cleanLoading = 0
         @$scope.cleanResult = result
-        console.log result
+        @$scope.cleanLoading = 0
+        @refreshDirs()
+
       @$scope.cleanScreen ^=1
 
     submitTask: ->
