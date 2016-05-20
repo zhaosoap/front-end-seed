@@ -141,11 +141,11 @@ def runSplit():
 
 #run experiment
     else:
-        ex_clean.add_config({
+        ex_split.add_config({
                 'criteria': reqJson
                 })
 
-        res = ex_clean.run().result
+        res = ex_split.run().result
 
 
     #{

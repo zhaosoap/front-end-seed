@@ -64,14 +64,14 @@
                   img.loading(src='./styles/image/loading.gif')
                 .check-element.animate-hide(ng-hide='cleanLoading')
                   p Raw File :
-                    span {{splitResult.input.rawFile}}
-                    |({{splitResult.input.rows}},{{splitResult.input.columns}})
+                    span {{cleanResult.input.rawFile}}
+                    |({{cleanResult.input.rows}},{{cleanResult.input.columns}})
                   p Deleted :
-                    span {{splitResult.input.rows - splitResult.output.rows}}
+                    span {{cleanResult.input.rows - cleanResult.output.rows}}
                     |rows
                   p Saved as :
-                    span {{splitResult.output.cleanFile}}
-                    |({{splitResult.output.rows}},{{splitResult.output.columns}})
+                    span {{cleanResult.output.cleanFile}}
+                    |({{cleanResult.output.rows}},{{cleanResult.output.columns}})
 
       .part2
         .content(
@@ -114,13 +114,13 @@
                   img.loading(src='./styles/image/loading.gif')
                 .check-element.animate-hide(ng-hide='splitLoading')
                   p Clean File:
-                    span {{splitResult.input.trainSet}}
+                    span {{splitResult.input.cleanFile}}
                     |({{splitResult.input.rows}},{{splitResult.input.columns}})
                   p Train Set:
                     span {{splitResult.train.trainSet}}
                     |({{splitResult.train.rows}},{{splitResult.train.columns}})
                     | Test Set:
-                    span {{splitResult.testSet}}
+                    span {{splitResult.test.testSet}}
                     |({{splitResult.test.rows}},{{splitResult.test.columns}})
 
 
