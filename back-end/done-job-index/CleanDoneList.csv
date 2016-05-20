@@ -12,3 +12,8 @@ backward.csv,False,False,False,-999,48061,48,45645,48,1_f_f_all_-999.csv
 backward.csv,False,False,False,-1000,48061,48,48061,48,1_f_f_all_-1000.csv
 forward.csv,False,False,False,-1000,6100,48,6100,48,2_f_f_all_-1000.csv
 forward.csv,False,True,False,-1000,6100,48,6100,48,2_f_t_all_-1000.csv
+backward.csv,True,False,True,-1000,48061,48,5384,48,1_t_f_mr_-1000.csv
+backward.csv,True,True,False,-1000,48061,48,46917,48,1_t_t_all_-1000.csv
+forward.csv,True,True,True,-90,6100,48,6027,48,2_t_t_mr_-90.csv
+backward.csv,True,False,False,-1000,48061,48,46931,48,1_t_f_all_-1000.csv
+forward.csv,False,False,False,-90,6100,48,6041,48,2_f_f_all_-90.csv
