@@ -13,6 +13,8 @@ angular.module 'TDLV'
   initScope: ->
     cleanScreen: 0
     cleanLoading: 1
+    cleanScreen: 0
+    cleanLoading: 1
     cleanConf:
       RxLevGreaterThan: -1000
       delNullLacOrCellId: false
@@ -21,11 +23,14 @@ angular.module 'TDLV'
       rawFile: null
     splitConf:
       cleanFile: null
-      splitWay: 0
+      isRandom: false
       ratio: 80
 
 
     cleanResult:
+      input:{}
+      output:{}
+    splitResult:
       input:{}
       output:{}
 
@@ -43,7 +48,7 @@ angular.module 'TDLV'
     getDefaultConf: 'apiData.getDefaultConf'
     runAlgorithm: 'apiRun.runAlgorithm'
     runClean: 'apiRun.runClean'
-
+    runSplit: 'apiRun.runSplit'
     refreshDirs: ->
       dirs = ['train','test','raw','clean']
       Promise.bind @
@@ -88,6 +93,18 @@ angular.module 'TDLV'
         @refreshDirs()
 
       @$scope.cleanScreen ^=1
+
+    submitSplitTask: ->
+
+      Promise.bind @
+      .then ->
+        @runSplit @$scope.splitConf
+      .then (result)->
+        @$scope.splitResult = result
+        @$scope.splitLoading = 0
+        @refreshDirs()
+
+      @$scope.splitScreen ^=1
 
     submitTask: ->
       Promise.bind @

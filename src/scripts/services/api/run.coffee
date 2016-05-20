@@ -50,5 +50,16 @@ angular.module 'TDLV'
         , (res) ->
           reject res
 
+    runSplit: (input)->
+
+      meta = apiRunBase.one 'run'
+      .all 'split'
+      new Promise (resolve, reject) ->
+        meta.post input
+        .then (result) ->
+          resolve result
+        , (res) ->
+          reject res
+
 
 ]

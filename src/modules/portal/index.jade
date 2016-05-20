@@ -28,7 +28,7 @@
             .left
               p Clean
               .row(ng-show='cleanConf.rawFile')
-                .btn.btn-block.btn-lg.btn-success(ng-hide='cleanScreen' ng-click='submitCleanTask()')
+                .btn.btn-block.btn-lg.btn-success(ng-click='submitCleanTask()')
                   | submit
             .middle
               span.fui-triangle-up(
@@ -64,17 +64,19 @@
                   img.loading(src='./styles/image/loading.gif')
                 .check-element.animate-hide(ng-hide='cleanLoading')
                   p Raw File :
-                    span {{cleanResult.input.rawFile}}
-                    |({{cleanResult.input.rows}},{{cleanResult.input.columns}})
+                    span {{splitResult.input.rawFile}}
+                    |({{splitResult.input.rows}},{{splitResult.input.columns}})
                   p Deleted :
-                    span {{cleanResult.input.rows - cleanResult.output.rows}}
+                    span {{splitResult.input.rows - splitResult.output.rows}}
                     |rows
                   p Saved as :
-                    span {{cleanResult.output.cleanFile}}
-                    |({{cleanResult.output.rows}},{{cleanResult.output.columns}})
+                    span {{splitResult.output.cleanFile}}
+                    |({{splitResult.output.rows}},{{splitResult.output.columns}})
 
       .part2
-        .content
+        .content(
+        style='height:160px'
+        )
           .left
             p Split Train & Test
             .row
@@ -86,18 +88,39 @@
             .row(ng-show='splitConf.cleanFile')
               .btn.btn-block.btn-lg.btn-success(ng-click='submitSplitTask()',ng-hide='load1')
                 | submit
+          .middle
+            span.fui-triangle-up(
+            style='float:left'
+            ng-show='splitScreen'
+            ng-click='splitScreen=0'
+            )
           .right
-            label.radio
-              input(type='radio', value='0', ng-model='splitConf.splitWay')
-              span Ordered
-            label.radio
-              input(type='radio', value='1', ng-model='splitConf.splitWay')
-              span Random
-            label Ratio
-              select(
-              ng-model='splitConf.ratio'
-              ng-options='name for name in [10,20,30,40,50,60,70,80,90]'
-              )
+            .check-element.animate-hide(ng-hide='splitScreen')
+              .sylfix
+                label.radio
+                  input(type='radio', ng-value='false' , ng-model='splitConf.isRandom')
+                  span Ordered
+                label.radio
+                  input(type='radio', ng-value='true' , ng-model='splitConf.isRandom')
+                  span Random
+                label Ratio
+                  select(
+                  ng-model='splitConf.ratio'
+                  ng-options='name for name in [10,20,30,40,50,60,70,80,90]'
+                  )
+            .check-element.animate-hide(ng-show='splitScreen')
+              .sylfix
+                .check-element.animate-hide(ng-show='splitLoading')
+                  img.loading(src='./styles/image/loading.gif')
+                .check-element.animate-hide(ng-hide='splitLoading')
+                  p Train Set:
+                    span {{splitResult.input.trainSet}}
+                    |({{splitResult.input.rows}},{{splitResult.input.columns}})
+
+                  p Test Set:
+                    span {{splitResult.output.testSet}}
+                    |({{splitResult.output.rows}},{{splitResult.output.columns}})
+
       .part2
         .content
           .left
