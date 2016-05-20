@@ -1,5 +1,5 @@
-from localization.preprocess import clean
 from localization.clean.cleanJob import ex_clean
+from localization.split.splitjob import ex_split
 from localization.algorithms.RF_roc import RF_roc
 import pandas as pd
 import numpy as np
@@ -55,12 +55,10 @@ def runClean():
 
 #duplicated record found
     if result:
-        print 'exist'
         res = result['result']
 
 #run experiment
     else:
-        print 'not exist'
         ex_clean.add_config({
                 'criteria': reqJson
                 })
@@ -119,10 +117,40 @@ def runClean():
 @app.route('/api/run/split',methods = ['POST'])
 def runSplit():
     reqJson = json.loads(request.data)
+
+    cleanFile = str(reqJson['cleanFile'])
+    isRandom = bool(reqJson['isRandom'])
+    ratio = int(reqJson['ratio'])
+
+    conn = pymongo.MongoClient('115.28.215.182',27017)
+    db = conn['jobdone']
+    collection = db.default.runs
+
+#find duplicated record
+    result = collection.find_one({
+        'config.criteria.cleanFile': cleanFile,
+        'config.criteria.isRandom': isRandom,
+        'config.criteria.ratio': ratio,
+        'status': 'COMPLETED',
+        'experiment.name': 'split_expt'
+        })
+
+#duplicated record found
+    if result:
+        res = result['result']
+
+#run experiment
+    else:
+        ex_clean.add_config({
+                'criteria': reqJson
+                })
+
+        res = ex_clean.run().result
+
+
     #{
     #  "cleanFile": "forward_t_t_mr_-60.csv"
-    #  "ordered" : true,
-    #  "random" : false,
+    #  "isRandom": true
     #  "ratio" : 80
     #}
     #
@@ -150,7 +178,7 @@ def runSplit():
     #       "columns": 40
     # }
     #
-    return json.dumps(reqJson)
+    return json.dumps(res)
 
 @app.route('/api/run/algorithm',methods = ['POST'])
 def runAlgorithm():
