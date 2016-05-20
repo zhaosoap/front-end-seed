@@ -113,13 +113,16 @@
                 .check-element.animate-hide(ng-show='splitLoading')
                   img.loading(src='./styles/image/loading.gif')
                 .check-element.animate-hide(ng-hide='splitLoading')
-                  p Train Set:
+                  p Clean File:
                     span {{splitResult.input.trainSet}}
                     |({{splitResult.input.rows}},{{splitResult.input.columns}})
+                  p Train Set:
+                    span {{splitResult.train.trainSet}}
+                    |({{splitResult.train.rows}},{{splitResult.train.columns}})
+                    | Test Set:
+                    span {{splitResult.testSet}}
+                    |({{splitResult.test.rows}},{{splitResult.test.columns}})
 
-                  p Test Set:
-                    span {{splitResult.output.testSet}}
-                    |({{splitResult.output.rows}},{{splitResult.output.columns}})
 
       .part2
         .content
