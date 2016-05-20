@@ -1,3 +1,6 @@
-rawFile,delNullLacOrCellId,delNullLngOrLat,MessageType,RxLevGreaterThan,inputRows,inputColumns,outputRows,outputColumns,cleanFile
+rawFile,delNullLacOrCellId,delNullLngOrLat,isMR,RxLevGreaterThan,inputRows,inputColumns,outputRows,outputColumns,cleanFile
 
 
+backward.csv,True,True,True,-90,48061,48,5346,48,1_t_t_mr_-90.csv
+backward.csv,False,False,False,-1000,48061,48,48061,48,1_f_f_all_-1000.csv
+forward.csv,True,True,True,-66,6100,48,4517,48,2_t_t_mr_-66.csv

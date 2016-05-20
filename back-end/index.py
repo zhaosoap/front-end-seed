@@ -1,8 +1,9 @@
 from localization.preprocess import clean
-from localization.clean import cleanJob
+from localization.clean.cleanJob import ex_clean
 from localization.algorithms.RF_roc import RF_roc
 import pandas as pd
 import numpy as np
+import pymongo
 import sys
 import os
 # all the imports
@@ -29,7 +30,56 @@ app.config.from_object(__name__)
 @app.route('/api/run/clean',methods = ['POST'])
 def runClean():
     reqJson = json.loads(request.data)
-    result = cleanJob.cleanByCriteria(reqJson)
+
+
+    rawFile = str(reqJson['rawFile'])
+    delNullLacOrCellId = bool(reqJson['delNullLacOrCellId'])
+    delNullLngOrLat = bool(reqJson['delNullLngOrLat'])
+    isMR = bool(reqJson['isMR'])
+    RxLevGreaterThan = int(reqJson['RxLevGreaterThan'])
+
+    conn = pymongo.MongoClient('115.28.215.182',27017)
+    db = conn['jobdone']
+    collection = db.default.runs
+
+#find duplicated record
+    result = collection.find_one({
+        'config.criteria.rawFile': rawFile,
+        'config.criteria.delNullLacOrCellId': delNullLacOrCellId,
+        'config.criteria.delNullLngOrLat': delNullLngOrLat,
+        'config.criteria.isMR': isMR,
+        'config.criteria.RxLevGreaterThan': RxLevGreaterThan,
+        'status': 'COMPLETED',
+        'experiment.name': 'clean_expt'
+        })
+
+#duplicated record found
+    if result:
+        print 'exist'
+        res = result['result']
+
+#run experiment
+    else:
+        print 'not exist'
+        ex_clean.add_config({
+                'criteria': reqJson
+                })
+
+        res = ex_clean.run().result
+
+    result = {
+        "message": "Clean task has been completed.",
+        "input": {
+            "rawFile": rawFile,
+            "rows": int(res['inputRows']),
+            "columns": int(res['inputColumns'])
+        },
+        "output": {
+            "cleanFile": res['cleanFile'],
+            "rows": int(res['outputRows']),
+            "columns": int(res['outputColumns'])
+        }
+    }
 
     return json.dumps(result)
 

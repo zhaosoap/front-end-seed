@@ -1,20 +1,18 @@
 import os
 import pandas as pd
+from sacred import Experiment
+from sacred.observers import MongoObserver
+import pymongo
 
-def is_clean_job_done(criteria, filePath):
-	inFile = open(filePath)
+ex_clean = Experiment('clean_expt')
 
-	for line in inFile:
-		items = line.split(',')
+ex_clean.observers.append(MongoObserver.create(url='115.28.215.182:27017',
+                                        db_name='jobdone'))
 
-		if (str(criteria[0]) == items[0] and
-			str(criteria[1]) == items[1] and
-			str(criteria[2]) == items[2] and
-			str(criteria[3]) == items[3] and
-			str(criteria[4]) == items[4]):
-			return [x.strip() for x in items[5:]]
+@ex_clean.config
+def my_config():
+    pass
 
-	return False
 
 def get_clean_file_name(criteria, rawPath):
 	files = os.listdir(rawPath)
@@ -62,59 +60,31 @@ def do_clean_file(rawFilePath, cleanFileName, criteria):
 	df.to_csv('data/clean/' + cleanFileName, index = False)
 
 
-	return inputRows, inputColumns, outputRows, outputColumns
+	return inputRows, inputColumns, outputRows, outputColumns, cleanFileName
 
 
-def write_to_clean_job_file(criteria, outputDetail):
-	tot_list = criteria + outputDetail
-
-	tot_str = ','.join(str(x) for x in tot_list)
-
-	outputFile = open('done-job-index/CleanDoneList.csv','a')
-
-	outputFile.write(tot_str + '\n')
-
-
-def cleanByCriteria(reqJson):
-    inputFileName = reqJson["rawFile"]
-    delNullLacOrCellId = reqJson["delNullLacOrCellId"]
-    delNullLngOrLat = reqJson["delNullLngOrLat"]
-    isMR = reqJson["isMR"]
-    RxLevGreaterThan = reqJson["RxLevGreaterThan"]
-
-    jobDoneFilePath = 'done-job-index/CleanDoneList.csv'
-
-    criteria = [inputFileName, delNullLacOrCellId, delNullLngOrLat, isMR, RxLevGreaterThan]
-
-    isCleanJobDone = is_clean_job_done(criteria, jobDoneFilePath)
-
-    if (isCleanJobDone):
-        inputRows = isCleanJobDone[0]
-        inputColumns = isCleanJobDone[1]
-        outputRows = isCleanJobDone[2]
-        outputColumns = isCleanJobDone[3]
-        cleanFileName = isCleanJobDone[4]
-    else:
-	    inputFilePath = 'data/raw/' + inputFileName
-	    cleanFileName = get_clean_file_name(criteria, 'data/raw/')
-	    inputRows, inputColumns, outputRows, outputColumns = do_clean_file(inputFilePath, cleanFileName, criteria)
-	    outputDetail = [inputRows, inputColumns, outputRows, outputColumns, cleanFileName]
-	    write_to_clean_job_file(criteria, outputDetail)
+@ex_clean.main
+def cleanByCriteria(criteria):
+    rawFile = criteria['rawFile']
+    delNullLacOrCellId = criteria['delNullLacOrCellId']
+    delNullLngOrLat = criteria['delNullLngOrLat']
+    isMR = criteria['isMR']
+    RxLevGreaterThan = criteria['RxLevGreaterThan']
 
 
+    criteria = [rawFile, delNullLacOrCellId, delNullLngOrLat, isMR, RxLevGreaterThan]
 
+    inputFilePath = 'data/raw/' + rawFile
+    cleanFileName = get_clean_file_name(criteria, 'data/raw/')
+    inputRows, inputColumns, outputRows, outputColumns, cleanFileName = do_clean_file(inputFilePath, cleanFileName, criteria)
+	    
     result = {
-        "message": "Clean task has been completed.",
-        "input": {
-            "rawFile": inputFileName,
-            "rows": int(inputRows),
-            "columns": int(inputColumns)
-        },
-        "output": {
-            "cleanFile": cleanFileName,
-            "rows": int(outputRows),
-            "columns": int(outputColumns)
-        }
+        'inputRows': inputRows,
+        'inputColumns': inputColumns,
+        'outputRows': outputRows,
+        'outputColumns': outputColumns,
+        'cleanFile': str(cleanFileName),
+        'rawFile': str(rawFile)
     }
 
     return result
