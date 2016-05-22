@@ -19,11 +19,12 @@ angular.module 'TDLV'
     apiDataBase
     AUTH
   ) ->
-    getResults: ->
+    getResults: (input)->
+
       meta = apiDataBase.one 'data'
       .one 'results'
-      .one 'RF'
-      .one '0'
+      .one input.algorithm
+      .one input.id
 
       new Promise (resolve, reject) ->
         meta.get()

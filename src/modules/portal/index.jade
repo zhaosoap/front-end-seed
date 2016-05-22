@@ -175,14 +175,57 @@
         .content
           .left
             p Results
+            .row(ng-show='trainSet&&testSet')
+
+              select(
+              ng-model='algResName'
+              ng-options='name for name in algResFileList'
+              )
+                option(value="") -- choose result--
           .right
+            .newwrap(ng-show='resultScreen')
+              .check-element.animate-hide(ng-show='algLoading')
+                img.loading(src='./styles/image/loading.gif')
+              .check-element.animate-hide(ng-hide='algLoading')
+                .sylresult
+                  p Train Set:
+                    span.ft {{algResult.trainSet}}
+                    | Test Set:
+                    span.ft {{algResult.testSet}}
+                    | Result Id:
+                    span.ft {{algResult.algResNumber}}
+                .sylresult
+                  .half
+                    p Total Train size
+                      span {{algResult.TrainSize}}
+                    p Total Test size
+                      span {{algResult.TestSize}}
+                    p Total Max error
+                      span {{algResult.MaxError}}
+                    p Total Min error
+                      span {{algResult.MinError}}
+                .sylresult
+
+                  p Total Mean error
+                    span {{algResult.MeanError.toFixed(2)}}
+                  p Total Median error
+                    span {{algResult.MedianError}}
+                  p Total 67% error
+                    span {{algResult.Per67Error}}
+                  p Total 80% error
+                    span {{algResult.Per80Error}}
+                  p Total 90% error
+                    span {{algResult.Per90Error}}
+                .sylbt
+                  .btn.btn-block.btn-lg.btn-info(ng-click='goVisualize()',ng-hide='load1') Visualize
 
       .part2
         .content
           .left
             p Analysis
-          .right
 
+          .right
+            img(src='{{algResult.cdf}}')
 
 
 

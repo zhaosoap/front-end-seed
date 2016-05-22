@@ -6,9 +6,6 @@ import pymongo
 
 ex_clean = Experiment('clean_expt')
 
-ex_clean.observers.append(MongoObserver.create(url='115.28.215.182:27017',
-                                        db_name='jobdone'))
-
 @ex_clean.config
 def my_config():
     pass
@@ -48,7 +45,7 @@ def do_clean_file(rawFilePath, cleanFileName, criteria):
 	if (len(needToDelCol)):
 		for colName in needToDelCol:
 			df = df[df[colName].notnull()]
-	df = df.fillna(-999)		
+	df = df.fillna(-999)
 	df = df[df['All-RxLev Sub (dBm)'] > int(criteria[4])]
 
 	if (criteria[3] == True):
@@ -77,7 +74,7 @@ def cleanByCriteria(criteria):
     inputFilePath = 'data/raw/' + rawFile
     cleanFileName = get_clean_file_name(criteria, 'data/raw/')
     inputRows, inputColumns, outputRows, outputColumns, cleanFileName = do_clean_file(inputFilePath, cleanFileName, criteria)
-	    
+
     result = {
         'inputRows': inputRows,
         'inputColumns': inputColumns,
@@ -88,6 +85,3 @@ def cleanByCriteria(criteria):
     }
 
     return result
-
-
-

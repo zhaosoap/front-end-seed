@@ -6,6 +6,7 @@ angular.module 'TDLV'
 
   inject: [
     '$scope'
+    '$rootScope'
     '$timeout'
     'apiData'
     'calcTool'
@@ -18,6 +19,9 @@ angular.module 'TDLV'
     load3: true
     showModel : 0
     errThreshold: 0
+    algResult:{}
+
+
   data:
     sampleSize: null
     fullSize: null
@@ -127,11 +131,19 @@ angular.module 'TDLV'
       jogEnable : true
     window.map = @display.map
 
+    if not @$rootScope.resultAlg
+      @$rootScope.resultAlg = 'RF_roc'
+    if not @$rootScope.resultId
+      @$rootScope.resultId = 1
     Promise.bind @
     .then ->
-      @getResults()
-    .then (result) ->
-      @splitResults result
+      @getResults
+        'algorithm': @$rootScope.resultAlg
+        'id': @$rootScope.resultId.toString()
+
+    .then (output) ->
+      @$scope.algResult = output.result
+      @splitResults output.data
       @convertGPS @predGPS
     .then (result) ->
       @predGPS = result

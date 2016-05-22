@@ -1,6 +1,8 @@
 from localization.clean.cleanJob import ex_clean
 from localization.split.splitjob import ex_split
-from localization.algorithms.RF_roc import RF_roc
+from localization.algorithms.RF_roc.alg_RF_roc import ex_alg_RF_roc
+from sacred.observers import MongoObserver
+from localization.algorithms.RF_roc import rf_roc_adapter
 import pandas as pd
 import numpy as np
 import pymongo
@@ -23,24 +25,34 @@ DEBUG = True
 REGION_FOLDER_LIST = ['pudong_airport/','hongqiao_airport/','fudan_univ/','xujiahui/']
 MOVEMENT_FILENAME = 'movement_7_12.json'
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__, static_url_path='',static_folder='data')
 CORS(app)
 app.config.from_object(__name__)
+conn = pymongo.MongoClient('115.28.215.182',27017)
+db = conn['jobdone']
+collection = db.default.runs
+mongoObserver = MongoObserver.create(url='115.28.215.182:27017',db_name='jobdone')
+
+ex_clean.observers.append(mongoObserver)
+ex_split.observers.append(mongoObserver)
+ex_alg_RF_roc.observers.append(mongoObserver)
+Algorithms = {
+    "RF_roc" : ex_alg_RF_roc
+}
+Adapter ={
+    "RF_roc" : rf_roc_adapter
+}
 
 @app.route('/api/run/clean',methods = ['POST'])
 def runClean():
     reqJson = json.loads(request.data)
-
-
     rawFile = str(reqJson['rawFile'])
     delNullLacOrCellId = bool(reqJson['delNullLacOrCellId'])
     delNullLngOrLat = bool(reqJson['delNullLngOrLat'])
     isMR = bool(reqJson['isMR'])
     RxLevGreaterThan = int(reqJson['RxLevGreaterThan'])
 
-    conn = pymongo.MongoClient('115.28.215.182',27017)
-    db = conn['jobdone']
-    collection = db.default.runs
+
 
 #find duplicated record
     result = collection.find_one({
@@ -122,10 +134,6 @@ def runSplit():
     isRandom = bool(reqJson['isRandom'])
     ratio = int(reqJson['ratio'])
 
-    conn = pymongo.MongoClient('115.28.215.182',27017)
-    db = conn['jobdone']
-    collection = db.default.runs
-
 #find duplicated record
     result = collection.find_one({
         'config.criteria.cleanFile': cleanFile,
@@ -183,22 +191,25 @@ def runSplit():
 @app.route('/api/run/algorithm',methods = ['POST'])
 def runAlgorithm():
     reqJson = json.loads(request.data)
-    print reqJson
-    algorithms = {
-        "RF_roc" : RF_roc
-    }
     id = reqJson["id"]
-    configuration = reqJson["configuration"]
-    trainSet = reqJson["trainSet"]
-    testSet = reqJson["testSet"]
-    files = os.listdir('data/results/'+id+'/')
-    # print files
-    outPath = 'data/results/'+id+'/'+str(len(files))+'/'
-    os.mkdir(outPath)
-    # print outPath
-    algorithms[id].run(trainSet,testSet,configuration,outPath)
-    # run this algorithm
-    return "success"
+    reqJson = Adapter[id].formatInput(reqJson)
+#find duplicated record
+    cond = Adapter[id].getCond(reqJson)
+    result = collection.find_one(cond)
+
+#duplicated record found
+    if result:
+        res = result['result']
+
+#run experiment
+    else:
+        Algorithms[id].add_config({
+                'criteria': reqJson
+                })
+        print reqJson
+        res = Algorithms[id].run().result
+
+    return json.dumps(res)
 
 @app.route('/api/data/fileList',methods = ['POST'])
 def getFileList():
@@ -231,8 +242,17 @@ def getDefaultConf():
 
 @app.route('/api/data/results/<algName>/<resultId>',methods = ['GET'])
 def getResults(algName, resultId):
-    df = pd.read_csv('data/results/'+algName+'/'+resultId+'/outDF.csv')
-    return df.to_json(orient="values")
+    fpath = 'data/results/'+algName+'/'+resultId+'/'
+    df = pd.read_csv(fpath+'outDF.csv')
+    with open(fpath+'result.txt') as restxt:
+         resjson= json.load(restxt)
+    res = {
+        "message": "success",
+        "data": json.loads(df.to_json(orient="values")),
+        "result": resjson
+    }
+    print res
+    return json.dumps(res)
 
 @app.route('/movement/get_stay_data',methods = ['POST'])
 def getStayData():
@@ -253,7 +273,6 @@ def getMovementData():
     with open(filepath) as data_file:
         data = json.load(data_file)
     return json.dumps(data)
-
 
 
 if __name__ == '__main__':

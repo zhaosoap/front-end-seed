@@ -6,8 +6,11 @@ angular.module 'TDLV'
 
   inject: [
     '$scope'
+    '$rootScope'
     'apiData'
     'apiRun'
+    'CONFIG'
+    '$state'
   ]
 
   initScope: ->
@@ -15,6 +18,8 @@ angular.module 'TDLV'
     cleanLoading: 1
     cleanScreen: 0
     cleanLoading: 1
+    resultScreen: 0
+    algLoading: 1
     cleanConf:
       RxLevGreaterThan: -1000
       delNullLacOrCellId: false
@@ -33,6 +38,7 @@ angular.module 'TDLV'
     splitResult:
       input:{}
       output:{}
+    algResult:{}
 
     RF_roc:
       layer1: {}
@@ -78,12 +84,12 @@ angular.module 'TDLV'
         { name: 'RNN', url: '/modules/algorithm/RNN.html'},
         { name: 'MLP', url: '/modules/algorithm/MLP.html'},
       ];
-    @$scope.template = @$scope.templates[1]
+    @$scope.algorithm = 'RF_roc'
 
 
   methods:
     submitCleanTask: ->
-
+      @$scope.cleanLoading = 1
       Promise.bind @
       .then ->
         @runClean @$scope.cleanConf
@@ -95,18 +101,19 @@ angular.module 'TDLV'
       @$scope.cleanScreen ^=1
 
     submitSplitTask: ->
-
+      @$scope.splitLoading = 1
       Promise.bind @
       .then ->
         @runSplit @$scope.splitConf
       .then (result)->
         @$scope.splitResult = result
-        @$scope.splitLoading = 0
         @refreshDirs()
+        @$scope.splitLoading = 0
 
       @$scope.splitScreen ^=1
 
     submitTask: ->
+      @$scope.algLoading = 1
       Promise.bind @
       .then ->
         @runAlgorithm
@@ -115,8 +122,15 @@ angular.module 'TDLV'
           testSet : @$scope.testSet
           configuration : @$scope[@$scope.algorithm]
       .then (result)->
-        console.log result
+        result.cdf = 'http://'+@CONFIG.BASEURL.HOST+'/'+result.cdf
+        @$scope.algResult = result
+        @$scope.algLoading = 0
+      @$scope.resultScreen = 1
 
+    goVisualize: ->
+      @$rootScope.resultAlg = @$scope.algorithm
+      @$rootScope.resultId = @$scope.algResult.algResNumber
+      @$state.go 'visual'
 
     _changeTemplate: (newValue, oldValue)->
       @$scope.template = _.find(@$scope.templates, ['name', newValue]);

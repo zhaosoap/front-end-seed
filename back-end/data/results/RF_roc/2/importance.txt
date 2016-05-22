@@ -1,0 +1,61 @@
+1	All-BSIC (Num)	0.000000
+2	All-Neighbor RxLev (dBm) (Sorted)[2]	0.000000
+3	All-Neighbor RxLev (dBm) (Sorted)[3]	0.000000
+4	All-Neighbor RxLev (dBm) (Sorted)[4]	0.000000
+5	All-Neighbor RxLev (dBm) (Sorted)[5]	0.000000
+6	All-Neighbor RxLev (dBm) (Sorted)[6]	0.000000
+7	LAC	0.000000
+8	CI	0.000000
+9	longitude	0.000000
+10	latitude	0.000000
+11	0	0.000000
+12	1	0.000000
+13	2	0.000000
+14	All-Neighbor RxLev (dBm) (Sorted)[1]	0.000000
+15	3	0.000000
+16	p_dist	0.000000
+17	n_dist	0.000000
+18	p_angle	0.000000
+19	n_angle	0.000000
+20	p_timegap	0.000000
+21	n_timegap	0.000000
+22	p_speed	0.000000
+23	n_speed	0.000000
+24	p_lon	0.000000
+25	p_lat	0.000000
+26	n_lon	0.000000
+27	n_lat	0.000000
+28	4	0.000000
+29	All-Neighbor ARFCN (Sorted)[6]	0.000000
+30	All-Neighbor ARFCN (Sorted)[5]	0.000000
+31	All-Neighbor ARFCN (Sorted)[4]	0.000000
+32	All-ARFCN BCCH	0.000000
+33	All-RxLev Full (dBm)	0.000000
+34	All-RxLev Sub (dBm)	0.000000
+35	All-RxQual Full	0.000000
+36	All-RxQual Sub	0.000000
+37	All-MS TxPower (dBm)	0.000000
+38	All-Neighbor LAC (Sorted)[1]	0.000000
+39	All-Neighbor LAC (Sorted)[2]	0.000000
+40	All-Neighbor LAC (Sorted)[3]	0.000000
+41	All-Neighbor LAC (Sorted)[4]	0.000000
+42	All-Neighbor LAC (Sorted)[5]	0.000000
+43	All-Neighbor LAC (Sorted)[6]	0.000000
+44	All-Neighbor Cell Id (Sorted)[1]	0.000000
+45	All-Neighbor Cell Id (Sorted)[2]	0.000000
+46	All-Neighbor Cell Id (Sorted)[3]	0.000000
+47	All-Neighbor Cell Id (Sorted)[4]	0.000000
+48	All-Neighbor Cell Id (Sorted)[5]	0.000000
+49	All-Neighbor Cell Id (Sorted)[6]	0.000000
+50	All-Neighbor BSIC (Num) (Sorted)[1]	0.000000
+51	All-Neighbor BSIC (Num) (Sorted)[2]	0.000000
+52	All-Neighbor BSIC (Num) (Sorted)[3]	0.000000
+53	All-Neighbor BSIC (Num) (Sorted)[4]	0.000000
+54	All-Neighbor BSIC (Num) (Sorted)[5]	0.000000
+55	All-Neighbor BSIC (Num) (Sorted)[6]	0.000000
+56	All-Neighbor ARFCN (Sorted)[1]	0.000000
+57	All-Neighbor ARFCN (Sorted)[2]	0.000000
+58	All-Neighbor ARFCN (Sorted)[3]	0.000000
+59	pred_lon	0.000000
+60	pred_lat	0.000000
+

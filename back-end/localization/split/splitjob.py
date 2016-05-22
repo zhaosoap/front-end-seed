@@ -7,13 +7,9 @@ from sklearn import cross_validation
 
 ex_split = Experiment('split_expt')
 
-ex_split.observers.append(MongoObserver.create(url='115.28.215.182:27017',
-                                        db_name='jobdone'))
-
 @ex_split.config
 def my_config():
     pass
-
 
 def get_split_file_name(criteria, cleanPath):
 	files = os.listdir(cleanPath)

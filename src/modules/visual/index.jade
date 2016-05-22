@@ -1,6 +1,6 @@
 .visual
   .part1
-    .content
+    .content(ng-hide ='load1&&load2&&load3')
       .row-one
         .col-xs-4.sampling-rate.has-success
           span Sampling rate
@@ -23,9 +23,12 @@
         .col-xs-3
           .btn.btn-block.btn-lg.btn-danger(ng-click='setVisModel4()', ng-hide='load2')
             | Model4
+    .content(ng-show='load1&&load2&&load3')
+      img.loading(src='./styles/image/loading.gif')
+
   .wrapper
-      .part2
-        .content(id='container')
+    .part2
+      .content(id='container')
 
 
-      .part3
+    .part3
