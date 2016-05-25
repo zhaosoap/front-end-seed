@@ -9,8 +9,9 @@ from sklearn.preprocessing import OneHotEncoder
 from sacred import Experiment
 from sacred.observers import MongoObserver
 import pymongo
+import pickle
 
-from ..figure import ArkPlot
+from ...utils.figure import ArkPlot
 from math import atan, cos, asin, sqrt, pow, pi, sin
 import math as Math
 from sklearn.tree import export_graphviz
@@ -273,6 +274,7 @@ def run(trainPath, testPath, config,outPath):
     print 'Generate Report ...'
     tot_error = []
     f = open(outPath + 'traj.txt', 'w')
+    f_err = outPath + 'tot_error'
     #f.write('11111')
     for t, pred_pt, true_pt in zip(te_time, te_pred, te_label):
         #f.write(',%d,%.6f,%.6f,%.6f,%.6f' % (t, true_pt[0], true_pt[1], pred_pt[0], pred_pt[1]))
@@ -280,7 +282,8 @@ def run(trainPath, testPath, config,outPath):
         tot_error.append(compute_error(pred_pt, true_pt))
     #f.write('\n')
     tot_error = sorted(tot_error)
-
+    with open(f_err, 'wb') as f:
+        pickle.dump(tot_error, f)
     result ={
         'outPath':outPath,
         'TrainSize':tr_feature.shape[0],
@@ -317,7 +320,6 @@ def run(trainPath, testPath, config,outPath):
         # 'title' : 'Filter Train: %dm, Filter Test: %dm' % (tr_limit, te_limit),
         'title' : 'Cumulative distribution function(CDF)',
         'ylabel' : 'Percentage',
-        'xticks' : range(0,int(maxErr),int(maxErr)/10),
         'xlim' : [0, max(tot_error)]
     }
     aplt.cdf(**params)

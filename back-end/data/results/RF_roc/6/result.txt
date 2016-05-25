@@ -1,0 +1,1 @@
+{"cdf": "results/RF_roc/6/cdf.png", "MedianError": 51.100000000000001, "TestSize": 5384, "algResNumber": "6", "MeanError": 77.553101783060924, "TrainSize": 6100, "testSet": "backward.csv", "Per80Error": 120.8, "MaxError": 688.29999999999995, "Per90Error": 179.9, "Per67Error": 83.7, "MinError": 0.20000000000000001, "outPath": "data/results/RF_roc/6/", "trainSet": "forward.csv"}

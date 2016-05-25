@@ -1,0 +1,97 @@
+1	2	0.431149
+2	All-Neighbor RxLev (dBm) (Sorted)[4]	0.089612
+3	longitude	0.075163
+4	latitude	0.065605
+5	n_lat	0.050428
+6	All-Neighbor ARFCN (Sorted)[4]	0.043561
+7	All-Neighbor ARFCN (Sorted)[1]	0.042844
+8	pred_lon	0.028407
+9	All-BSIC (Num)	0.025972
+10	20	0.020937
+11	p_lon	0.018974
+12	n_lon	0.016749
+13	All-Neighbor ARFCN (Sorted)[5]	0.014028
+14	All-ARFCN BCCH	0.011378
+15	pred_lat	0.010250
+16	p_lat	0.008306
+17	CI	0.008121
+18	All-Neighbor Cell Id (Sorted)[3]	0.006585
+19	All-Neighbor RxLev (dBm) (Sorted)[6]	0.005532
+20	All-MS TxPower (dBm)	0.005196
+21	30	0.004263
+22	All-Neighbor BSIC (Num) (Sorted)[2]	0.002304
+23	All-Neighbor ARFCN (Sorted)[2]	0.001882
+24	All-Neighbor Cell Id (Sorted)[2]	0.001676
+25	16	0.001642
+26	All-Neighbor RxLev (dBm) (Sorted)[5]	0.001592
+27	29	0.001485
+28	All-Neighbor LAC (Sorted)[4]	0.000723
+29	All-Neighbor BSIC (Num) (Sorted)[3]	0.000704
+30	All-Neighbor ARFCN (Sorted)[6]	0.000641
+31	All-RxLev Full (dBm)	0.000640
+32	All-Neighbor Cell Id (Sorted)[1]	0.000558
+33	All-Neighbor RxLev (dBm) (Sorted)[2]	0.000496
+34	All-Neighbor RxLev (dBm) (Sorted)[1]	0.000400
+35	All-RxQual Full	0.000369
+36	5	0.000310
+37	3	0.000216
+38	All-Neighbor LAC (Sorted)[5]	0.000205
+39	All-RxQual Sub	0.000155
+40	All-Neighbor BSIC (Num) (Sorted)[6]	0.000149
+41	All-Neighbor LAC (Sorted)[1]	0.000139
+42	All-RxLev Sub (dBm)	0.000119
+43	All-Neighbor RxLev (dBm) (Sorted)[3]	0.000079
+44	7	0.000073
+45	26	0.000070
+46	p_speed	0.000061
+47	27	0.000057
+48	All-Neighbor Cell Id (Sorted)[4]	0.000041
+49	n_dist	0.000031
+50	22	0.000024
+51	All-Neighbor Cell Id (Sorted)[5]	0.000024
+52	All-Neighbor ARFCN (Sorted)[3]	0.000023
+53	4	0.000019
+54	8	0.000013
+55	23	0.000010
+56	n_angle	0.000005
+57	All-Neighbor BSIC (Num) (Sorted)[4]	0.000004
+58	33	0.000000
+59	p_timegap	0.000000
+60	31	0.000000
+61	32	0.000000
+62	34	0.000000
+63	38	0.000000
+64	35	0.000000
+65	36	0.000000
+66	37	0.000000
+67	n_timegap	0.000000
+68	39	0.000000
+69	p_dist	0.000000
+70	p_angle	0.000000
+71	n_speed	0.000000
+72	40	0.000000
+73	14	0.000000
+74	25	0.000000
+75	All-Neighbor Cell Id (Sorted)[6]	0.000000
+76	All-Neighbor BSIC (Num) (Sorted)[1]	0.000000
+77	All-Neighbor BSIC (Num) (Sorted)[5]	0.000000
+78	All-Neighbor LAC (Sorted)[6]	0.000000
+79	LAC	0.000000
+80	All-Neighbor LAC (Sorted)[3]	0.000000
+81	All-Neighbor LAC (Sorted)[2]	0.000000
+82	0	0.000000
+83	1	0.000000
+84	28	0.000000
+85	9	0.000000
+86	11	0.000000
+87	12	0.000000
+88	13	0.000000
+89	15	0.000000
+90	17	0.000000
+91	18	0.000000
+92	19	0.000000
+93	21	0.000000
+94	24	0.000000
+95	10	0.000000
+96	6	0.000000
+

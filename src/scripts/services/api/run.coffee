@@ -26,8 +26,7 @@ angular.module 'TDLV'
         testSet
         configuration
       } = input
-      meta = apiRunBase.one 'run'
-      .all 'algorithm'
+      meta = apiRunBase.all 'execution'
       new Promise (resolve, reject) ->
         meta.post
           id: id
@@ -41,8 +40,8 @@ angular.module 'TDLV'
 
     runClean: (input)->
 
-      meta = apiRunBase.one 'run'
-      .all 'clean'
+      meta = apiRunBase.one 'preprocessor'
+      .all 'cleaning'
       new Promise (resolve, reject) ->
         meta.post input
         .then (result) ->
@@ -52,7 +51,7 @@ angular.module 'TDLV'
 
     runSplit: (input)->
 
-      meta = apiRunBase.one 'run'
+      meta = apiRunBase.one 'preprocessor'
       .all 'split'
       new Promise (resolve, reject) ->
         meta.post input

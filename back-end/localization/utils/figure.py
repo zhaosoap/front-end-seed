@@ -104,7 +104,7 @@ class ArkPlot:
 
 
 
-    def cdf(self, data_batch, label_batch, fname,xticks, \
+    def cdf(self, data_batch, label_batch, fname, \
             title='', xlabel='', ylabel='',xlim=[0, 100]):
         assert(len(data_batch) == len(label_batch))
         plt.figure()
@@ -114,6 +114,7 @@ class ArkPlot:
         for data in data_batch:
             max_value = max(np.max(data), max_value)
         #max_value = np.max(data_batch)
+        xticks = range(0,int(max_value),int(max_value)/10)
         bins = range(0, int(max_value)+1)
         x = np.array(bins[0:-1])
 
@@ -156,7 +157,6 @@ class ArkPlot:
         plt.yticks([0.0,0.2,0.4,0.5,0.6,0.67,0.8,0.9,1.0])
         plt.savefig(fname, format='png')
         plt.close()
-
 def fig1():
     pass
 

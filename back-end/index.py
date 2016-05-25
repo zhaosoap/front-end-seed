@@ -1,11 +1,14 @@
 from localization.clean.cleanJob import ex_clean
 from localization.split.splitjob import ex_split
 from localization.algorithms.RF_roc.alg_RF_roc import ex_alg_RF_roc
+from localization.algorithms.DT.alg_DT import ex_alg_DT
 from sacred.observers import MongoObserver
 from localization.algorithms.RF_roc import rf_roc_adapter
+from localization.algorithms.DT import dt_adapter
+from localization.utils.figure import ArkPlot
 import pandas as pd
 import numpy as np
-import pymongo
+import pymongo,pickle
 import sys
 import os
 # all the imports
@@ -36,14 +39,18 @@ mongoObserver = MongoObserver.create(url='115.28.215.182:27017',db_name='jobdone
 ex_clean.observers.append(mongoObserver)
 ex_split.observers.append(mongoObserver)
 ex_alg_RF_roc.observers.append(mongoObserver)
+ex_alg_DT.observers.append(mongoObserver)
+
 Algorithms = {
-    "RF_roc" : ex_alg_RF_roc
+    "RF_roc" : ex_alg_RF_roc,
+    "DT": ex_alg_DT
 }
 Adapter ={
-    "RF_roc" : rf_roc_adapter
+    "RF_roc" : rf_roc_adapter,
+    "DT" : dt_adapter
 }
 
-@app.route('/api/run/clean',methods = ['POST'])
+@app.route('/api/preprocessor/cleaning',methods = ['POST'])
 def runClean():
     reqJson = json.loads(request.data)
     rawFile = str(reqJson['rawFile'])
@@ -126,7 +133,7 @@ def runClean():
     #clean.run("forward.csv", None)
     #clean.run("backward.csv", None)
 
-@app.route('/api/run/split',methods = ['POST'])
+@app.route('/api/preprocessor/split',methods = ['POST'])
 def runSplit():
     reqJson = json.loads(request.data)
 
@@ -188,13 +195,14 @@ def runSplit():
     #
     return json.dumps(res)
 
-@app.route('/api/run/algorithm',methods = ['POST'])
+@app.route('/api/execution',methods = ['POST'])
 def runAlgorithm():
     reqJson = json.loads(request.data)
     id = reqJson["id"]
     reqJson = Adapter[id].formatInput(reqJson)
 #find duplicated record
     cond = Adapter[id].getCond(reqJson)
+    print cond
     result = collection.find_one(cond)
 
 #duplicated record found
@@ -210,6 +218,7 @@ def runAlgorithm():
         res = Algorithms[id].run().result
 
     return json.dumps(res)
+
 
 @app.route('/api/data/fileList',methods = ['POST'])
 def getFileList():
@@ -238,7 +247,36 @@ def getDefaultConf():
         'defaultConfs': defaultConfs
     }
     return json.dumps(res)
+@app.route('/api/data/reports',methods = ['POST'])
+def getReports():
+    reports = []
+    reqJson = json.loads(request.data)
+    errors = []
+    errlabels = []
+    for query in reqJson['querys']:
+        filepath = 'data/results/'+query['alg']+'/'+str(query['num'])+'/'
+        with open(filepath+'result.txt') as res_json:
+            reports.append(json.load(res_json))
+        with open(filepath+'tot_error', 'rb') as f:
+            errors.append(pickle.load(f))
+            errlabels.append(query['alg']+'_'+str(query['num']))
+    aplt = ArkPlot()
+    params = {
+        'data_batch' : errors,
+        'label_batch': errlabels,
+        'fname':'cdf.png',
+        'xlabel' : 'Error (m)',
+        # 'title' : 'Filter Train: %dm, Filter Test: %dm' % (tr_limit, te_limit),
+        'title' : 'Cumulative distribution function(CDF)',
+        'ylabel' : 'Percentage',
+    }
+    aplt.cdf(**params)
 
+    res = {
+        'message': 'success',
+        'reports': reports
+    }
+    return json.dumps(res)
 
 @app.route('/api/data/results/<algName>/<resultId>',methods = ['GET'])
 def getResults(algName, resultId):
@@ -254,25 +292,6 @@ def getResults(algName, resultId):
     print res
     return json.dumps(res)
 
-@app.route('/movement/get_stay_data',methods = ['POST'])
-def getStayData():
-    filename = 'stay_9.json'
-    filepath = 'static/data/density/sample/'+filename
-    with open(filepath) as data_file:
-        data = json.load(data_file)
-    return json.dumps(data)
-
-
-@app.route('/movement/get_movement_data',methods = ['POST'])
-def getMovementData():
-    #data: hour,slice,startHour,endHour,startLat,startLng,endLat,endLng
-    params = json.loads(request.data)
-    fileid = int(params['regionId'])
-
-    filepath = 'static/data/movement/'+REGION_FOLDER_LIST[fileid]+MOVEMENT_FILENAME
-    with open(filepath) as data_file:
-        data = json.load(data_file)
-    return json.dumps(data)
 
 
 if __name__ == '__main__':

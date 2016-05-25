@@ -13,16 +13,16 @@
       .row-one
         .col-xs-3
           .btn.btn-block.btn-lg.btn-success(ng-click='setVisModel1()',ng-hide='load1')
-            | Model1
+            | Trajectory
         .col-xs-3
           .btn.btn-block.btn-lg.btn-info(ng-click='setVisModel2()', ng-hide='load2')
-            | Model2
+            | Deviation
         .col-xs-3
           .btn.btn-block.btn-lg.btn-warning(ng-click='setVisModel3()', ng-hide='load3')
-            | Model3
+            | Dev-BS
         .col-xs-3
           .btn.btn-block.btn-lg.btn-danger(ng-click='setVisModel4()', ng-hide='load2')
-            | Model4
+            | Traj-count
     .content(ng-show='load1&&load2&&load3')
       img.loading(src='./styles/image/loading.gif')
 
