@@ -156,19 +156,21 @@ angular.module 'TDLV'
         temp.alg = r.id
         temp.num = r.algResNumber
         origin.push temp
-      orgin = origin.concat @$scope.addResList
-      orgin = _.uniqWith orgin, _.isEqual
+      origin = origin.concat @$scope.addResList
+      _.remove origin, (n)->
+        not (n&&n.alg&&n.num)
+      origin = _.uniqWith origin, _.isEqual
       Promise.bind @
       .then ->
-        @getReports orgin
+        @getReports origin
       .then (result) ->
         @$scope.showCdf = 'http://'+@CONFIG.BASEURL.HOST+'/'+result.cdf
         @$scope.resultList =result.reports
 
 
-    goVisualize: ->
-      @$rootScope.resultAlg = @$scope.algorithm
-      @$rootScope.resultId = @$scope.algResult.algResNumber
+    goVisualize: (alg,num)->
+      @$rootScope.resultAlg = alg
+      @$rootScope.resultId = num
       @$state.go 'visual'
 
     _changeTemplate: (newValue, oldValue)->

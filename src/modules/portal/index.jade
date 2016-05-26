@@ -178,7 +178,8 @@
 
             .view-row(ng-show='trainSet&&testSet')
               .col-lg-1
-                span.fui-plus(ng-click='addResult()')
+                .clickable
+                  span.fui-plus(ng-click='addResult()')
               .col-lg-9
                 .row(ng-repeat='i in addResList track by $index')
 
@@ -222,6 +223,7 @@
                       th 67%
                       th 80%
                       th 90%
+                      th Vis
                     tr(ng-repeat='res in resultList')
                       td {{res.id}}
                       td {{res.algResNumber}}
@@ -234,10 +236,13 @@
                       td {{res.Per67Error}}
                       td {{res.Per80Error}}
                       td {{res.Per90Error}}
+                      td
+                        .clickable
+                          span.fui-eye(ng-click='goVisualize(res.id, res.algResNumber)')
 
 
-                .sylbt
-                  .btn.btn-block.btn-lg.btn-info(ng-click='goVisualize()',ng-hide='load1') Visualize
+                //.sylbt
+                //  .btn.btn-block.btn-lg.btn-info(ng-click='goVisualize()',ng-hide='load1') Visualize
 
       .part2
         .content

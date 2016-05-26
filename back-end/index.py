@@ -261,7 +261,8 @@ def getReports():
             errors.append(pickle.load(f))
             errlabels.append(query['alg']+'_'+str(query['num']))
     aplt = ArkPlot()
-    rd = random.randint(0,20)
+    rd = random.randint(0,10000)
+    os.system('rm data/images/cdf_*.png')
     params = {
         'data_batch' : errors,
         'label_batch': errlabels,
