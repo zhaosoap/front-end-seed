@@ -122,6 +122,7 @@ angular.module 'TDLV'
 
     submitTask: ->
       @$scope.algLoading = 1
+      @$scope.resultList =[]
       Promise.bind @
       .then ->
         @runAlgorithm
@@ -149,12 +150,20 @@ angular.module 'TDLV'
       @$scope.addResList.push {}
 
     getResults: ->
+      origin= []
+      for r in @$scope.resultList
+        temp ={}
+        temp.alg = r.id
+        temp.num = r.algResNumber
+        origin.push temp
+      orgin = origin.concat @$scope.addResList
+      orgin = _.uniqWith orgin, _.isEqual
       Promise.bind @
       .then ->
-        @getReports @$scope.addResList
+        @getReports orgin
       .then (result) ->
         @$scope.showCdf = 'http://'+@CONFIG.BASEURL.HOST+'/'+result.cdf
-        @$scope.resultList = @$scope.resultList.concat result.reports
+        @$scope.resultList =result.reports
 
 
     goVisualize: ->

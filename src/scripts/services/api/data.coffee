@@ -33,7 +33,7 @@ angular.module 'TDLV'
         , (res) ->
           reject res
 
-    getResults: (input)->
+    getReports: (input)->
 
       meta = apiDataBase.one 'data'
       .all 'reports'

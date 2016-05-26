@@ -8,7 +8,7 @@ from localization.algorithms.DT import dt_adapter
 from localization.utils.figure import ArkPlot
 import pandas as pd
 import numpy as np
-import pymongo,pickle
+import pymongo,pickle,random
 import sys
 import os
 # all the imports
@@ -253,7 +253,7 @@ def getReports():
     reqJson = json.loads(request.data)
     errors = []
     errlabels = []
-    for query in reqJson['querys']:
+    for query in reqJson:
         filepath = 'data/results/'+query['alg']+'/'+str(query['num'])+'/'
         with open(filepath+'result.txt') as res_json:
             reports.append(json.load(res_json))
@@ -261,10 +261,11 @@ def getReports():
             errors.append(pickle.load(f))
             errlabels.append(query['alg']+'_'+str(query['num']))
     aplt = ArkPlot()
+    rd = random.randint(0,20)
     params = {
         'data_batch' : errors,
         'label_batch': errlabels,
-        'fname':'data/cdf.png',
+        'fname':'data/images/cdf_%s.png' % rd,
         'xlabel' : 'Error (m)',
         # 'title' : 'Filter Train: %dm, Filter Test: %dm' % (tr_limit, te_limit),
         'title' : 'Cumulative distribution function(CDF)',
@@ -274,7 +275,7 @@ def getReports():
 
     res = {
         'message': 'success',
-        'cdf':'data/cdf.png',
+        'cdf':'images/cdf_%s.png' % rd,
         'reports': reports
     }
     return json.dumps(res)

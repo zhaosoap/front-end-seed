@@ -339,6 +339,7 @@ def start(criteria):
     os.mkdir(outPath)
 
     res = run(trainPath,testPath,configuration,outPath)
+    
     res['trainSet'] = trainSet
     res['testSet'] = testSet
     res['id'] = id

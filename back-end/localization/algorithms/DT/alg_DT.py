@@ -344,8 +344,8 @@ def start(criteria):
     res = run(trainPath,testPath,configuration,outPath)
     res['trainSet'] = trainSet
     res['testSet'] = testSet
-    res['id'] = id 
-    res['algResNumber'] = str(len(files))
+    res['id'] = id
+    res['algResNumber'] = len(files)
     res['cdf'] = 'results/'+id+'/'+str(len(files))+'/cdf.png'
     f_res = open(outPath + 'result.txt', 'w')
     f_res.write(json.dumps(res))

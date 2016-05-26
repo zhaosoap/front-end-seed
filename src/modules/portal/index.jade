@@ -195,8 +195,8 @@
 
 
                 .row
-                  .btn.btn-block.btn-lg.btn-success(ng-click='submitTask()',ng-hide='load1')
-                    | Load
+                  .btn.btn-block.btn-lg.btn-success(ng-click='getResults()',ng-hide='load1')
+                    | Add
 
           .right
             .newwrap(ng-show='resultScreen')
@@ -245,7 +245,7 @@
             p Analysis
 
           .right
-            img(src='{{showCDF}}')
+            img(src='{{showCdf}}')
 
 
 
