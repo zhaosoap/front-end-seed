@@ -175,13 +175,29 @@
         .content
           .left
             p Results
-            .row(ng-show='trainSet&&testSet')
 
-              select(
-              ng-model='algResName'
-              ng-options='name for name in algResFileList'
-              )
-                option(value="") -- choose result--
+            .view-row(ng-show='trainSet&&testSet')
+              .col-lg-1
+                span.fui-plus(ng-click='addResult()')
+              .col-lg-9
+                .row(ng-repeat='i in addResList track by $index')
+
+                  select(
+                  ng-model='resultList[$index].alg'
+                  ng-options='name for name in ["DT"]'
+                  )
+                    option(value="") -- algorithm --
+                  select(
+                  ng-model='resultList[$index].num'
+                  ng-options='name for name in [6,7,9]'
+                  )
+                    option(value="") -- id --
+
+
+                .row
+                  .btn.btn-block.btn-lg.btn-success(ng-click='submitTask()',ng-hide='load1')
+                    | Load
+
           .right
             .newwrap(ng-show='resultScreen')
               .check-element.animate-hide(ng-show='algLoading')
@@ -189,33 +205,37 @@
               .check-element.animate-hide(ng-hide='algLoading')
                 .sylresult
                   p Train Set:
-                    span.ft {{algResult.trainSet}}
+                    span.ft {{trainSet}}
                     | Test Set:
-                    span.ft {{algResult.testSet}}
-                    | Result Id:
-                    span.ft {{algResult.algResNumber}}
+                    span.ft {{testSet}}
                 .sylresult
-                  .half
-                    p Total Train size
-                      span {{algResult.TrainSize}}
-                    p Total Test size
-                      span {{algResult.TestSize}}
-                    p Total Max error
-                      span {{algResult.MaxError}}
-                    p Total Min error
-                      span {{algResult.MinError}}
-                .sylresult
+                  table
+                    tr
+                      th Algorithm
+                      th ResultId
+                      th Train
+                      th Test
+                      th Max
+                      th Min
+                      th Mean
+                      th Median
+                      th 67%
+                      th 80%
+                      th 90%
+                    tr(ng-repeat='res in resultList')
+                      td {{res.id}}
+                      td {{res.algResNumber}}
+                      td {{res.TrainSize}}
+                      td {{res.TestSize}}
+                      td {{res.MaxError}}
+                      td {{res.MinError}}
+                      td {{res.MeanError.toFixed(2)}}
+                      td {{res.MedianError}}
+                      td {{res.Per67Error}}
+                      td {{res.Per80Error}}
+                      td {{res.Per90Error}}
 
-                  p Total Mean error
-                    span {{algResult.MeanError.toFixed(2)}}
-                  p Total Median error
-                    span {{algResult.MedianError}}
-                  p Total 67% error
-                    span {{algResult.Per67Error}}
-                  p Total 80% error
-                    span {{algResult.Per80Error}}
-                  p Total 90% error
-                    span {{algResult.Per90Error}}
+
                 .sylbt
                   .btn.btn-block.btn-lg.btn-info(ng-click='goVisualize()',ng-hide='load1') Visualize
 
@@ -225,7 +245,7 @@
             p Analysis
 
           .right
-            img(src='{{algResult.cdf}}')
+            img(src='{{showCDF}}')
 
 
 

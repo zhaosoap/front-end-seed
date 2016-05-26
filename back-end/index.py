@@ -264,7 +264,7 @@ def getReports():
     params = {
         'data_batch' : errors,
         'label_batch': errlabels,
-        'fname':'cdf.png',
+        'fname':'data/cdf.png',
         'xlabel' : 'Error (m)',
         # 'title' : 'Filter Train: %dm, Filter Test: %dm' % (tr_limit, te_limit),
         'title' : 'Cumulative distribution function(CDF)',
@@ -274,7 +274,27 @@ def getReports():
 
     res = {
         'message': 'success',
+        'cdf':'data/cdf.png',
         'reports': reports
+    }
+    return json.dumps(res)
+
+@app.route('/api/data/reportList',methods = ['GET'])
+def getReportList():
+    defaultConfs = {}
+    reqJson = request.args
+    results = collection.find({
+        'config.criteria.testSet': reqJson['testSet'],
+        'config.criteria.trainSet': reqJson['trainSet']
+        })
+    output = {}
+    for item in results:
+        if not item['result']['id'] in output:
+            output[item['result']['id']] = []
+        output[item['result']['id']].append(item['result']['algResNumber'])
+    res = {
+        "message": "success",
+        "domTree": output
     }
     return json.dumps(res)
 

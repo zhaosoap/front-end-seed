@@ -1,0 +1,88 @@
+1	n_lon	0.119323
+2	pred_lon	0.110352
+3	p_lon	0.109474
+4	n_lat	0.077518
+5	longitude	0.074224
+6	p_lat	0.069454
+7	pred_lat	0.069042
+8	latitude	0.052677
+9	CI	0.047750
+10	All-BSIC (Num)	0.032403
+11	1	0.030942
+12	0	0.028407
+13	LAC	0.028132
+14	All-Neighbor Cell Id (Sorted)[1]	0.014554
+15	All-ARFCN BCCH	0.013141
+16	23	0.010205
+17	All-Neighbor ARFCN (Sorted)[1]	0.008440
+18	3	0.008001
+19	6	0.007985
+20	All-Neighbor LAC (Sorted)[1]	0.007831
+21	14	0.007147
+22	All-Neighbor RxLev (dBm) (Sorted)[6]	0.005324
+23	All-Neighbor ARFCN (Sorted)[2]	0.005056
+24	All-Neighbor Cell Id (Sorted)[2]	0.004714
+25	All-Neighbor LAC (Sorted)[2]	0.004215
+26	All-Neighbor BSIC (Num) (Sorted)[1]	0.004193
+27	16	0.003963
+28	All-RxLev Full (dBm)	0.003476
+29	All-Neighbor RxLev (dBm) (Sorted)[5]	0.003331
+30	8	0.002737
+31	All-Neighbor RxLev (dBm) (Sorted)[1]	0.002728
+32	All-RxLev Sub (dBm)	0.002304
+33	4	0.002142
+34	All-Neighbor RxLev (dBm) (Sorted)[4]	0.002088
+35	All-MS TxPower (dBm)	0.001979
+36	All-Neighbor LAC (Sorted)[3]	0.001915
+37	All-Neighbor Cell Id (Sorted)[3]	0.001833
+38	18	0.001677
+39	All-Neighbor ARFCN (Sorted)[3]	0.001651
+40	All-Neighbor RxLev (dBm) (Sorted)[2]	0.001610
+41	All-Neighbor RxLev (dBm) (Sorted)[3]	0.001547
+42	All-Neighbor LAC (Sorted)[4]	0.001463
+43	All-Neighbor LAC (Sorted)[5]	0.001392
+44	13	0.001299
+45	All-Neighbor BSIC (Num) (Sorted)[2]	0.001260
+46	All-Neighbor Cell Id (Sorted)[4]	0.001122
+47	n_angle	0.000844
+48	21	0.000737
+49	n_dist	0.000692
+50	24	0.000660
+51	p_dist	0.000636
+52	p_angle	0.000558
+53	All-Neighbor ARFCN (Sorted)[4]	0.000554
+54	All-Neighbor BSIC (Num) (Sorted)[3]	0.000470
+55	20	0.000431
+56	All-Neighbor LAC (Sorted)[6]	0.000410
+57	All-Neighbor ARFCN (Sorted)[5]	0.000401
+58	All-Neighbor Cell Id (Sorted)[5]	0.000265
+59	9	0.000263
+60	All-Neighbor BSIC (Num) (Sorted)[5]	0.000201
+61	All-Neighbor Cell Id (Sorted)[6]	0.000150
+62	All-Neighbor ARFCN (Sorted)[6]	0.000148
+63	2	0.000141
+64	All-Neighbor BSIC (Num) (Sorted)[4]	0.000097
+65	All-Neighbor BSIC (Num) (Sorted)[6]	0.000073
+66	n_speed	0.000042
+67	15	0.000034
+68	p_speed	0.000033
+69	7	0.000026
+70	10	0.000024
+71	11	0.000019
+72	19	0.000018
+73	All-RxQual Full	0.000013
+74	5	0.000010
+75	17	0.000010
+76	12	0.000010
+77	p_timegap	0.000004
+78	All-RxQual Sub	0.000004
+79	n_timegap	0.000004
+80	22	0.000000
+81	30	0.000000
+82	31	0.000000
+83	28	0.000000
+84	27	0.000000
+85	26	0.000000
+86	25	0.000000
+87	29	0.000000
+

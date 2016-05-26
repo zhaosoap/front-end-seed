@@ -33,6 +33,29 @@ angular.module 'TDLV'
         , (res) ->
           reject res
 
+    getResults: (input)->
+
+      meta = apiDataBase.one 'data'
+      .all 'reports'
+      new Promise (resolve, reject) ->
+        meta.post input
+        .then (result) ->
+          resolve result
+        , (res) ->
+          reject res
+
+    getReportList: (input)->
+
+      meta = apiDataBase.one 'data'
+      .one 'reportList'
+
+      new Promise (resolve, reject) ->
+        meta.get input
+        .then (result) ->
+          resolve result
+        , (res) ->
+          reject res
+
     getFileList: (input)->
       {
         dirs

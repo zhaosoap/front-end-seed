@@ -38,7 +38,9 @@ angular.module 'TDLV'
     splitResult:
       input:{}
       output:{}
-    algResult:{}
+    resultList:[]
+    addResList:[]
+    showCdf: null
 
     RF_roc:
       layer1: {}
@@ -47,11 +49,15 @@ angular.module 'TDLV'
     testFileList: null
     rawFileList: null
     cleanFileList: null
+    reportList: null
+
 
 
   data:
     getFileList: 'apiData.getFileList'
     getDefaultConf: 'apiData.getDefaultConf'
+    getReports: 'apiData.getReports'
+    getReportList: 'apiData.getReportList'
     runAlgorithm: 'apiRun.runAlgorithm'
     runClean: 'apiRun.runClean'
     runSplit: 'apiRun.runSplit'
@@ -122,10 +128,30 @@ angular.module 'TDLV'
           testSet : @$scope.testSet
           configuration : @$scope[@$scope.algorithm]
       .then (result)->
-        result.cdf = 'http://'+@CONFIG.BASEURL.HOST+'/'+result.cdf
-        @$scope.algResult = result
+        @$scope.showCdf = 'http://'+@CONFIG.BASEURL.HOST+'/'+result.cdf
+        @$scope.resultList.push result
         @$scope.algLoading = 0
+      Promise.bind @
+      .then ->
+        @getReportList
+          trainSet : @$scope.trainSet
+          testSet : @$scope.testSet
+      .then (result)
+        @$scope.reportList =
+
       @$scope.resultScreen = 1
+
+    addResult: ->
+      @$scope.addResList.push {}
+
+    getResults: ->
+      Promise.bind @
+      .then ->
+        @getReports @$scope.addResList
+      .then (result) ->
+        @$scope.showCdf = 'http://'+@CONFIG.BASEURL.HOST+'/'+result.cdf
+        @$scope.resultList = @$scope.resultList.concat result.reports
+
 
     goVisualize: ->
       @$rootScope.resultAlg = @$scope.algorithm
