@@ -183,13 +183,13 @@
                 .row(ng-repeat='i in addResList track by $index')
 
                   select(
-                  ng-model='resultList[$index].alg'
-                  ng-options='name for name in ["DT"]'
+                  ng-model='addResList[$index].alg'
+                  ng-options='name for name in algList'
                   )
                     option(value="") -- algorithm --
                   select(
-                  ng-model='resultList[$index].num'
-                  ng-options='name for name in [6,7,9]'
+                  ng-model='addResList[$index].num'
+                  ng-options='name for name in domTree[addResList[$index].alg]'
                   )
                     option(value="") -- id --
 

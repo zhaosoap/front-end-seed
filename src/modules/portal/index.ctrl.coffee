@@ -42,6 +42,7 @@ angular.module 'TDLV'
     addResList:[]
     showCdf: null
 
+
     RF_roc:
       layer1: {}
       layer2: {}
@@ -49,7 +50,8 @@ angular.module 'TDLV'
     testFileList: null
     rawFileList: null
     cleanFileList: null
-    reportList: null
+    algList: null
+    domTree: null
 
 
 
@@ -131,13 +133,15 @@ angular.module 'TDLV'
         @$scope.showCdf = 'http://'+@CONFIG.BASEURL.HOST+'/'+result.cdf
         @$scope.resultList.push result
         @$scope.algLoading = 0
+
       Promise.bind @
       .then ->
         @getReportList
           trainSet : @$scope.trainSet
           testSet : @$scope.testSet
-      .then (result)
-        @$scope.reportList =
+      .then (result)->
+        @$scope.algList = Object.keys result.domTree
+        @$scope.domTree = result.domTree
 
       @$scope.resultScreen = 1
 
