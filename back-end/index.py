@@ -2,9 +2,11 @@ from localization.clean.cleanJob import ex_clean
 from localization.split.splitjob import ex_split
 from localization.algorithms.RF_roc.alg_RF_roc import ex_alg_RF_roc
 from localization.algorithms.DT.alg_DT import ex_alg_DT
+from localization.algorithms.CellSense.alg_cellsense import ex_alg_cellsense
 from sacred.observers import MongoObserver
 from localization.algorithms.RF_roc import rf_roc_adapter
 from localization.algorithms.DT import dt_adapter
+from localization.algorithms.CellSense import cellsense_adapter
 from localization.utils.figure import ArkPlot
 import pandas as pd
 import numpy as np
@@ -40,14 +42,17 @@ ex_clean.observers.append(mongoObserver)
 ex_split.observers.append(mongoObserver)
 ex_alg_RF_roc.observers.append(mongoObserver)
 ex_alg_DT.observers.append(mongoObserver)
+ex_alg_cellsense.observers.append(mongoObserver)
 
 Algorithms = {
     "RF_roc" : ex_alg_RF_roc,
-    "DT": ex_alg_DT
+    "DT": ex_alg_DT,
+    "CS": ex_alg_cellsense
 }
 Adapter ={
     "RF_roc" : rf_roc_adapter,
-    "DT" : dt_adapter
+    "DT" : dt_adapter,
+    "CS" : cellsense_adapter
 }
 
 @app.route('/api/preprocessor/cleaning',methods = ['POST'])

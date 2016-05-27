@@ -3,6 +3,8 @@
 npm-debug.log
 *_book
 
+*.pyc
+
 .tmp
 trash
 
