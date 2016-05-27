@@ -89,8 +89,9 @@ angular.module 'TDLV'
       [
         { name: 'DT', url: '/modules/algorithm/DT.html'},
         { name: 'RF_roc', url: '/modules/algorithm/RF.html'},
-        { name: 'RNN', url: '/modules/algorithm/RNN.html'},
+#        { name: 'RNN', url: '/modules/algorithm/RNN.html'},
         { name: 'MLP', url: '/modules/algorithm/MLP.html'},
+        { name: 'FP', url: '/modules/algorithm/FP.html'}
       ]
     @$scope.algorithm = 'RF_roc'
 

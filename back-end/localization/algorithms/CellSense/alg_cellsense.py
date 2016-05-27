@@ -200,7 +200,6 @@ def start(criteria):
     files = os.listdir('data/results/'+id+'/')
     outPath = 'data/results/'+id+'/'+str(len(files))+'/'
     os.mkdir(outPath)
-
     res = run(trainPath,testPath,configuration,outPath)
     res['trainSet'] = trainSet
     res['testSet'] = testSet

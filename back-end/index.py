@@ -27,12 +27,11 @@ DEBUG = True
 #SECRET_KEY = 'development key'
 #USERNAME = 'admin'
 #PASSWORD = 'default'
-REGION_FOLDER_LIST = ['pudong_airport/','hongqiao_airport/','fudan_univ/','xujiahui/']
-MOVEMENT_FILENAME = 'movement_7_12.json'
 
 app = Flask(__name__, static_url_path='',static_folder='data')
 CORS(app)
 app.config.from_object(__name__)
+
 conn = pymongo.MongoClient('115.28.215.182',27017)
 db = conn['jobdone']
 collection = db.default.runs
@@ -47,12 +46,14 @@ ex_alg_cellsense.observers.append(mongoObserver)
 Algorithms = {
     "RF_roc" : ex_alg_RF_roc,
     "DT": ex_alg_DT,
-    "CS": ex_alg_cellsense
+    "CS": ex_alg_cellsense,
+    # "MLP": ex_alg_MLP_aus
 }
 Adapter ={
     "RF_roc" : rf_roc_adapter,
     "DT" : dt_adapter,
-    "CS" : cellsense_adapter
+    "CS" : cellsense_adapter,
+    # "MLP" : mlp_aus_adapter
 }
 
 @app.route('/api/preprocessor/cleaning',methods = ['POST'])
@@ -209,11 +210,9 @@ def runAlgorithm():
     cond = Adapter[id].getCond(reqJson)
     print cond
     result = collection.find_one(cond)
-
 #duplicated record found
     if result:
         res = result['result']
-
 #run experiment
     else:
         Algorithms[id].add_config({
