@@ -2,13 +2,18 @@ from localization.clean.cleanJob import ex_clean
 from localization.split.splitjob import ex_split
 from localization.algorithms.RF_roc.alg_RF_roc import ex_alg_RF_roc
 from localization.algorithms.DT.alg_DT import ex_alg_DT
+from localization.algorithms.MLP_aus.alg_MLP_aus import ex_alg_MLP_aus
 from localization.algorithms.CellSense.alg_cellsense import ex_alg_cellsense
 from localization.algorithms.RangeBase.alg_rangebase import ex_alg_rangebase
 from sacred.observers import MongoObserver
 from localization.algorithms.RF_roc import rf_roc_adapter
 from localization.algorithms.DT import dt_adapter
 from localization.algorithms.CellSense import cellsense_adapter
+<<<<<<< HEAD
 from localization.algorithms.RangeBase import rangebase_adapter
+=======
+from localization.algorithms.MLP_aus import mlp_aus_adapter
+>>>>>>> 5d658099e5ea0145aafdbf91c2069cb4cdada80a
 from localization.utils.figure import ArkPlot
 import pandas as pd
 import numpy as np
@@ -29,12 +34,11 @@ DEBUG = True
 #SECRET_KEY = 'development key'
 #USERNAME = 'admin'
 #PASSWORD = 'default'
-REGION_FOLDER_LIST = ['pudong_airport/','hongqiao_airport/','fudan_univ/','xujiahui/']
-MOVEMENT_FILENAME = 'movement_7_12.json'
 
 app = Flask(__name__, static_url_path='',static_folder='data')
 CORS(app)
 app.config.from_object(__name__)
+
 conn = pymongo.MongoClient('115.28.215.182',27017)
 db = conn['jobdone']
 collection = db.default.runs
@@ -45,18 +49,27 @@ ex_split.observers.append(mongoObserver)
 ex_alg_RF_roc.observers.append(mongoObserver)
 ex_alg_DT.observers.append(mongoObserver)
 ex_alg_cellsense.observers.append(mongoObserver)
+ex_alg_MLP_aus.observers.append(mongoObserver)
 
 Algorithms = {
     "RF_roc" : ex_alg_RF_roc,
     "DT": ex_alg_DT,
     "CS": ex_alg_cellsense,
+<<<<<<< HEAD
     "RB": ex_alg_rangebase
+=======
+    "MLP_aus": ex_alg_MLP_aus
+>>>>>>> 5d658099e5ea0145aafdbf91c2069cb4cdada80a
 }
 Adapter ={
     "RF_roc" : rf_roc_adapter,
     "DT" : dt_adapter,
     "CS" : cellsense_adapter,
+<<<<<<< HEAD
     "RB" : rangebase_adapter
+=======
+    "MLP_aus" : mlp_aus_adapter
+>>>>>>> 5d658099e5ea0145aafdbf91c2069cb4cdada80a
 }
 
 @app.route('/api/preprocessor/cleaning',methods = ['POST'])
@@ -213,11 +226,9 @@ def runAlgorithm():
     cond = Adapter[id].getCond(reqJson)
     print cond
     result = collection.find_one(cond)
-
 #duplicated record found
     if result:
         res = result['result']
-
 #run experiment
     else:
         Algorithms[id].add_config({
