@@ -3,10 +3,12 @@ from localization.split.splitjob import ex_split
 from localization.algorithms.RF_roc.alg_RF_roc import ex_alg_RF_roc
 from localization.algorithms.DT.alg_DT import ex_alg_DT
 from localization.algorithms.CellSense.alg_cellsense import ex_alg_cellsense
+from localization.algorithms.RangeBase.alg_rangebase import ex_alg_rangebase
 from sacred.observers import MongoObserver
 from localization.algorithms.RF_roc import rf_roc_adapter
 from localization.algorithms.DT import dt_adapter
 from localization.algorithms.CellSense import cellsense_adapter
+from localization.algorithms.RangeBase import rangebase_adapter
 from localization.utils.figure import ArkPlot
 import pandas as pd
 import numpy as np
@@ -47,12 +49,14 @@ ex_alg_cellsense.observers.append(mongoObserver)
 Algorithms = {
     "RF_roc" : ex_alg_RF_roc,
     "DT": ex_alg_DT,
-    "CS": ex_alg_cellsense
+    "CS": ex_alg_cellsense,
+    "RB": ex_alg_rangebase
 }
 Adapter ={
     "RF_roc" : rf_roc_adapter,
     "DT" : dt_adapter,
-    "CS" : cellsense_adapter
+    "CS" : cellsense_adapter,
+    "RB" : rangebase_adapter
 }
 
 @app.route('/api/preprocessor/cleaning',methods = ['POST'])
