@@ -1,1 +1,0 @@
-{"cdf": "results/MLP_aus/0/cdf.png", "MedianError": 47.799999999999997, "TestSize": 5384, "algResNumber": "0", "MeanError": 75.592886329866275, "testSet": "backward.csv", "Per80Error": 106.9, "MaxError": 740.39999999999998, "Per90Error": 160.3, "Per67Error": 75.7, "MinError": 0.80000000000000004, "outPath": "data/results/MLP_aus/0/", "trainSet": "forward.csv"}
