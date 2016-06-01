@@ -9,11 +9,8 @@ from sacred.observers import MongoObserver
 from localization.algorithms.RF_roc import rf_roc_adapter
 from localization.algorithms.DT import dt_adapter
 from localization.algorithms.CellSense import cellsense_adapter
-<<<<<<< HEAD
 from localization.algorithms.RangeBase import rangebase_adapter
-=======
 from localization.algorithms.MLP_aus import mlp_aus_adapter
->>>>>>> 5d658099e5ea0145aafdbf91c2069cb4cdada80a
 from localization.utils.figure import ArkPlot
 import pandas as pd
 import numpy as np
@@ -50,26 +47,20 @@ ex_alg_RF_roc.observers.append(mongoObserver)
 ex_alg_DT.observers.append(mongoObserver)
 ex_alg_cellsense.observers.append(mongoObserver)
 ex_alg_MLP_aus.observers.append(mongoObserver)
-
+ex_alg_rangebase.observers.append(mongoObserver)
 Algorithms = {
     "RF_roc" : ex_alg_RF_roc,
     "DT": ex_alg_DT,
     "CS": ex_alg_cellsense,
-<<<<<<< HEAD
-    "RB": ex_alg_rangebase
-=======
+    "RB": ex_alg_rangebase,
     "MLP_aus": ex_alg_MLP_aus
->>>>>>> 5d658099e5ea0145aafdbf91c2069cb4cdada80a
 }
 Adapter ={
     "RF_roc" : rf_roc_adapter,
     "DT" : dt_adapter,
     "CS" : cellsense_adapter,
-<<<<<<< HEAD
-    "RB" : rangebase_adapter
-=======
+    "RB" : rangebase_adapter,
     "MLP_aus" : mlp_aus_adapter
->>>>>>> 5d658099e5ea0145aafdbf91c2069cb4cdada80a
 }
 
 @app.route('/api/preprocessor/cleaning',methods = ['POST'])
@@ -282,7 +273,9 @@ def getReports():
             errlabels.append(query['alg']+'_'+str(query['num']))
     aplt = ArkPlot()
     rd = random.randint(0,10000)
-    os.system('rm data/images/cdf_*.png')
+    try:
+        os.system('rm data/images/cdf_*.png')
+    except: None
     params = {
         'data_batch' : errors,
         'label_batch': errlabels,
@@ -307,7 +300,7 @@ def getReportList():
     reqJson = request.args
     results = collection.find({
         'config.criteria.testSet': reqJson['testSet'],
-        'config.criteria.trainSet': reqJson['trainSet']
+        'status':'COMPLETED'
         })
     output = {}
     for item in results:

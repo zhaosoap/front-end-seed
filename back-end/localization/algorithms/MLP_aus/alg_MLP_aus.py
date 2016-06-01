@@ -153,7 +153,7 @@ def run(trainPath, testPath, config,outPath):
     network = build_mlp(n_con, n_dis, dis_dims, vocab_sizes, len(grid_info),config['layer1']['emb_size'],config['layer1']['hidden_num'],config['layer1']['hidden_size'])
     #'categorical_crossentropy'
     network.compile(loss=config['layer1']['loss'], optimizer=Adagrad())
-    network.fit(tr_input,tr_label,nb_epoch=config['layer1']['nb_epoch'], batch_size=config['layer1']['batch_size'], verbose=config['layer1']['verbose'])
+    network.fit(tr_input,tr_label,nb_epoch=config['layer1']['nb_epoch'], batch_size=config['layer1']['batch_size'], verbose=0)
     tr_pred = np.asarray(network.predict(tr_input))
     tr_pred = np.argmax(tr_pred, axis=1)
     tr_pred = [grid_info[idx] for idx in tr_pred]
@@ -168,7 +168,7 @@ def run(trainPath, testPath, config,outPath):
     print 'second layer'
     network1 = build_mlp(n_con+2, n_dis, dis_dims, vocab_sizes, len(grid_info),config['layer2']['emb_size'],config['layer2']['hidden_num'],config['layer2']['hidden_size'])
     network1.compile(loss=config['layer2']['loss'], optimizer=Adagrad())
-    network1.fit(tr_input,tr_label,nb_epoch=config['layer2']['nb_epoch'], batch_size=config['layer2']['batch_size'], verbose=config['layer2']['verbose'])
+    network1.fit(tr_input,tr_label,nb_epoch=config['layer2']['nb_epoch'], batch_size=config['layer2']['batch_size'], verbose=0)
     te_pred1 = np.asarray(network1.predict(te_input))
     te_pred1 = np.argmax(te_pred1, axis=1)
     te_pred1 = np.array([grid_info[idx] for idx in te_pred1])
@@ -207,6 +207,7 @@ def start(criteria):
     res = run(trainPath,testPath,configuration,outPath)
     res['trainSet'] = trainSet
     res['testSet'] = testSet
+    res['id'] = id
     res['algResNumber'] = str(len(files))
     res['cdf'] = 'results/'+id+'/'+str(len(files))+'/cdf.png'
     f_res = open(outPath + 'result.txt', 'w')
