@@ -1,0 +1,1 @@
+{"MedianError": 432.10000000000002, "TestSize": 5384, "algResNumber": 0, "MeanError": 415.77241827637448, "testSet": "backward.csv", "Per80Error": 556.8, "id": "RB", "MaxError": 1581.3, "Per90Error": 637.2, "Per67Error": 507.4, "MinError": 7.4000000000000004, "outPath": "data/results/RB/0/"}

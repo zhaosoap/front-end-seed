@@ -7,12 +7,12 @@ from string import upper
 import numpy as np
 import pandas as pd
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 from sklearn.metrics import auc
-import matplotlib
 matplotlib.style.use('ggplot')
-
 class ArkPlot:
     def __init__(self):
         self.colorList = ['k', 'b', 'r', 'g', 'y', 'c', 'm']
@@ -113,8 +113,10 @@ class ArkPlot:
         max_value = -1
         for data in data_batch:
             max_value = max(np.max(data), max_value)
+        if max_value>800:
+            max_value = 800
         #max_value = np.max(data_batch)
-        xticks = range(0,int(max_value),int(max_value)/10)
+        xticks = range(0,int(max_value),int(max_value)/20)
         bins = range(0, int(max_value)+1)
         x = np.array(bins[0:-1])
 
