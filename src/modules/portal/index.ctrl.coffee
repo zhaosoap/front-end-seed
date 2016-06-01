@@ -159,7 +159,7 @@ angular.module 'TDLV'
         origin.push temp
       origin = origin.concat @$scope.addResList
       _.remove origin, (n)->
-        not (n&&n.alg&&n.num)
+        not (n&&n.alg && (typeof(n.num) != "undefined"))
       origin = _.uniqWith origin, _.isEqual
       Promise.bind @
       .then ->
