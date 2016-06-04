@@ -160,12 +160,22 @@ def run(trainPath, testPath, config, outPath):
     tr_data = pd.read_csv(trainPath)
 
     # get test data
+    eng_para = pd.read_csv('data/2g_gongcan_new.csv')
+    eng_para = eng_para[['LAC', 'CI', 'longitude', 'latitude']]
     te_data = pd.read_csv(testPath)
+    te_data = te_data[te_data['All-LAC'].notnull() & te_data['All-Cell Id'].notnull() & te_data['All-Longitude'].notnull() & te_data['All-Latitude'].notnull()]
     te_label = te_data[['All-Longitude', 'All-Latitude']].values
+    df = te_data.merge(eng_para, left_on=['All-LAC', 'All-Cell Id'], right_on=['LAC', 'CI'], how='left')
+    te_base = df.loc[:,['longitude','latitude']].values
+    te_time = te_data.loc[:,['Time']].values
+    eng_para = pd.read_csv('data/2g_gongcan_new.csv')
+    eng_para = eng_para[['LAC', 'CI', 'longitude', 'latitude']]
 
     # train and predict
     cs.fit(tr_data)
     te_pred = cs.predict(te_data)
+    te_pred = np.array(te_pred)
+    te_label = np.array(te_label)
     error = [distance(pt1, pt2) for pt1, pt2 in zip(te_pred, te_label)]
     error = sorted(error)
 
@@ -174,6 +184,15 @@ def run(trainPath, testPath, config, outPath):
     with open(f_err, 'wb') as f:
         pickle.dump(error, f)
 
+    outDF = pd.DataFrame()
+    outDF['time'] = te_time[:,0]
+    outDF['predict-Long'] = te_pred[:,0]
+    outDF['predict-Lat'] = te_pred[:,1]
+    outDF['real-Long'] = te_label[:,0]
+    outDF['real-Lat'] = te_label[:,1]
+    outDF['ServingBase-Long'] = te_base[:,0]
+    outDF['ServingBase-Lat'] = te_base[:,1]
+    outDF.to_csv(outPath + 'outDF.csv')
     # save result
     result ={
         'outPath':outPath,

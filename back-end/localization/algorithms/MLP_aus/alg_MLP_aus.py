@@ -66,6 +66,8 @@ def load_dataset(f_name, eng_para, augment=False):
 
     # Join with Engineer Parameter data
     df = df.merge(eng_para, left_on=['All-LAC', 'All-Cell Id'], right_on=['LAC', 'CI'], how='left')
+    t_base = df.loc[:,['Longitude','Latitude']].values
+    t_time = df.loc[:,['Time']].values
     eng_para_ = eng_para.loc[:, ['LAC', 'CI', 'Longitude', 'Latitude']] # For all the neighbor, just join the longitude and latitude of BTSs
     for i in range(1, 7):
         df = df.merge(eng_para_, left_on=['All-Neighbor LAC (Sorted)[%d]' % i, 'All-Neighbor Cell Id (Sorted)[%d]' % i], right_on=['LAC','CI'], how='left', suffixes=('', '_%d' % i))
@@ -110,13 +112,13 @@ def load_dataset(f_name, eng_para, augment=False):
     #print 'Median Distance\t%f' % np.median(dist)
     #print 'Max Distance\t%f' % np.max(dist)
 
-    return df.values, label, [lacci_vals, bsic_vals, arfcn_vals]
+    return df.values, label, [lacci_vals, bsic_vals, arfcn_vals], t_time, t_base
 
 def run(trainPath, testPath, config,outPath):
     eng_para = pd.read_csv('data/2g_gongcan_old.csv')
-    tr_feature, tr_label, tr_ids = load_dataset(trainPath, eng_para, True)
+    tr_feature, tr_label, tr_ids, tr_time, tr_base = load_dataset(trainPath, eng_para, True)
     tr_label=pickle.load(open('data/tr_label.pkl'))
-    te_feature, te_label, te_ids = load_dataset(testPath, eng_para, False)
+    te_feature, te_label, te_ids, te_time, te_base = load_dataset(testPath, eng_para, False)
     train_size, n_con = tr_feature.shape
     test_size, n_con = te_feature.shape
     n_dis = len(tr_ids)
@@ -139,7 +141,8 @@ def run(trainPath, testPath, config,outPath):
             te_id_idx_ += map(lambda x: vocab_dict[x], te_ids_[i])
         tr_ids = np.array(tr_id_idx_, dtype=np.int32).reshape(dis_dim, train_size).transpose()
         te_ids = np.array(te_id_idx_, dtype=np.int32).reshape(dis_dim, test_size).transpose()
-
+        tr_ids = np.array([sorted(i) for i in tr_ids])
+        te_ids = np.array([sorted(i) for i in te_ids])
         ## Add discrete feature to dict
         tr_input.append(tr_ids)
         te_input.append(te_ids)
@@ -178,6 +181,18 @@ def run(trainPath, testPath, config,outPath):
     f_err = outPath + 'tot_error'
     with open(f_err, 'wb') as f:
         pickle.dump(error, f)
+    te_base = np.array(te_base)
+    te_time = np.array(te_time)
+    outDF = pd.DataFrame()
+    outDF['time'] = te_time[:,0]
+    outDF['predict-Long'] = te_pred1[:,0]
+    outDF['predict-Lat'] = te_pred1[:,1]
+    outDF['real-Long'] = te_label[:,0]
+    outDF['real-Lat'] = te_label[:,1]
+    outDF['ServingBase-Long'] = te_base[:,0]
+    outDF['ServingBase-Lat'] = te_base[:,1]
+    outDF.to_csv(outPath + 'outDF.csv')
+
     # save result
     result ={
         'outPath':outPath,

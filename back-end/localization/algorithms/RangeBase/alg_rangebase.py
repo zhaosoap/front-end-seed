@@ -49,8 +49,14 @@ def run(testPath, config, outPath):
     eng_para = eng_para[['LAC', 'CI', 'longitude', 'latitude']]
     # get test data
     te_data = pd.read_csv(testPath)
+    te_data = te_data[te_data['All-LAC'].notnull() & te_data['All-Cell Id'].notnull() & te_data['All-Longitude'].notnull() & te_data['All-Latitude'].notnull()]
+    df = te_data.merge(eng_para, left_on=['All-LAC', 'All-Cell Id'], right_on=['LAC', 'CI'], how='left')
+    te_base = df.loc[:,['longitude','latitude']].values
+    te_time = te_data.loc[:,['Time']].values
     te_label = te_data[['All-Longitude', 'All-Latitude']].values
     te_pred = predict(te_data, eng_para)
+    te_pred = np.array(te_pred)
+    te_label = np.array(te_label)
 
     error = [distance(pt1, pt2) for pt1, pt2 in zip(te_pred, te_label)]
     error = sorted(error)
@@ -59,6 +65,16 @@ def run(testPath, config, outPath):
     f_err = outPath + 'tot_error'
     with open(f_err, 'wb') as f:
         pickle.dump(error, f)
+    
+    outDF = pd.DataFrame()
+    outDF['time'] = te_time[:,0]
+    outDF['predict-Long'] = te_pred[:,0]
+    outDF['predict-Lat'] = te_pred[:,1]
+    outDF['real-Long'] = te_label[:,0]
+    outDF['real-Lat'] = te_label[:,1]
+    outDF['ServingBase-Long'] = te_base[:,0]
+    outDF['ServingBase-Lat'] = te_base[:,1]
+    outDF.to_csv(outPath + 'outDF.csv')
 
     # save result
     result ={

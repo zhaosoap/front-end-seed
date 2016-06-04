@@ -1,1 +1,0 @@
-{"cdf": "results/DT/3/cdf.png", "MedianError": 53.299999999999997, "TestSize": 5384, "algResNumber": 3, "MeanError": 76.545709509658238, "TrainSize": 6100, "testSet": "backward.csv", "Per80Error": 121.6, "id": "DT", "MaxError": 827.0, "Per90Error": 175.4, "Per67Error": 85.9, "MinError": 0.59999999999999998, "outPath": "data/results/DT/3/", "trainSet": "forward.csv"}
