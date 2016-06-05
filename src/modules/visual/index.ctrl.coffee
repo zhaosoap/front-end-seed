@@ -133,7 +133,7 @@ angular.module 'TDLV'
 
     if not @$rootScope.resultAlg
       @$rootScope.resultAlg = 'RF_roc'
-    if not @$rootScope.resultId
+    if (typeof(@$rootScope.resultId) == "undefined")
       @$rootScope.resultId = 1
     Promise.bind @
     .then ->
