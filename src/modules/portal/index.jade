@@ -22,9 +22,7 @@
                 option(value="") -- choose raw file --
       .part2
         .clean
-          .content(
-            style='height:160px'
-          )
+          .content
             .left
               p Clean
               .row(ng-show='cleanConf.rawFile')
@@ -74,9 +72,7 @@
                     |({{cleanResult.output.rows}},{{cleanResult.output.columns}})
 
       .part2
-        .content(
-        style='height:160px'
-        )
+        .content
           .left
             p Split Train & Test
             .row
