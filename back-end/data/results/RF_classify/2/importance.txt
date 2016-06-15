@@ -1,0 +1,83 @@
+1	All-MS TxPower (dBm)	0.075242
+2	All-RxLev Full (dBm)	0.060414
+3	All-Neighbor RxLev (dBm) (Sorted)[1]	0.050400
+4	All-RxLev Sub (dBm)	0.049077
+5	All-Neighbor RxLev (dBm) (Sorted)[2]	0.048687
+6	All-Neighbor RxLev (dBm) (Sorted)[3]	0.041330
+7	All-Neighbor RxLev (dBm) (Sorted)[4]	0.040880
+8	All-Neighbor RxLev (dBm) (Sorted)[5]	0.039202
+9	All-Neighbor RxLev (dBm) (Sorted)[6]	0.038911
+10	All-Neighbor ARFCN (Sorted)[1]	0.026849
+11	All-Neighbor BSIC (Num) (Sorted)[4]	0.025686
+12	All-Neighbor BSIC (Num) (Sorted)[5]	0.023774
+13	All-Neighbor ARFCN (Sorted)[5]	0.023639
+14	All-Neighbor ARFCN (Sorted)[2]	0.023533
+15	All-Neighbor ARFCN (Sorted)[6]	0.023513
+16	All-Neighbor ARFCN (Sorted)[4]	0.023237
+17	All-Neighbor ARFCN (Sorted)[3]	0.023043
+18	All-Neighbor BSIC (Num) (Sorted)[2]	0.022818
+19	All-Neighbor BSIC (Num) (Sorted)[6]	0.022801
+20	All-Neighbor BSIC (Num) (Sorted)[1]	0.022687
+21	All-Neighbor BSIC (Num) (Sorted)[3]	0.022558
+22	All-Neighbor Cell Id (Sorted)[1]	0.019844
+23	All-Neighbor Cell Id (Sorted)[2]	0.015951
+24	CI	0.015293
+25	All-Neighbor Cell Id (Sorted)[4]	0.014933
+26	All-BSIC (Num)	0.014426
+27	All-Neighbor Cell Id (Sorted)[3]	0.014008
+28	All-ARFCN BCCH	0.013839
+29	All-Neighbor LAC (Sorted)[1]	0.012519
+30	All-Neighbor Cell Id (Sorted)[5]	0.012093
+31	longitude	0.011290
+32	latitude	0.010749
+33	All-Neighbor LAC (Sorted)[2]	0.009987
+34	All-Neighbor Cell Id (Sorted)[6]	0.009791
+35	All-Neighbor LAC (Sorted)[4]	0.009503
+36	All-Neighbor LAC (Sorted)[3]	0.008888
+37	All-Neighbor LAC (Sorted)[5]	0.008588
+38	All-Neighbor LAC (Sorted)[6]	0.006928
+39	All-RxQual Full	0.005906
+40	4	0.004254
+41	All-RxQual Sub	0.003891
+42	27	0.003315
+43	20	0.003265
+44	28	0.002875
+45	8	0.002874
+46	22	0.002475
+47	31	0.002311
+48	5	0.002295
+49	14	0.002237
+50	30	0.002093
+51	12	0.002080
+52	34	0.001992
+53	LAC	0.001913
+54	1	0.001824
+55	18	0.001781
+56	23	0.001761
+57	29	0.001666
+58	16	0.001653
+59	32	0.001608
+60	2	0.001500
+61	9	0.001272
+62	26	0.000899
+63	6	0.000693
+64	10	0.000652
+65	15	0.000626
+66	19	0.000500
+67	24	0.000494
+68	25	0.000490
+69	21	0.000433
+70	7	0.000352
+71	33	0.000299
+72	17	0.000192
+73	13	0.000184
+74	11	0.000176
+75	3	0.000140
+76	0	0.000119
+77	35	0.000000
+78	36	0.000000
+79	37	0.000000
+80	38	0.000000
+81	39	0.000000
+82	40	0.000000
+
