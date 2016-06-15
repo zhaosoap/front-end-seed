@@ -1,12 +1,14 @@
 from localization.clean.cleanJob import ex_clean
 from localization.split.splitjob import ex_split
 from localization.algorithms.RF_roc.alg_RF_roc import ex_alg_RF_roc
+from localization.algorithms.RF_classify.alg_RF_classify import ex_alg_RF_classify
 from localization.algorithms.DT.alg_DT import ex_alg_DT
 from localization.algorithms.MLP_aus.alg_MLP_aus import ex_alg_MLP_aus
 from localization.algorithms.CellSense.alg_cellsense import ex_alg_cellsense
 from localization.algorithms.RangeBase.alg_rangebase import ex_alg_rangebase
 from sacred.observers import MongoObserver
 from localization.algorithms.RF_roc import rf_roc_adapter
+from localization.algorithms.RF_classify import rf_classify_adapter
 from localization.algorithms.DT import dt_adapter
 from localization.algorithms.CellSense import cellsense_adapter
 from localization.algorithms.RangeBase import rangebase_adapter
@@ -44,12 +46,14 @@ mongoObserver = MongoObserver.create(url='115.28.215.182:27017',db_name='jobdone
 ex_clean.observers.append(mongoObserver)
 ex_split.observers.append(mongoObserver)
 ex_alg_RF_roc.observers.append(mongoObserver)
+ex_alg_RF_classify.observers.append(mongoObserver)
 ex_alg_DT.observers.append(mongoObserver)
 ex_alg_cellsense.observers.append(mongoObserver)
 ex_alg_MLP_aus.observers.append(mongoObserver)
 ex_alg_rangebase.observers.append(mongoObserver)
 Algorithms = {
     "RF_roc" : ex_alg_RF_roc,
+    "RF_classify" : ex_alg_RF_classify,
     "DT": ex_alg_DT,
     "CS": ex_alg_cellsense,
     "RB": ex_alg_rangebase,
@@ -57,6 +61,7 @@ Algorithms = {
 }
 Adapter ={
     "RF_roc" : rf_roc_adapter,
+    "RF_classify" : rf_classify_adapter,
     "DT" : dt_adapter,
     "CS" : cellsense_adapter,
     "RB" : rangebase_adapter,
