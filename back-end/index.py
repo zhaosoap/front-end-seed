@@ -316,7 +316,7 @@ def getReportList():
 @app.route('/api/data/results/<algName>/<resultId>',methods = ['GET'])
 def getResults(algName, resultId):
     fpath = 'data/results/'+algName+'/'+resultId+'/'
-    df = pd.read_csv(fpath+'outDF.csv')
+    df = pd.read_csv(fpath+'outDF_corrected.csv')
     with open(fpath+'result.txt') as restxt:
          resjson= json.load(restxt)
     res = {

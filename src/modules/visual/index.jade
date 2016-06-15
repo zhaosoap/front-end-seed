@@ -28,7 +28,78 @@
 
   .wrapper
     .part2
-      .content(id='container')
+      .content
+        .left
+          p Results
+
+          .view-row
+            .col-lg-2
+              .clickable
+                span.fui-plus(ng-click='addResult()')
+            .col-lg-9
+              .row(ng-repeat='i in addResList track by $index')
+
+                select(
+                ng-model='addResList[$index].alg'
+                ng-options='name for name in algList'
+                )
+                  option(value="") -- algorithm --
+                select(
+                ng-model='addResList[$index].num'
+                ng-options='name for name in domTree[addResList[$index].alg]'
+                )
+                  option(value="") -- id --
+
+
+              .row
+                .btn.btn-block.btn-lg.btn-primary(ng-click='getRRs()',ng-hide='load1')
+                  | Add
+
+        .right(id='container')
+
+    .part3
+      .content(ng-show='resultScreen')
+        .newwrap(style="width:100%")
+          .sylresult
+            p Train Set:
+              span.ft {{trainSet}}
+              | Test Set:
+              span.ft {{testSet}}
+          .sylresult
+            table(style="margin:auto;width:85%")
+              tr
+                th Algorithm
+                th ResultId
+                th Train
+                th Test
+                th Max
+                th Min
+                th Mean
+                th Median
+                th 67%
+                th 80%
+                th 90%
+              tr(ng-repeat='res in resultList')
+                td {{res.id}}
+                td {{res.algResNumber}}
+                td {{res.TrainSize}}
+                td {{res.TestSize}}
+                td {{res.MaxError}}
+                td {{res.MinError}}
+                td {{res.MeanError.toFixed(2)}}
+                td {{res.MedianError}}
+                td {{res.Per67Error}}
+                td {{res.Per80Error}}
+                td {{res.Per90Error}}
+
+
+            //.sylbt
+            //  .btn.btn-block.btn-lg.btn-info(ng-click='goVisualize()',ng-hide='load1') Visualize
+
+    .part3
+      .content(ng-show='resultScreen')
+        img(style="margin:auto" src='{{showCdf}}')
+
 
 
     .part3

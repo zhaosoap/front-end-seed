@@ -98,8 +98,8 @@ class CellSense:
             j = int(distance(self.ld, (self.ld[0], y)) / self.grid_length)
 
             gx = self.ld[0] + i*self.glng_offset
-            gy = self.ld[1] + i*self.glat_offset
-            return i * self.hsize + j, (gx, gy), (gx+self.glng_offset, gy+self.glat_offset)
+            gy = self.ld[1] + j*self.glat_offset
+            return i + j * self.hsize, (gx, gy), (gx+self.glng_offset, gy+self.glat_offset)
         else: # not in this grid
             return -1, -1, -1
 
@@ -134,9 +134,10 @@ class CellSense:
         fps = transform_func(data) if transform_func is not None else self.transform(data)
         for fp in fps:
             gid, gld, gru = self.get_grid(fp.lnglat)
-            if not self.grid.has_key(gid):
+            if not self.grid.has_key(gid) and gid != -1:
                 self.grid[gid] = Grid(gld, gru)
-            self.grid[gid].add_fingerpoint(fp)
+            if gid != -1:
+                self.grid[gid].add_fingerpoint(fp)
         # compute histograms
         for gid in self.grid.keys():
             self.grid[gid].compute_histogram(self.default_std)

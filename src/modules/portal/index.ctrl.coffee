@@ -172,6 +172,8 @@ angular.module 'TDLV'
     goVisualize: (alg,num)->
       @$rootScope.resultAlg = alg
       @$rootScope.resultId = num
+      @$rootScope.trainSet = @$scope.trainSet
+      @$rootScope.testSet = @$scope.testSet
       @$state.go 'visual'
 
     _changeTemplate: (newValue, oldValue)->
