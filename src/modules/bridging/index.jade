@@ -1,0 +1,83 @@
+.visual
+  .part1
+    .content()
+
+      .row-one
+        .col-xs-3
+          .btn.btn-block.btn-lg.btn-success(ng-click='delayMFP()',ng-hide='load1')
+            | Most Frequent Path
+        .col-xs-3
+          .btn.btn-block.btn-lg.btn-info(ng-click='setSP()', ng-hide='load2')
+            | Shortest Path
+
+        .col-xs-3(ng-hide='true')
+          .btn.btn-block.btn-lg.btn-danger(ng-click='setVisModel4()', ng-hide='load2')
+            | Traj-count
+    .content(ng-show='mfping',style='position:fixed;z-index:2;top:400px;left:75px')
+      img.loading(style='width:110px',src='./styles/image/ripple.svg')
+      p(style='color:#FFFFFF') 历史轨迹查询中...
+
+  .wrapper
+    .part2
+      .content
+        .left(ng-hide='true')
+          p Results
+
+          .view-row
+            .col1
+              .clickable
+                span.fui-plus(ng-click='addResult()')
+            .col2
+              .row(ng-repeat='i in addResList track by $index')
+
+                select(
+                ng-model='addResList[$index].alg'
+                ng-options='name as thisp.EN[name] for name in algList'
+                )
+                  option(value="") -- algorithm --
+                select(
+                ng-model='addResList[$index].num'
+                ng-options='name for name in domTree[addResList[$index].alg]'
+                )
+                  option(value="") -- id --
+
+
+              .row
+                .btn.btn-block.btn-lg.btn-primary(ng-click='getRRs()',ng-hide='load1')
+                  | Add
+          .view-row(style="position:absolute;bottom:0;width:100%;")
+            table
+              tr
+                td Truth
+                td
+                  hr(style="width:50px;border:none;margin: 0;border-top:5px solid #FFFFFF")
+              tr(ng-repeat='res in resultList track by $index')
+                td {{thisp.EN[res.id]}}
+                td
+                  hr(style="width:50px;border:none;margin: 0;border-top:5px solid {{thisp.predColors[$index]}}")
+
+
+        .middle(id='container')
+        .right(ng-hide='true',style="width:100%")
+          .newwrap(ng-hide='true',style="width:100%")
+            .sylresult
+              p Train Set:
+                span.ft {{trainSet}}
+                | Test Set:
+                span.ft {{testSet}}
+            .sylresult
+              table(style="margin:auto;width:96%;border-bottom:2px solid")
+                tr(style="border-top:2px solid;border-bottom:2px solid")
+                  th Algorithm
+                  th Median
+                  th 67%
+                  th 80%
+                tr(ng-repeat='res in resultList')
+                  td {{thisp.EN[res.id]}}
+                  td {{res.MedianError.toFixed(1)}}
+                  td {{res.Per67Error.toFixed(1)}}
+                  td {{res.Per80Error.toFixed(1)}}
+            .sylresult(style="position:absolute;bottom:0;width:100%;")
+              img(style="margin:auto;width:400px;" src='{{showCdf}}')
+
+

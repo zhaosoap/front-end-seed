@@ -24,11 +24,17 @@ angular.module 'TDLV'
       abstract: true
       resolve:
         authorization: gResolveProvider.authorization
+    .state 'home'
+    ,
+      parent: 'abslogin'
+      url: '/'
+      templateUrl: '/modules/home/index.html'
+      controller: 'homeCtrl'
 
     .state 'portal'
     ,
       parent: 'abslogin'
-      url: '/'
+      url: '/portal'
       templateUrl: '/modules/portal/index.html'
       controller: 'portalCtrl'
 
@@ -39,6 +45,12 @@ angular.module 'TDLV'
       templateUrl: '/modules/visual/index.html'
       controller: 'visualCtrl'
 
+    .state 'bridging'
+    ,
+      parent: 'abslogin'
+      url: '/bridging'
+      templateUrl: '/modules/bridging/index.html'
+      controller: 'bridgingCtrl'
     .state 'gmap'
     ,
       parent: 'abslogin'

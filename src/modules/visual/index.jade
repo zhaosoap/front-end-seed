@@ -6,10 +6,13 @@
           span Sampling rate
           input.form-control(type='text',ng-model='samplingRate')
           span %
+          span.glyphicon.glyphicon-refresh(style='cursor:pointer',ng-click='setSamplingRate()')
+
         .col-xs-5.sampling-rate.has-success
           span Error distance greater than
           input.form-control(type='text',ng-model='errThreshold')
           span m
+          span.glyphicon.glyphicon-refresh(style='cursor:pointer',ng-click='setErrorDistance()')
       .row-one
         .col-xs-3
           .btn.btn-block.btn-lg.btn-success(ng-click='setVisModel1()',ng-hide='load1')
@@ -20,7 +23,7 @@
         .col-xs-3
           .btn.btn-block.btn-lg.btn-warning(ng-click='setVisModel3()', ng-hide='load3')
             | Dev-BS
-        .col-xs-3
+        .col-xs-3(ng-hide='true')
           .btn.btn-block.btn-lg.btn-danger(ng-click='setVisModel4()', ng-hide='load2')
             | Traj-count
     .content(ng-show='load1&&load2&&load3')
@@ -33,15 +36,15 @@
           p Results
 
           .view-row
-            .col-lg-2
+            .col1
               .clickable
                 span.fui-plus(ng-click='addResult()')
-            .col-lg-9
+            .col2
               .row(ng-repeat='i in addResList track by $index')
 
                 select(
                 ng-model='addResList[$index].alg'
-                ng-options='name for name in algList'
+                ng-options='name as thisp.EN[name] for name in algList'
                 )
                   option(value="") -- algorithm --
                 select(
@@ -54,8 +57,41 @@
               .row
                 .btn.btn-block.btn-lg.btn-primary(ng-click='getRRs()',ng-hide='load1')
                   | Add
+          .view-row(style="position:absolute;bottom:0;width:100%;")
+            table
+              tr
+                td Truth
+                td
+                  hr(style="width:50px;border:none;margin: 0;border-top:5px solid #FFFFFF")
+              tr(ng-repeat='res in resultList track by $index')
+                td {{thisp.EN[res.id]}}
+                td
+                  hr(style="width:50px;border:none;margin: 0;border-top:5px solid {{thisp.predColors[$index]}}")
 
-        .right(id='container')
+
+        .middle(id='container')
+        .right
+          .newwrap(style="width:100%")
+            .sylresult
+              p Train Set:
+                span.ft {{trainSet}}
+                | Test Set:
+                span.ft {{testSet}}
+            .sylresult
+              table(style="margin:auto;width:96%;border-bottom:2px solid")
+                tr(style="border-top:2px solid;border-bottom:2px solid")
+                  th Algorithm
+                  th Median
+                  th 67%
+                  th 80%
+                tr(ng-repeat='res in resultList')
+                  td {{thisp.EN[res.id]}}
+                  td {{res.MedianError.toFixed(1)}}
+                  td {{res.Per67Error.toFixed(1)}}
+                  td {{res.Per80Error.toFixed(1)}}
+            .sylresult(style="position:absolute;bottom:0;width:100%;")
+              img(style="margin:auto;width:400px;" src='{{showCdf}}')
+
 
     .part3
       .content(ng-show='resultScreen')
@@ -66,8 +102,8 @@
               | Test Set:
               span.ft {{testSet}}
           .sylresult
-            table(style="margin:auto;width:85%")
-              tr
+            table(style="margin:auto;width:85%;border-bottom:2px solid")
+              tr(style="border-top:2px solid;border-bottom:2px solid")
                 th Algorithm
                 th ResultId
                 th Train
@@ -80,7 +116,7 @@
                 th 80%
                 th 90%
               tr(ng-repeat='res in resultList')
-                td {{res.id}}
+                td {{thisp.EN[res.id]}}
                 td {{res.algResNumber}}
                 td {{res.TrainSize}}
                 td {{res.TestSize}}

@@ -67,7 +67,14 @@ Adapter ={
     "RB" : rangebase_adapter,
     "MLP_aus" : mlp_aus_adapter
 }
-
+EN = {
+    "RB" : 'Range based',
+    "CS": 'Fingerprint(CellSense)',
+    "RF_roc": 'Two-Layer RF regression',
+    "RF_classify": 'RF grid with filter',
+    "MLP_aus": 'MultiLayer Perceptron',
+    "DT":'Two-layer DT regression'
+}
 @app.route('/api/preprocessor/cleaning',methods = ['POST'])
 def runClean():
     reqJson = json.loads(request.data)
@@ -275,7 +282,7 @@ def getReports():
             reports.append(json.load(res_json))
         with open(filepath+'tot_error', 'rb') as f:
             errors.append(pickle.load(f))
-            errlabels.append(query['alg']+'_'+str(query['num']))
+            errlabels.append(EN[query['alg']]+'_'+str(query['num']))
     aplt = ArkPlot()
     rd = random.randint(0,10000)
     try:

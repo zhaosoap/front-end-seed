@@ -11,6 +11,7 @@ angular.module 'TDLV'
     'apiData'
     'calcTool'
     'CONFIG'
+    'EN'
   ]
 
   initScope: ->
@@ -27,6 +28,7 @@ angular.module 'TDLV'
     showCdf: null
     resultScreen: 0
     algLoading: 1
+    thisp: @
 
   data:
     sampleSize: null
@@ -38,6 +40,7 @@ angular.module 'TDLV'
     tower: null
     GPSList: []
     CONFIG: 'CONFIG'
+    EN: 'EN'
     getGreatCircleDistance: 'calcTool.getGreatCircleDistance'
     getResults: 'apiData.getResults'
     getReportList: 'apiData.getReportList'
@@ -47,7 +50,8 @@ angular.module 'TDLV'
     baseGPS: []
     showGPSIndex: []
     it:null
-    predColors:['#3498DB','#2ECC71','#8E44AD','#F39C12','#95A5A6','#8B572A']
+    predColors:['#FC5F64','#D4FF00','#3484E9','#F39C12','#BD10E0','#8B572A']
+#    predColors:['#F88854','#D4FF00','#FC5F64','#F39C12','#BD10E0','#8B572A']
     display:
       isDirty : false
       map : null
@@ -131,6 +135,7 @@ angular.module 'TDLV'
           @fullSize = @GPSList[0].predGPS.length
           if @it is 0
             @$scope.samplingRate = 5
+            @$scope.setSamplingRate()
           else
             @$scope.showModel = @$scope.showModel+4
 
@@ -184,13 +189,13 @@ angular.module 'TDLV'
       image : 'http://'+@CONFIG.BASEURL.HOST+'/images/green-star-7.png'
       size : new AMap.Size(10,10)
     @tower = new AMap.Icon
-      image : 'http://'+@CONFIG.BASEURL.HOST+'/images/tower.png'
+      image : 'http://'+@CONFIG.BASEURL.HOST+'/images/radio-tower0.png'
       size : new AMap.Size(24,24)
 
     @display.map = new AMap.Map 'container',
       zoom : 15
       center : [121.4456,31.1986]
-      mapStyle : 'fresh'
+      mapStyle : 'blue_night'
       features: ['road']
       jogEnable : true
     window.map = @display.map
@@ -344,79 +349,110 @@ angular.module 'TDLV'
           path : @display.showPred
           strokeColor : @predColors[i]
           strokeWeight : 2
+#          isOutline: true
+#          outlineColor: '#FFFFFF'
           map : @display.map
         if i is 0
           pline1 = new AMap.Polyline
             path : @display.showReal
             strokeWeight : 2
-            strokeColor : '#E74C3C'
+#            isOutline: true
+#            outlineColor: '#D8D8D8'
+            strokeColor : '#FFFFFF'
+#            strokeColor : '#FF5500'
             map : @display.map
 
     VisModel2: ->
       @clearDisplay()
       @display.isDirty = true
-      for x in @showGPSIndex
-        marker = new AMap.Marker
-          position: [@predGPS[x].lng,@predGPS[x].lat]
-          icon : if @display.isFirst then @greenStar else @blueIcon
-          offset : new AMap.Pixel(-5,-5),
-          map : @display.map
-        marker1 = new AMap.Marker
-          position: [@realGPS[x].lng,@realGPS[x].lat]
-          icon : if @display.isFirst then @violetStar else @redIcon
-          offset : new AMap.Pixel(-5,-5),
-          map : @display.map
-        pline = new AMap.Polyline
-          path : [@predGPS[x], @realGPS[x]]
-          strokeColor : '#16A085'
-          strokeStyle : 'dashed'
-          strokeWeight : 2
-          map : @display.map
-        @display.isFirst = false
+      for GPS,i in @GPSList
+        @display.showPred = []
+        @display.showReal = []
+        for x in @showGPSIndex
+          @display.showPred.push GPS.predGPS[x]
+          @display.showReal.push GPS.realGPS[x]
+          if i is 0
+            new AMap.Circle
+              center: new AMap.LngLat(GPS.realGPS[x][0], GPS.realGPS[x][1])
+              radius: 3
+              strokeColor: "#FFFFFF"
+              fillColor: "#FFFFFF"
+              map: @display.map
+          if @smallerThanThreshold(GPS,x)
+            continue
+          new AMap.Circle
+            center: new AMap.LngLat(GPS.predGPS[x][0], GPS.predGPS[x][1])
+            radius: 3
+            strokeColor: @predColors[i]
+            fillColor: @predColors[i]
+            map: @display.map
+          new AMap.Polyline
+              path : [GPS.predGPS[x], GPS.realGPS[x]]
+              strokeColor : @predColors[i]
+              strokeStyle : 'dashed'
+              strokeWeight : 1
+              map : @display.map
+
+
+          @display.isFirst = false
 
     VisModel3: ->
       @clearDisplay()
       @display.isDirty = true
-      for x in @showGPSIndex
-        @display.showPred.push @predGPS[x]
-        @display.showReal.push @realGPS[x]
-        marker = new AMap.Marker
-          position: [@predGPS[x].lng,@predGPS[x].lat]
-          icon : if @display.isFirst then @greenStar else @blueIcon
-          offset : new AMap.Pixel(-5,-5),
-          map : @display.map
-        marker1 = new AMap.Marker
-          position: [@realGPS[x].lng,@realGPS[x].lat]
-          icon : if @display.isFirst then @violetStar else @redIcon
-          offset : new AMap.Pixel(-5,-5),
-          map : @display.map
-        pline = new AMap.Polyline
-          path : [@predGPS[x], @realGPS[x]]
-          strokeColor : '#16A085'
-          strokeWeight : 2
-          map : @display.map
-        @display.isFirst = false
-        if @baseGPS[x].lat > 0
-          marker2 = new AMap.Marker
-            position: [@baseGPS[x].lng,@baseGPS[x].lat]
-            icon :  @tower
-            offset : new AMap.Pixel(0,-22),
-            map : @display.map
-          pline1 = new AMap.Polyline
-            path : [@realGPS[x], @baseGPS[x]]
-            strokeColor : '#95A5A6'
+      for GPS,i in @GPSList
+        @display.showPred = []
+        @display.showReal = []
+        for x in @showGPSIndex
+          @display.showPred.push GPS.predGPS[x]
+          @display.showReal.push GPS.realGPS[x]
+          if i is 0
+            new AMap.Circle
+              center: new AMap.LngLat(GPS.realGPS[x][0], GPS.realGPS[x][1])
+              radius: 3
+              strokeColor: "#FFFFFF"
+              fillColor: "#FFFFFF"
+              map: @display.map
+          if @smallerThanThreshold(GPS,x)
+            continue
+          new AMap.Circle
+            center: new AMap.LngLat(GPS.predGPS[x][0], GPS.predGPS[x][1])
+            radius: 3
+            strokeColor: @predColors[i]
+            fillColor: @predColors[i]
+            map: @display.map
+          new AMap.Polyline
+            path : [GPS.predGPS[x], GPS.realGPS[x]]
+            strokeColor : @predColors[i]
             strokeStyle : 'dashed'
+            strokeWeight : 1
             map : @display.map
-          pline2 = new AMap.Polyline
-            path : [@predGPS[x], @baseGPS[x]]
-            strokeColor : '#BDC3C7'
-            strokeStyle : 'dashed'
-            map : @display.map
-    _setSamplingRate: (newValue, oldValue) ->
-      @sampleSize = @fullSize*newValue/100
+
+          @display.isFirst = false
+          if GPS.baseGPS[x][1] > 0
+            marker2 = new AMap.Marker
+              position: [GPS.baseGPS[x][0],GPS.baseGPS[x][1]]
+              icon :  @tower
+              offset : new AMap.Pixel(0,-22)
+              map : @display.map
+            if i is 0
+              pline1 = new AMap.Polyline
+                path : [GPS.realGPS[x], GPS.baseGPS[x]]
+                strokeColor : '#FFFFFF'
+                strokeWeight : 1
+                strokeStyle : 'dashed'
+                map : @display.map
+            pline2 = new AMap.Polyline
+              path : [GPS.predGPS[x], GPS.baseGPS[x]]
+              strokeColor : @predColors[i]
+              strokeStyle : 'dashed'
+              strokeWeight : 1
+              map : @display.map
+    setSamplingRate: () ->
+
+      @sampleSize = @fullSize*@$scope.samplingRate/100
       @runSample()
 
-    _setErrorDistance: (newValue, oldValue) ->
+    setErrorDistance: () ->
       if @showGPSIndex.length is 0
         return
       @$scope.showModel = @$scope.showModel+4
@@ -429,7 +465,5 @@ angular.module 'TDLV'
       @$scope.VisModel4() if newValue%4 is 3
 
   watch:
-      '{object}samplingRate' : '_setSamplingRate'
-      '{object}errThreshold' : '_setErrorDistance'
       '{object}showModel' : '_setShowModel'
 
