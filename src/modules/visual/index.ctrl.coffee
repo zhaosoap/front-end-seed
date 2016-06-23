@@ -30,6 +30,11 @@ angular.module 'TDLV'
     algLoading: 1
     thisp: @
 
+    eyeColor:
+      '0': null
+      '1':
+        color: '#00a185'
+
   data:
     sampleSize: null
     fullSize: null
@@ -50,8 +55,10 @@ angular.module 'TDLV'
     baseGPS: []
     showGPSIndex: []
     it:null
-    predColors:['#FC5F64','#D4FF00','#3484E9','#F39C12','#BD10E0','#8B572A']
+    AlgShowCtrl: {}
+    predColors:['#FC5F64','#D4FF00','#3484E9','#BD10E0','#F39C12','#8B572A','#8BCB6B']
 #    predColors:['#F88854','#D4FF00','#FC5F64','#F39C12','#BD10E0','#8B572A']
+
     display:
       isDirty : false
       map : null
@@ -92,8 +99,6 @@ angular.module 'TDLV'
       .catch (error)->
         console.log error
 
-
-
     runSample: ->
       @showGPSIndex = []
       temp = @sampleSize
@@ -120,24 +125,30 @@ angular.module 'TDLV'
       @display.isDirty = false
 
     getAllGPS: ->
-      for i in [@GPSList.length..@$scope.resultList.length-1]
-        @it = i
-        Promise.bind @
-        .then ->
-          @getResults
-            'algorithm': @$scope.resultList[@it].id
-            'id': @$scope.resultList[@it].algResNumber.toString()
+      i = @GPSList.length;
+      allPromise =[]
 
-        .then (output) ->
+      while i<@$scope.resultList.length
+        @it = i
+        allPromise.push @getResults
+          'algorithm': @$scope.resultList[@it].id
+          'id': @$scope.resultList[@it].algResNumber.toString()
+        i++
+      Promise.bind @
+      .then ->
+        Promise.all allPromise
+      .then (res) ->
+        for output in res
           @$scope.algResult = output.result
           @GPSList.push @splitResults output.data
           console.log 'begin'+@it
           @fullSize = @GPSList[0].predGPS.length
-          if @it is 0
+          if @GPSList.length is 1
             @$scope.samplingRate = 5
             @$scope.setSamplingRate()
           else
             @$scope.showModel = @$scope.showModel+4
+
 
 #        Promise.bind @
 #        .then ->
@@ -174,6 +185,16 @@ angular.module 'TDLV'
     .then (result)->
       @$scope.algList = Object.keys result.domTree
       @$scope.domTree = result.domTree
+      if not @$rootScope.resultAlg
+        @$rootScope.resultAlg = 'RF_roc'
+      if (typeof(@$rootScope.resultId) == "undefined")
+        @$rootScope.resultId = 1
+
+      temp ={}
+      temp.alg = @$rootScope.resultAlg
+      temp.num = @$rootScope.resultId.toString()
+      @$scope.addResList.push temp
+      @$scope.getRRs()
 
     @redIcon = new AMap.Icon
       image : 'http://'+@CONFIG.BASEURL.HOST+'/images/red-oval-7.png'
@@ -200,16 +221,7 @@ angular.module 'TDLV'
       jogEnable : true
     window.map = @display.map
 
-    if not @$rootScope.resultAlg
-      @$rootScope.resultAlg = 'RF_roc'
-    if (typeof(@$rootScope.resultId) == "undefined")
-      @$rootScope.resultId = 1
 
-    temp ={}
-    temp.id = @$rootScope.resultAlg
-    temp.algResNumber = @$rootScope.resultId.toString()
-    @$scope.resultList.push temp
-    @$scope.getRRs()
 
   methods:
     setVisModel1: ->
@@ -231,20 +243,45 @@ angular.module 'TDLV'
         temp.alg = r.id
         temp.num = r.algResNumber
         origin.push temp
+      for addRes in @$scope.addResList
+        addRes.num = _.max @$scope.domTree[addRes.alg]
       origin = origin.concat @$scope.addResList
       _.remove origin, (n)->
         not (n&&n.alg && (typeof(n.num) != "undefined"))
       origin = _.uniqWith origin, _.isEqual
 
+      for r in origin
+        if not _.has @$scope.AlgShowCtrl, r.alg
+          @$scope.AlgShowCtrl[r.alg] = 1
+      Promise.bind @
+      .then ->
+        @getReports origin
+      .then (result) ->
+#        @$scope.showCdf = 'http://'+@CONFIG.BASEURL.HOST+'/'+result.cdf
+        @$scope.resultList =result.reports
+        @getAllGPS()
+        @$scope.resultScreen = 1
+
+        @$scope.changeShowCtrl()
+
+    changeShowCtrl: (alg)->
+      if alg?
+        @$scope.AlgShowCtrl[alg] ^= 1
+
+      origin= []
+      for r in @$scope.resultList
+        if not @$scope.AlgShowCtrl[r.id]
+          continue;
+        temp ={}
+        temp.alg = r.id
+        temp.num = r.algResNumber
+        origin.push temp
       Promise.bind @
       .then ->
         @getReports origin
       .then (result) ->
         @$scope.showCdf = 'http://'+@CONFIG.BASEURL.HOST+'/'+result.cdf
-        @$scope.resultList =result.reports
-        @getAllGPS()
-        @$scope.resultScreen = 1
-
+      @$scope.showModel = @$scope.showModel+4
     VisModel4: ->
       @clearDisplay()
       @display.isDirty = true
@@ -328,39 +365,32 @@ angular.module 'TDLV'
       for GPS,i in @GPSList
         @display.showPred = []
         @display.showReal = []
+        viewCt = @$scope.AlgShowCtrl[@$scope.addResList[i].alg]
+        if not viewCt and i is not 0
+          continue
         for x in @showGPSIndex
           @display.showPred.push GPS.predGPS[x]
           @display.showReal.push GPS.realGPS[x]
           if @smallerThanThreshold(GPS,x)
             continue
-#          marker = new AMap.Marker
-#            position: [GPS.predGPS[x][0],GPS.predGPS[x][1]]
-#            icon : if @display.isFirst then @greenStar else @predIcons[i]
-#            offset : new AMap.Pixel(-5,-5)
-#            map : @display.map
-#          if i is 0
-#            marker1 = new AMap.Marker
-#              position: [GPS.realGPS[x][0],GPS.realGPS[x][1]]
-#              icon : if @display.isFirst then @violetStar else @redIcon
-#              offset : new AMap.Pixel(-5,-5)
-#              map : @display.map
+
           @display.isFirst = false
-        pline = new AMap.Polyline
-          path : @display.showPred
-          strokeColor : @predColors[i]
-          strokeWeight : 2
-#          isOutline: true
-#          outlineColor: '#FFFFFF'
-          map : @display.map
         if i is 0
           pline1 = new AMap.Polyline
             path : @display.showReal
             strokeWeight : 2
-#            isOutline: true
-#            outlineColor: '#D8D8D8'
             strokeColor : '#FFFFFF'
-#            strokeColor : '#FF5500'
             map : @display.map
+
+        if not viewCt
+          continue
+        pline = new AMap.Polyline
+          path : @display.showPred
+          strokeColor : @predColors[i]
+          strokeWeight : 2
+          map : @display.map
+
+
 
     VisModel2: ->
       @clearDisplay()
@@ -368,6 +398,9 @@ angular.module 'TDLV'
       for GPS,i in @GPSList
         @display.showPred = []
         @display.showReal = []
+        viewCt = @$scope.AlgShowCtrl[@$scope.addResList[i].alg]
+        if not viewCt and i is not 0
+          continue
         for x in @showGPSIndex
           @display.showPred.push GPS.predGPS[x]
           @display.showReal.push GPS.realGPS[x]
@@ -378,7 +411,7 @@ angular.module 'TDLV'
               strokeColor: "#FFFFFF"
               fillColor: "#FFFFFF"
               map: @display.map
-          if @smallerThanThreshold(GPS,x)
+          if @smallerThanThreshold(GPS,x) or not viewCt
             continue
           new AMap.Circle
             center: new AMap.LngLat(GPS.predGPS[x][0], GPS.predGPS[x][1])
@@ -402,6 +435,9 @@ angular.module 'TDLV'
       for GPS,i in @GPSList
         @display.showPred = []
         @display.showReal = []
+        viewCt = @$scope.AlgShowCtrl[@$scope.addResList[i].alg]
+        if not viewCt and i is not 0
+          continue
         for x in @showGPSIndex
           @display.showPred.push GPS.predGPS[x]
           @display.showReal.push GPS.realGPS[x]
@@ -412,7 +448,7 @@ angular.module 'TDLV'
               strokeColor: "#FFFFFF"
               fillColor: "#FFFFFF"
               map: @display.map
-          if @smallerThanThreshold(GPS,x)
+          if @smallerThanThreshold(GPS,x) or not viewCt
             continue
           new AMap.Circle
             center: new AMap.LngLat(GPS.predGPS[x][0], GPS.predGPS[x][1])

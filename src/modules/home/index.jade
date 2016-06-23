@@ -1,4 +1,4 @@
-.portal
+.home
   .part1
     .content
       p This system can predict the location of measurement report(MR)
@@ -7,7 +7,7 @@
   .part2
     .row
 
-      .col-xs-3.col-xs-offset-3
+      .col-xs-3.col-xs-offset-1
         .tile
           img.tile-image.big-illustration(src='./styles/image/compas.svg')
           h3.tile-title Localization
@@ -17,10 +17,16 @@
 
       .col-xs-3
         .tile
-          img.tile-image.big-illustration(src='./styles/image/loop.svg')
+          img.tile-image.big-illustration(src='./styles/image/map.svg')
           h3.tile-title Trajectory bridging
           p Bridging trajectories with collaborative filtering.
           a.btn.btn-primary.btn-large.btn-block(ng-click='goBridging()') Go Bridging
+      .col-xs-3
+        .tile
+          img.tile-image.big-illustration(src='./styles/image/loop.svg')
+          h3.tile-title CrowdVis
+          p Display the spatial-temporal distribution of a group of people.
+          a.btn.btn-primary.btn-large.btn-block(href='http://localhost:1515') Go Application
 
 
 

@@ -50,9 +50,10 @@
                 select(
                 ng-model='addResList[$index].num'
                 ng-options='name for name in domTree[addResList[$index].alg]'
+                ng-hide='true'
                 )
                   option(value="") -- id --
-
+                span.fui-eye(ng-style='eyeColor[AlgShowCtrl[i.alg]]',ng-click="changeShowCtrl(i.alg)")
 
               .row
                 .btn.btn-block.btn-lg.btn-primary(ng-click='getRRs()',ng-hide='load1')
@@ -63,7 +64,7 @@
                 td Truth
                 td
                   hr(style="width:50px;border:none;margin: 0;border-top:5px solid #FFFFFF")
-              tr(ng-repeat='res in resultList track by $index')
+              tr(ng-repeat='res in resultList track by $index',ng-show='AlgShowCtrl[res.id]')
                 td {{thisp.EN[res.id]}}
                 td
                   hr(style="width:50px;border:none;margin: 0;border-top:5px solid {{thisp.predColors[$index]}}")
@@ -84,7 +85,7 @@
                   th Median
                   th 67%
                   th 80%
-                tr(ng-repeat='res in resultList')
+                tr(ng-repeat='res in resultList',ng-show='AlgShowCtrl[res.id]')
                   td {{thisp.EN[res.id]}}
                   td {{res.MedianError.toFixed(1)}}
                   td {{res.Per67Error.toFixed(1)}}
