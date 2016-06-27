@@ -1,0 +1,12 @@
+Total Train size	9999
+Total Test size	9999
+Total Max error	950.600000
+Total Min error	0.700000
+Total Mean error	144.303960
+Total Median error	111.700000
+Total 67% error	166.800000
+
+Total 80% error	227.700000
+
+Total 90% error	309.700000
+

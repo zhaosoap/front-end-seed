@@ -97,8 +97,12 @@ def make_dataset_roc(df, enc, locList, idList, gongcan):
     df = df.fillna(-999)
     t = df.loc[:, 'Time'].values
     def compute_second(x):
-        x = x.strip().split(':')
-        return int(x[0])*3600+int(x[1])*60+int(x[2])
+        try:
+            x = x.strip().split(':')
+            out = int(x[0])*3600+int(x[1])*60+int(x[2])
+        except:
+            out = 0
+        return out
     t = np.array(map(compute_second, t), dtype=np.int32)
 
     df = df.drop(['All-LAC','All-Cell Id','All-Longitude', 'All-Latitude', 'Time', 'MS', 'Frame Number', 'Direction', 'Message Type', 'Event', 'EventInfo'], axis=1)
@@ -187,7 +191,7 @@ def feature_engineer(feature, pred, timestamp):
     return feature
 
 def run(trainPath, testPath, config,outPath):
-    gcpath = "data/2g_gongcan_new.csv"
+    gcpath = "data/3g_gongcan.csv"
     gongcan = pd.read_csv(gcpath)
     #gongcan = prepare_gongcan(gongcanDF)
     trainDF = pd.read_csv(trainPath)
@@ -228,39 +232,40 @@ def run(trainPath, testPath, config,outPath):
         criterion=config['layer1']['criterion']).fit(tr_feature, tr_label)
     #est_1 = DecisionTreeRegressor().fit(tr_feature, tr_label)
     layer1_size = tr_feature.shape[1]
-
-    tr_pred = est_1.predict(tr_feature)
-    tr_feature = feature_engineer(tr_feature, tr_pred, tr_time)
-
     te_pred = est_1.predict(te_feature)
-    te_feature = feature_engineer(te_feature, te_pred, te_time)
+    if tr_time[0]!=0:
+        tr_pred = est_1.predict(tr_feature)
+        tr_feature = feature_engineer(tr_feature, tr_pred, tr_time)
 
-    print 'Train Layer 2 ...'
-    est_2 = RandomForestRegressor(
-       n_jobs=config['layer2']['n_jobs'],
-       #max_depth=5,
-       n_estimators = config['layer2']['n_estimators'],
-       max_features=config['layer2']['max_features'],
-       bootstrap=config['layer2']['bootstrap'],
-       criterion=config['layer2']['criterion']).fit(tr_feature, tr_label)
-    #est_2 = DecisionTreeRegressor().fit(tr_feature, tr_label)
-    layer2_size = tr_feature.shape[1]
+        te_pred = est_1.predict(te_feature)
+        te_feature = feature_engineer(te_feature, te_pred, te_time)
 
-    tr_feature_name = list(tr_feature_name)
-    for item in ['p_dist', 'n_dist', 'p_angle', 'n_angle', 'p_timegap', 'n_timegap', 'p_speed', 'n_speed', 'p_lon', 'p_lat', 'n_lon', 'n_lat', 'pred_lon', 'pred_lat']:
-       tr_feature_name.append(item)
+        print 'Train Layer 2 ...'
+        est_2 = RandomForestRegressor(
+           n_jobs=config['layer2']['n_jobs'],
+           #max_depth=5,
+           n_estimators = config['layer2']['n_estimators'],
+           max_features=config['layer2']['max_features'],
+           bootstrap=config['layer2']['bootstrap'],
+           criterion=config['layer2']['criterion']).fit(tr_feature, tr_label)
+        #est_2 = DecisionTreeRegressor().fit(tr_feature, tr_label)
+        layer2_size = tr_feature.shape[1]
 
-    importance = est_2.feature_importances_
-    # print importance
-    idx = np.argsort(-importance)
-    f_imp = open(outPath+'importance.txt', 'a')
-    ii = 1
-    for i in idx:
-        f_imp.write('%d\t%s\t%f\n' % (ii, tr_feature_name[i], importance[i]))
-        ii += 1
-    f_imp.write('\n')
-    f_imp.close()
-    te_pred = est_2.predict(te_feature)
+        tr_feature_name = list(tr_feature_name)
+        for item in ['p_dist', 'n_dist', 'p_angle', 'n_angle', 'p_timegap', 'n_timegap', 'p_speed', 'n_speed', 'p_lon', 'p_lat', 'n_lon', 'n_lat', 'pred_lon', 'pred_lat']:
+           tr_feature_name.append(item)
+
+        importance = est_2.feature_importances_
+        # print importance
+        idx = np.argsort(-importance)
+        f_imp = open(outPath+'importance.txt', 'a')
+        ii = 1
+        for i in idx:
+            f_imp.write('%d\t%s\t%f\n' % (ii, tr_feature_name[i], importance[i]))
+            ii += 1
+        f_imp.write('\n')
+        f_imp.close()
+        te_pred = est_2.predict(te_feature)
 
     outDF = pd.DataFrame()
     outDF['time'] = te_time
@@ -339,7 +344,7 @@ def start(criteria):
     os.mkdir(outPath)
 
     res = run(trainPath,testPath,configuration,outPath)
-    
+
     res['trainSet'] = trainSet
     res['testSet'] = testSet
     res['id'] = id
