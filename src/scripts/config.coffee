@@ -4,7 +4,7 @@ angular.module 'TDLV'
 
   local = window.location.origin
 #  base_host = '115.28.215.182:5000'
-   base_host = '210.6.28.98:5000'
+  base_host = '210.6.28.98:5000'
 #  base_host = '0.0.0.0:5000'
 #  base_host = '192.168.1.117:5000':
 
