@@ -341,6 +341,7 @@ def start(criteria):
     trainPath = 'data/train/' + trainSet
     testPath = 'data/test/'+ testSet
     files = os.listdir('data/results/'+id+'/')
+    files = [x for x in files if x[0] != '.']
     outPath = 'data/results/'+id+'/'+str(len(files))+'/'
     os.mkdir(outPath)
 
