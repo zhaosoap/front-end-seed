@@ -12,6 +12,7 @@ import pymongo
 import pickle
 
 from ...utils.figure import ArkPlot
+from ...utils import etui
 from math import atan, cos, asin, sqrt, pow, pi, sin
 import math as Math
 from sklearn.tree import export_graphviz
@@ -190,8 +191,8 @@ def feature_engineer(feature, pred, timestamp):
     feature = np.hstack((feature, add_feature))
     return feature
 
-def run(trainPath, testPath, config,outPath):
-    gcpath = "data/3g_gongcan.csv"
+def run(trainPath, testPath, gongcan,config,outPath):
+    gcpath = 'data/'+gongcan
     gongcan = pd.read_csv(gcpath)
     #gongcan = prepare_gongcan(gongcanDF)
     trainDF = pd.read_csv(trainPath)
@@ -343,7 +344,7 @@ def start(criteria):
     outPath = 'data/results/'+id+'/'+str(len(files))+'/'
     os.mkdir(outPath)
 
-    res = run(trainPath,testPath,configuration,outPath)
+    res = run(trainPath,testPath,etui.matchGC(trainSet),configuration,outPath)
 
     res['trainSet'] = trainSet
     res['testSet'] = testSet

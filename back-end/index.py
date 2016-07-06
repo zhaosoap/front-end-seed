@@ -38,10 +38,10 @@ app = Flask(__name__, static_url_path='',static_folder='data')
 CORS(app)
 app.config.from_object(__name__)
 
-conn = pymongo.MongoClient('115.28.215.182',27017)
+conn = pymongo.MongoClient('210.6.28.98',5001)
 db = conn['jobdone']
 collection = db.default.runs
-mongoObserver = MongoObserver.create(url='115.28.215.182:27017',db_name='jobdone')
+mongoObserver = MongoObserver.create(url='210.6.28.98:5001',db_name='jobdone')
 
 ex_clean.observers.append(mongoObserver)
 ex_split.observers.append(mongoObserver)
