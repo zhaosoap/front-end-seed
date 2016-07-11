@@ -102,7 +102,7 @@ def make_dataset_roc(df, enc, locList, idList, gongcan):
             x = x.strip().split(':')
             out = int(x[0])*3600+int(x[1])*60+int(x[2])
         except:
-            out = 0
+            out = x
         return out
     t = np.array(map(compute_second, t), dtype=np.int32)
 
@@ -192,7 +192,7 @@ def feature_engineer(feature, pred, timestamp):
     return feature
 
 def run(trainPath, testPath, gongcan,config,outPath):
-    gcpath = 'data/'+gongcan
+    gcpath = 'data/engin-para/'+gongcan
     gongcan = pd.read_csv(gcpath)
     #gongcan = prepare_gongcan(gongcanDF)
     trainDF = pd.read_csv(trainPath)
@@ -233,40 +233,39 @@ def run(trainPath, testPath, gongcan,config,outPath):
         criterion=config['layer1']['criterion']).fit(tr_feature, tr_label)
     #est_1 = DecisionTreeRegressor().fit(tr_feature, tr_label)
     layer1_size = tr_feature.shape[1]
+
+    tr_pred = est_1.predict(tr_feature)
+    tr_feature = feature_engineer(tr_feature, tr_pred, tr_time)
+
     te_pred = est_1.predict(te_feature)
-    if tr_time[0]!=0:
-        tr_pred = est_1.predict(tr_feature)
-        tr_feature = feature_engineer(tr_feature, tr_pred, tr_time)
+    te_feature = feature_engineer(te_feature, te_pred, te_time)
 
-        te_pred = est_1.predict(te_feature)
-        te_feature = feature_engineer(te_feature, te_pred, te_time)
+    print 'Train Layer 2 ...'
+    est_2 = RandomForestRegressor(
+       n_jobs=config['layer2']['n_jobs'],
+       #max_depth=5,
+       n_estimators = config['layer2']['n_estimators'],
+       max_features=config['layer2']['max_features'],
+       bootstrap=config['layer2']['bootstrap'],
+       criterion=config['layer2']['criterion']).fit(tr_feature, tr_label)
+    #est_2 = DecisionTreeRegressor().fit(tr_feature, tr_label)
+    layer2_size = tr_feature.shape[1]
 
-        print 'Train Layer 2 ...'
-        est_2 = RandomForestRegressor(
-           n_jobs=config['layer2']['n_jobs'],
-           #max_depth=5,
-           n_estimators = config['layer2']['n_estimators'],
-           max_features=config['layer2']['max_features'],
-           bootstrap=config['layer2']['bootstrap'],
-           criterion=config['layer2']['criterion']).fit(tr_feature, tr_label)
-        #est_2 = DecisionTreeRegressor().fit(tr_feature, tr_label)
-        layer2_size = tr_feature.shape[1]
+    tr_feature_name = list(tr_feature_name)
+    for item in ['p_dist', 'n_dist', 'p_angle', 'n_angle', 'p_timegap', 'n_timegap', 'p_speed', 'n_speed', 'p_lon', 'p_lat', 'n_lon', 'n_lat', 'pred_lon', 'pred_lat']:
+       tr_feature_name.append(item)
 
-        tr_feature_name = list(tr_feature_name)
-        for item in ['p_dist', 'n_dist', 'p_angle', 'n_angle', 'p_timegap', 'n_timegap', 'p_speed', 'n_speed', 'p_lon', 'p_lat', 'n_lon', 'n_lat', 'pred_lon', 'pred_lat']:
-           tr_feature_name.append(item)
-
-        importance = est_2.feature_importances_
-        # print importance
-        idx = np.argsort(-importance)
-        f_imp = open(outPath+'importance.txt', 'a')
-        ii = 1
-        for i in idx:
-            f_imp.write('%d\t%s\t%f\n' % (ii, tr_feature_name[i], importance[i]))
-            ii += 1
-        f_imp.write('\n')
-        f_imp.close()
-        te_pred = est_2.predict(te_feature)
+    importance = est_2.feature_importances_
+    # print importance
+    idx = np.argsort(-importance)
+    f_imp = open(outPath+'importance.txt', 'a')
+    ii = 1
+    for i in idx:
+        f_imp.write('%d\t%s\t%f\n' % (ii, tr_feature_name[i], importance[i]))
+        ii += 1
+    f_imp.write('\n')
+    f_imp.close()
+    te_pred = est_2.predict(te_feature)
 
     outDF = pd.DataFrame()
     outDF['time'] = te_time
@@ -338,8 +337,8 @@ def start(criteria):
     configuration = criteria["configuration"]
     trainSet = criteria["trainSet"]
     testSet = criteria["testSet"]
-    trainPath = 'data/train/' + trainSet
-    testPath = 'data/test/'+ testSet
+    trainPath = 'data/train/corrected/' + trainSet
+    testPath = 'data/test/corrected/'+ testSet
     files = os.listdir('data/results/'+id+'/')
     files = [x for x in files if x[0] != '.']
     outPath = 'data/results/'+id+'/'+str(len(files))+'/'

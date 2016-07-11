@@ -248,7 +248,10 @@ def getFileList():
     fileLists = {}
     reqJson = json.loads(request.data)
     for dir in reqJson['dirs']:
-        files = os.listdir('data/'+dir)
+        indir = dir
+        if dir in ['train','test']:
+            indir = dir+'/corrected'
+        files = os.listdir('data/'+indir)
         files = [x for x in files if x[0] != '.']
         fileLists[dir]=files
     res = {
@@ -328,7 +331,7 @@ def getReportList():
 @app.route('/api/data/results/<algName>/<resultId>',methods = ['GET'])
 def getResults(algName, resultId):
     fpath = 'data/results/'+algName+'/'+resultId+'/'
-    df = pd.read_csv(fpath+'outDF_corrected.csv')
+    df = pd.read_csv(fpath+'outDF.csv')
     with open(fpath+'result.txt') as restxt:
          resjson= json.load(restxt)
     res = {

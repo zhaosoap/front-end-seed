@@ -19,27 +19,26 @@ def write_batch(buffer_list, buffer_lon, buffer_lat, f_correct_route):
 	res = res.split('},')
 	lonlat = []
 	for i in xrange(len(buffer_list)):
-		for j in xrange(3):
-			k = i*3+j;
-			try:
-				if k == len(res)-1:
-					lonlat.append(json.loads(res[k]))
-				else:
-					lonlat.append(json.loads(res[k]+'}'))
-			except:
-				print k,len(res)
-				print i,j		
+		try:
+			if i == len(res)-1:
+				lonlat.append(json.loads(res[i]))
+			else:
+				lonlat.append(json.loads(res[i]+'}'))
+		except:
+			print i,len(res)
+			print buffer_list[i]	
 
 		buffered_line = buffer_list[i]	
-		f_correct_route.write(buffered_line[0]+','+buffered_line[1]+','+\
-			str(lonlat[0]['Lng'])+','+str(lonlat[0]['Lat'])+','+\
-			str(lonlat[1]['Lng'])+','+str(lonlat[1]['Lat'])+','+\
-			str(lonlat[2]['Lng'])+','+str(lonlat[2]['Lat'])+'\n')
+		buffered_line[11] = str(lonlat[0]['Lng'])
+		buffered_line[12] = str(lonlat[0]['Lat'])
+		line = ','.join(buffered_line)
+		f_correct_route.write(line+'\n')
 
 		# f_correct_route.write(buffered_line[0]+','+buffered_line[1]+','+buffered_line[2]+','+buffered_line[3]+','+\
 		#    str(lonlat['Lat'])+'N,'+str(lonlat['Lng'])+'E,'+buffered_line[6]+','+buffered_line[7]+','+buffered_line[8]+','+buffered_line[9]+'\n')
 
 def correct_route(filename, f, files):
+	# print filename
 	add_prefix = re.compile('\.csv')
 	if f.find('.csv') == 0:
 		return
@@ -85,12 +84,8 @@ def correct_route(filename, f, files):
 			buffer_lat = []
 
 		buffer_list.append(line)	
-		buffer_lon.append(line[2].strip())
-		buffer_lat.append(line[3].strip())
-		buffer_lon.append(line[4].strip())
-		buffer_lat.append(line[5].strip())
-		buffer_lon.append(line[6].strip())
-		buffer_lat.append(line[7].strip())
+		buffer_lon.append(line[11].strip())
+		buffer_lat.append(line[12].strip())
 
 
 	write_batch(buffer_list, buffer_lon, buffer_lat, f_correct_route)
