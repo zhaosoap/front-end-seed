@@ -1,0 +1,97 @@
+1	p_lat	0.094350
+2	pred_lat	0.089034
+3	n_lat	0.082832
+4	n_lon	0.081635
+5	pred_lon	0.077085
+6	latitude	0.070104
+7	CI	0.069468
+8	p_lon	0.065410
+9	longitude	0.052972
+10	2	0.043154
+11	LAC	0.037168
+12	1	0.029605
+13	All-BSIC (Num)	0.026965
+14	All-Neighbor Cell Id (Sorted)[1]	0.019247
+15	All-Neighbor RxLev (dBm) (Sorted)[6]	0.012767
+16	All-ARFCN BCCH	0.010132
+17	All-Neighbor RxLev (dBm) (Sorted)[5]	0.010062
+18	All-Neighbor ARFCN (Sorted)[1]	0.009804
+19	All-Neighbor Cell Id (Sorted)[2]	0.009746
+20	All-Neighbor Cell Id (Sorted)[3]	0.007528
+21	All-Neighbor RxLev (dBm) (Sorted)[4]	0.007498
+22	30	0.006731
+23	All-RxLev Full (dBm)	0.006429
+24	All-Neighbor RxLev (dBm) (Sorted)[3]	0.006154
+25	All-Neighbor ARFCN (Sorted)[2]	0.006151
+26	8	0.004493
+27	All-RxLev Sub (dBm)	0.004465
+28	28	0.004305
+29	All-Neighbor BSIC (Num) (Sorted)[1]	0.003986
+30	All-Neighbor RxLev (dBm) (Sorted)[2]	0.003866
+31	All-Neighbor LAC (Sorted)[1]	0.003272
+32	18	0.003117
+33	All-Neighbor RxLev (dBm) (Sorted)[1]	0.002825
+34	14	0.002808
+35	All-Neighbor ARFCN (Sorted)[3]	0.002662
+36	All-Neighbor Cell Id (Sorted)[4]	0.002542
+37	4	0.002296
+38	All-Neighbor ARFCN (Sorted)[4]	0.002224
+39	All-MS TxPower (dBm)	0.002088
+40	All-Neighbor LAC (Sorted)[2]	0.002049
+41	12	0.002030
+42	5	0.001965
+43	20	0.001815
+44	16	0.001749
+45	All-Neighbor ARFCN (Sorted)[5]	0.001509
+46	All-Neighbor Cell Id (Sorted)[5]	0.001409
+47	All-Neighbor BSIC (Num) (Sorted)[2]	0.001337
+48	29	0.001219
+49	p_angle	0.000677
+50	All-Neighbor ARFCN (Sorted)[6]	0.000646
+51	n_angle	0.000606
+52	32	0.000597
+53	31	0.000564
+54	All-Neighbor Cell Id (Sorted)[6]	0.000530
+55	27	0.000494
+56	All-Neighbor BSIC (Num) (Sorted)[4]	0.000455
+57	9	0.000446
+58	All-Neighbor BSIC (Num) (Sorted)[3]	0.000377
+59	34	0.000327
+60	All-Neighbor LAC (Sorted)[5]	0.000195
+61	All-Neighbor LAC (Sorted)[4]	0.000190
+62	n_dist	0.000169
+63	All-Neighbor LAC (Sorted)[6]	0.000149
+64	p_dist	0.000148
+65	All-Neighbor LAC (Sorted)[3]	0.000146
+66	All-Neighbor BSIC (Num) (Sorted)[5]	0.000146
+67	All-RxQual Full	0.000131
+68	22	0.000124
+69	23	0.000119
+70	All-Neighbor BSIC (Num) (Sorted)[6]	0.000114
+71	0	0.000096
+72	3	0.000058
+73	n_speed	0.000048
+74	All-RxQual Sub	0.000047
+75	13	0.000042
+76	33	0.000037
+77	7	0.000032
+78	15	0.000031
+79	p_speed	0.000030
+80	19	0.000027
+81	26	0.000025
+82	6	0.000023
+83	11	0.000023
+84	17	0.000021
+85	10	0.000015
+86	24	0.000014
+87	21	0.000007
+88	25	0.000004
+89	p_timegap	0.000004
+90	n_timegap	0.000003
+91	40	0.000000
+92	38	0.000000
+93	37	0.000000
+94	36	0.000000
+95	35	0.000000
+96	39	0.000000
+
