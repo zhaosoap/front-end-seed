@@ -6,7 +6,7 @@ All Javascript and style packages are respectively managed by **[npm](https://ww
     npm install
     bower install // bower install --allow-root
     gulp
-![Home page](home.jpg =500x300)
+![Home page](home.jpg)
 
 ### Add a new Page
 open /src/scripts/route.coffee ,add following code to create a new state.
