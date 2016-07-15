@@ -1,4 +1,4 @@
-angular.module 'TDLV', [
+angular.module 'Seed', [
   'ui.router'
   'classy'
   'classy-initScope'

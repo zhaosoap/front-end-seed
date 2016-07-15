@@ -1,1 +1,0 @@
-{"cdf": "results/RF_roc/4/cdf.png", "MedianError": 33.0, "TestSize": 5618, "algResNumber": 4, "MeanError": 50.39889640441438, "TrainSize": 41966, "testSet": "4G_FXtest.csv", "Per80Error": 63.0, "id": "RF_roc", "MaxError": 1054.7, "Per90Error": 101.6, "Per67Error": 48.1, "MinError": 0.5, "outPath": "data/results/RF_roc/4/", "trainSet": "4G_FXtrain.csv"}

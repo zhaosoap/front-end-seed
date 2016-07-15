@@ -1,4 +1,4 @@
-angular.module 'TDLV'
+angular.module 'Seed'
 
 .classy.controller
 
@@ -24,10 +24,10 @@ angular.module 'TDLV'
 
   methods:
     goPositioning: ->
-      @$state.go 'portal'
+      @$state.go '404'
 
     goBridging: ->
-      @$state.go 'bridging'
+      @$state.go '404'
 
 
 

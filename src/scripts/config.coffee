@@ -1,11 +1,8 @@
-angular.module 'TDLV'
+angular.module 'Seed'
 
 .factory 'CONFIG', ->
 
   local = window.location.hostname
-#  base_host = '115.28.215.182:5000'
-#  base_host = '210.6.28.98:5000'
-#  base_host = '0.0.0.0:5000'
   base_host = local + ':5000'
 
   test_host = '172.17.3.143'

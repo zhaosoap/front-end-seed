@@ -1,4 +1,4 @@
-angular.module 'TDLV'
+angular.module 'Seed'
 
 .config [
   '$locationProvider'
@@ -30,33 +30,11 @@ angular.module 'TDLV'
       url: '/'
       templateUrl: '/modules/home/index.html'
       controller: 'homeCtrl'
-
-    .state 'portal'
+    .state 'module1'
     ,
-      parent: 'abslogin'
-      url: '/portal'
-      templateUrl: '/modules/portal/index.html'
-      controller: 'portalCtrl'
-
-    .state 'visual'
-    ,
-      parent: 'abslogin'
-      url: '/visual'
-      templateUrl: '/modules/visual/index.html'
-      controller: 'visualCtrl'
-
-    .state 'bridging'
-    ,
-      parent: 'abslogin'
-      url: '/bridging'
-      templateUrl: '/modules/bridging/index.html'
-      controller: 'bridgingCtrl'
-    .state 'gmap'
-    ,
-      parent: 'abslogin'
-      url: '/gmap'
-      templateUrl: '/modules/gmap/index.html'
-      controller: 'gmapCtrl'
+      url: '/page1'
+      templateUrl: '/modules/page1/index.html'
+      controller: 'page1Ctrl'
 
     .state 'error'
     ,

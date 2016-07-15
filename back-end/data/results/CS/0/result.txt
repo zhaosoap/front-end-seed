@@ -1,1 +1,0 @@
-{"MedianError": 66.299999999999997, "TestSize": 5384, "algResNumber": 0, "MeanError": 127.39394502228826, "testSet": "backward.csv", "Per80Error": 190.3, "id": "CS", "MaxError": 1094.8, "Per90Error": 378.7, "Per67Error": 116.1, "MinError": 0.29999999999999999, "outPath": "data/results/CS/0/", "trainSet": "forward.csv"}

@@ -1,4 +1,4 @@
-angular.module 'TDLV'
+angular.module 'Seed'
 
 .service 'Location', [
   '$cookies'
