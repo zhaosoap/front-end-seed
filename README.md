@@ -4,9 +4,12 @@
 ## Quick start
 All Javascript and style packages are respectively managed by **[npm](https://www.npmjs.com/)** and **[bower](https://bower.io/)**.  
 
-    > npm install
-    > bower install // bower install --allow-root
-    > gulp
+```bash
+npm install
+bower install // bower install --allow-root
+gulp
+```
+
 ![Home page](home.jpg)
 
 ### Add a new Page
@@ -28,29 +31,38 @@ create your page(coffee,jade,less) in /src/modules/page1
     └── index.less
           
 page1/index.ctrl.coffee:
-    
-    angular.module 'Seed'
-	.classy.controller
-	  name: 'page1Ctrl'
-	  inject: [
-	    '$scope'
-	    '$rootScope'
-	    '$state'
-	  ]
-	  initScope: ->
-	    hello: 'This is a new page.'
-	  data: null
-	  init: -> null
-	  methods: null
+
+```coffeescript    
+angular.module 'Seed'
+.classy.controller
+  name: 'page1Ctrl'
+  inject: [
+    '$scope'
+    '$rootScope'
+    '$state'
+  ]
+  initScope: ->
+    hello: 'This is a new page.'
+  data: null
+  init: -> null
+  methods: null
+```  
+  
 page1/index.jade:
 
-	.page1
-	  {{hello}}
+```jade
+.page1
+  {{hello}}
+```
+
 page1/index.less:
-	
-	.page1 {
-	  text-align: center;
-	}
+
+```less
+.page1 {
+  text-align: center;
+}
+```
+
 **Add page1's js file and css file to this app**
 
 	src/modules/mod-index.jade:
@@ -75,32 +87,37 @@ Here is an example:
 
 1.Add these code in page1/index.jade:
 
-	.page1
-	  p {{hello}}
-	  label
-	    | Name:
-	    input(type='text',ng-model='user.name')
-	    button(ng-click='btnFunc()') Button
-	  p user.name = {{user.name}}
+```jade
+.page1
+  p {{hello}}
+  label
+    | Name:
+    input(type='text',ng-model='user.name')
+    button(ng-click='btnFunc()') Button
+  p user.name = {{user.name}}
+```
+  
 2.Create `btnFunc()` for the `Button` in page1/index.ctrl.coffee:
-	
-	angular.module 'Seed'
-	.classy.controller
-	  name: 'page1Ctrl'
-	  inject: [
-	    '$scope'
-	    '$rootScope'
-	    '$state'
-	  ]
-	  initScope: ->
-	    hello: 'This is a new page.'
-	    user:
-	      name: null
-	  data: null
-	  init: -> null
-	  methods:
-	    btnFunc: () ->
-	      @scope.user.name = 'button clicked.'	  
+
+```coffeescript	
+angular.module 'Seed'
+.classy.controller
+  name: 'page1Ctrl'
+  inject: [
+    '$scope'
+    '$rootScope'
+    '$state'
+  ]
+  initScope: ->
+    hello: 'This is a new page.'
+    user:
+      name: null
+  data: null
+  init: -> null
+  methods:
+    btnFunc: () ->
+      @scope.user.name = 'button clicked.'
+```      
 
 #### Structure of controller 
 Angular Classy are employed to make controllers more structured and prescriptive. See more details on [Angular-classy](http://davej.github.io/angular-classy/).
@@ -115,54 +132,61 @@ Angular Classy are employed to make controllers more structured and prescriptive
 ### Data exchange with backend via API
 
 1.Run backend app in /back-end/
-	
-	> python index.py	
+
+```bash	
+python index.py	
+```
+
 test url <http://localhost:5000/api/testGET?test=123> in browser and you will get 
 
+```json
 	{"message": "success", "result": "123_GET_processed"}
+```
 	
 2.add `testGET()` and `testPOST()` functions in src/scripts/services/api/user.coffee
 
-	angular.module 'Seed'
-	.factory 'apiUserBase', [
-	  'Restangular'
-	  'CONFIG'
-	  (
-	    Restangular
-	    CONFIG
-	  ) ->
-	    baseURL = "#{CONFIG.BASEURL.API_SEED}"
-	    Restangular.withConfig (RestangularConfigurer) ->
-	      RestangularConfigurer.setBaseUrl baseURL
-	]
-	.factory 'apiUser', [
-	  'apiUserBase'
-	  'AUTH'
-	  (
-	    apiUserBase
-	    AUTH
-	  ) ->
-	    testGET: ->
-	      meta = apiUserBase.one 'api'
-	      .one 'testGET'
-	      new Promise (resolve, reject) ->
-	        meta.get()
-	        .then (result) ->
-	          resolve result
-	        , (res) ->
-	          reject res
-
-    testPOST: ->
+```coffeescript
+angular.module 'Seed'
+.factory 'apiUserBase', [
+  'Restangular'
+  'CONFIG'
+  (
+    Restangular
+    CONFIG
+  ) ->
+    baseURL = "#{CONFIG.BASEURL.API_SEED}"
+    Restangular.withConfig (RestangularConfigurer) ->
+      RestangularConfigurer.setBaseUrl baseURL
+]
+.factory 'apiUser', [
+  'apiUserBase'
+  'AUTH'
+  (
+    apiUserBase
+    AUTH
+  ) ->
+    testGET: ->
       meta = apiUserBase.one 'api'
-      .all 'testPOST'
+      .one 'testGET'
       new Promise (resolve, reject) ->
-        meta.post()
+        meta.get()
         .then (result) ->
           resolve result
         , (res) ->
           reject res
-	]	
-	
+
+   testPOST: ->
+     meta = apiUserBase.one 'api'
+     .all 'testPOST'
+     new Promise (resolve, reject) ->
+       meta.post()
+       .then (result) ->
+         resolve result
+       , (res) ->
+         reject res
+]	
+```	
+
 * **Restangular** on [GitHub (Official Documentation)](https://github.com/mgonto/restangular) - AngularJS service to handle Rest API Restful Resources properly and easily
 * 《AngularJS权威教程_AriLerner著_涵盖1.2.x_人民邮电出版社》 page 142 "15.13 使用 Restangular"
 * testGET() and testPOST() return `new Promise(...)`.
@@ -177,44 +201,45 @@ test url <http://localhost:5000/api/testGET?test=123> in browser and you will ge
 #### Inject API service into controller.
 
 
+```coffeescript
+angular.module 'Seed'
+.classy.controller
+  name: 'page1Ctrl'
+  inject: [
+    '$scope'
+    '$rootScope'
+    '$state'
+    'apiUser'
+  ]
+  initScope: ->
+    hello: 'This is a new page.'
+    user:
+      name: null
+  data:
+    apiUser: 'apiUser'
+  init: -> null
+  methods:
+    btnFunc: () ->
+      @$scope.user.name = 'button clicked.'
+      
+   callGET: (arg) ->
+     Promise.bind @
+     .then ->
+       @apiUser.testGET arg
+     .then (out)->
+       @$scope.user.name = out.result
+     .catch (err) ->
+       console.log err
 
-	angular.module 'Seed'
-	.classy.controller
-	  name: 'page1Ctrl'
-	  inject: [
-	    '$scope'
-	    '$rootScope'
-	    '$state'
-	    'apiUser'
-	  ]
-	  initScope: ->
-	    hello: 'This is a new page.'
-	    user:
-	      name: null
-	  data:
-	    apiUser: 'apiUser'
-	  init: -> null
-	  methods:
-	    btnFunc: () ->
-	      @$scope.user.name = 'button clicked.'
-	      
-    callGET: (arg) ->
-      Promise.bind @
-      .then ->
-        @apiUser.testGET arg
-      .then (out)->
-        @$scope.user.name = out.result
-      .catch (err) ->
-        console.log err
-
-    callPOST: (arg) ->
-      Promise.bind @
-      .then ->
-        @apiUser.testPOST arg
-      .then (out)->
-        @$scope.user.name = out.result
-      .catch (err) ->
-        console.log err
+   callPOST: (arg) ->
+     Promise.bind @
+     .then ->
+       @apiUser.testPOST arg
+     .then (out)->
+       @$scope.user.name = out.result
+     .catch (err) ->
+       console.log err
+```       
 
 * `apiUser: 'apiUser'` in `data` equals `this.apiUser = this.$scope.apiUser`
 * `Promise.bind @` is the most efficient way of utilizing this with promises. 
