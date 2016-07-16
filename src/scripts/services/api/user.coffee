@@ -23,7 +23,8 @@ angular.module 'Seed'
       meta = apiUserBase
       .one 'testGET'
       new Promise (resolve, reject) ->
-        meta.get input
+        meta.get
+          test: input
         .then (result) ->
           resolve result
         , (res) ->
@@ -33,7 +34,8 @@ angular.module 'Seed'
       meta = apiUserBase
       .all 'testPOST'
       new Promise (resolve, reject) ->
-        meta.post input
+        meta.post
+          test: input
         .then (result) ->
           resolve result
         , (res) ->

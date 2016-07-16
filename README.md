@@ -200,6 +200,7 @@ angular.module 'Seed'
 		
 #### Inject API service into controller.
 
+src/modules/page1/index.ctrl.coffee:
 
 ```coffeescript
 angular.module 'Seed'

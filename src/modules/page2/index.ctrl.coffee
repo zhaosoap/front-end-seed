@@ -1,6 +1,6 @@
 angular.module 'Seed'
 .classy.controller
-  name: 'page1Ctrl'
+  name: 'page2Ctrl'
   inject: [
     '$scope'
     '$rootScope'
@@ -49,7 +49,7 @@ angular.module 'Seed'
       .catch (err) ->
         console.log err
 
-    racePromise: ->
+    anyPromise: ->
       @$scope.promises = []
       promises = []
       promises.push @apiUser.testPOST 'p2'

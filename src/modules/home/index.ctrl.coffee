@@ -7,8 +7,6 @@ angular.module 'Seed'
   inject: [
     '$scope'
     '$rootScope'
-    'apiData'
-    'apiRun'
     'CONFIG'
     '$state'
   ]
@@ -24,10 +22,10 @@ angular.module 'Seed'
 
   methods:
     goPositioning: ->
-      @$state.go '404'
+      @$state.go 'page1'
 
     goBridging: ->
-      @$state.go '404'
+      @$state.go 'page2'
 
 
 

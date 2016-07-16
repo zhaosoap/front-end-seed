@@ -30,11 +30,17 @@ angular.module 'Seed'
       url: '/'
       templateUrl: '/modules/home/index.html'
       controller: 'homeCtrl'
-    .state 'module1'
+    .state 'page1'
     ,
       url: '/page1'
       templateUrl: '/modules/page1/index.html'
       controller: 'page1Ctrl'
+
+    .state 'page2'
+    ,
+      url: '/page2'
+      templateUrl: '/modules/page2/index.html'
+      controller: 'page2Ctrl'
 
     .state 'error'
     ,
