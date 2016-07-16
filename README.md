@@ -1,11 +1,3 @@
-<link rel="stylesheet" href="http://yandex.st/highlightjs/6.1/styles/default.min.css">
-<script src="http://yandex.st/highlightjs/6.1/highlight.min.js"></script>
-<script>
-hljs.tabReplace = ' ';
-hljs.initHighlightingOnLoad();
-</script>
-
-
 
 # Front-end seed
 
@@ -20,11 +12,13 @@ All Javascript and style packages are respectively managed by **[npm](https://ww
 ### Add a new Page
 Open /src/scripts/route.coffee ,add following code to create a new state.
 
-    .state 'module1' 
-    ,
-      url: 'page1'
-      templateUrl: '/modules/page1/index.html'
-      controller: 'page1Ctrl'`
+```coffeescript
+.state 'module1' 
+,
+  url: 'page1'
+  templateUrl: '/modules/page1/index.html'
+  controller: 'page1Ctrl'
+```      
       
 create your page(coffee,jade,less) in /src/modules/page1
 
