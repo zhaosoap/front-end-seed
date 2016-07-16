@@ -12,5 +12,5 @@ angular.module 'Seed'
   BASEURL:
     LOCAL: local
     HOST: host
-    API_TDLV: "http://#{api}"
+    API_SEED: "http://#{api}"
 

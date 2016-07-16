@@ -19,11 +19,10 @@ CORS(app)
 app.config.from_object(__name__)
 
 @app.route('/api/testPOST',methods = ['POST'])
-def getDefaultConf():
-    defaultConfs = {}
+def testPOST():
     reqJson = json.loads(request.data)
-    reqJson['test'] += '_POST_processed'
-    output = reqJson
+    output = reqJson['test'] + '_POST_processed'
+    
     res = {
         'message': 'success',
         'result': output
@@ -32,12 +31,11 @@ def getDefaultConf():
 
 
 @app.route('/api/testGET',methods = ['GET'])
-def getReportList():
-    defaultConfs = {}
+def testGET():
+
     reqJson = request.args
-    reqJson['test'] += '_GET_processed'
-    output = reqJson
-    
+    output= reqJson['test']  + '_GET_processed'
+
     res = {
         "message": "success",
         "result": output
