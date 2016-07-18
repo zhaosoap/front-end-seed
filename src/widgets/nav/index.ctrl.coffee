@@ -21,8 +21,8 @@ angular.module 'Seed'
   init: -> null
 
 
-  methods: null
-
-
+  methods:
+    goHome: ->
+      @$state.go 'home'
   watch: null
 
