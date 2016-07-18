@@ -10,9 +10,12 @@ bower install // bower install --allow-root
 gulp
 ```
 
-![Home page](home.jpg)
+![Home page](mdIMG/home.jpg)
 
 ### Add a new Page
+
+![angularjs](mdIMG/angularjs.jpg)
+
 Open /src/scripts/route.coffee ,add following code to create a new state.
 
 ```coffeescript
