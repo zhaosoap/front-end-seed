@@ -1,18 +1,7 @@
 .page2
   p {{hello}}
-  label
-    | Name:
-    input(type='text',ng-model='user.name')
-    button(ng-click='btnFunc()') Button
-  p user.name = {{user.name}}
 
-  button(ng-click='callGET(user.name)') callGET
-  button(ng-click='callPOST(user.name)') callPOST
-  p {{this}}
-  p Promise 0: {{promises[0].result}}
-  p Promise 1: {{promises[1].result}}
-  button(ng-click='allPromise()') allPromise
-  button(ng-click='anyPromise()') anyPromise
+
 
 
 

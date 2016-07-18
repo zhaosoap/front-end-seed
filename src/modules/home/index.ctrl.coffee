@@ -22,10 +22,10 @@ angular.module 'Seed'
 
   methods:
     goPositioning: ->
-      @$state.go 'page1'
+      @$state.go 'page2'
 
     goBridging: ->
-      @$state.go 'page2'
+      @$state.go 'error'
 
 
 
